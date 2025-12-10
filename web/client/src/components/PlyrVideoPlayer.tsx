@@ -259,27 +259,6 @@ export function PlyrVideoPlayer({
               </div>
             </div>
           </div>
-
-          {/* Corner overlays to block specific YouTube buttons */}
-          {/* Bottom-left: "Watch on YouTube" button */}
-          <div 
-            className={`absolute rounded pointer-events-auto ${isFullscreen ? 'z-[9999] bottom-4 left-4 w-48 h-14' : 'z-10 bottom-2 left-2 w-40 h-12'}`}
-            style={{ 
-              background: 'rgba(0, 0, 0, 0.95)',
-              backdropFilter: 'blur(10px)' 
-            }}
-            onClick={(e) => e.stopPropagation()}
-          />
-
-          {/* Top-right: Share/More buttons */}
-          <div 
-            className={`absolute rounded pointer-events-auto ${isFullscreen ? 'z-[9999] top-4 right-4 w-40 h-12' : 'z-10 top-2 right-2 w-32 h-10'}`}
-            style={{ 
-              background: 'rgba(0, 0, 0, 0.95)',
-              backdropFilter: 'blur(10px)' 
-            }}
-            onClick={(e) => e.stopPropagation()}
-          />
         </>
       )}
     </>
