@@ -197,7 +197,7 @@ export function PlyrVideoPlayer({
           {/* Top branded bar - covers title area */}
           <div 
             className={`absolute top-0 left-0 right-0 pointer-events-auto ${isFullscreen ? 'z-[9999]' : 'z-10'}`}
-            style={{ height: isFullscreen ? '120px' : '100px' }}
+            style={{ height: isFullscreen ? '138px' : '115px' }}
             onClick={(e) => e.stopPropagation()}
           >
             <div className={`bg-gradient-to-b from-black/95 via-black/85 to-transparent h-full flex items-start gap-3 ${isFullscreen ? 'p-6' : 'p-4'}`}>
@@ -272,6 +272,17 @@ export function PlyrVideoPlayer({
     >
       {/* Plyr Player */}
       <div ref={videoRef} className="w-full h-full" />
+      
+      {/* Transparent overlay to block right-click on video iframe */}
+      <div 
+        className="absolute inset-0"
+        style={{ 
+          zIndex: 5,
+          pointerEvents: 'auto',
+          background: 'transparent'
+        }}
+        onContextMenu={handleContextMenu}
+      />
 
       {/* Render overlays - use portal when in fullscreen */}
       {isFullscreen && fullscreenContainer

@@ -258,3 +258,8 @@
 - [x] Deixar tarja superior mais escura (black/90→black/95, black/70→black/85)
 - [x] Desabilitar clique direito no player de vídeo (já estava implementado)
 - [ ] Testar cobertura do botão e clique direito
+
+## 🚫 Fix Right-Click on Video
+- [x] Adicionar overlay transparente sobre vídeo para bloquear clique direito (z-index: 5)
+- [x] Aumentar tarja superior em 15% (100px→115px, 120px→138px)
+- [ ] Testar clique direito em pause e fullscreen
