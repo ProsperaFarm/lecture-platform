@@ -65,7 +65,6 @@ export function PlyrVideoPlayer({
       /* Re-enable pointer events on Plyr controls and increase z-index */
       .plyr__controls {
         pointer-events: auto !important;
-        position: relative !important;
         z-index: 20 !important; /* Above overlay (z-10) */
       }
       /* Customize progress bar color to green */
