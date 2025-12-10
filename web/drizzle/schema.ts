@@ -63,7 +63,7 @@ export const lessons = pgTable("lessons", {
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 }, (table) => ({
-  courseIdIdx: index("courseId_idx").on(table.courseId),
+  courseIdIdx: index("lessons_courseId_idx").on(table.courseId),
 }));
 
 export type Lesson = typeof lessons.$inferSelect;
@@ -85,7 +85,7 @@ export const userProgress = pgTable("user_progress", {
 }, (table) => ({
   userLessonIdx: unique("user_lesson_idx").on(table.userId, table.lessonId),
   userIdIdx: index("userId_idx").on(table.userId),
-  courseIdIdx: index("courseId_idx").on(table.courseId),
+  courseIdIdx: index("user_progress_courseId_idx").on(table.courseId),
 }));
 
 export type UserProgress = typeof userProgress.$inferSelect;
@@ -103,7 +103,7 @@ export const userNotes = pgTable("user_notes", {
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 }, (table) => ({
-  userLessonIdx: index("user_lesson_idx").on(table.userId, table.lessonId),
+  userLessonIdx: index("user_notes_user_lesson_idx").on(table.userId, table.lessonId),
 }));
 
 export type UserNote = typeof userNotes.$inferSelect;
@@ -147,7 +147,7 @@ export const courseMaterials = pgTable("course_materials", {
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 }, (table) => ({
-  courseIdIdx: index("courseId_idx").on(table.courseId),
+  courseIdIdx: index("course_materials_courseId_idx").on(table.courseId),
   lessonIdIdx: index("lessonId_idx").on(table.lessonId),
 }));
 
