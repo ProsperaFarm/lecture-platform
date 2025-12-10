@@ -256,7 +256,7 @@ export function PlyrVideoPlayer({
 
           {/* Bottom gradient overlay - covers YouTube logo */}
           <div 
-            className={`absolute bottom-0 left-0 right-0 pointer-events-none ${isFullscreen ? 'z-[9999]' : 'z-10'}`}
+            className={`absolute bottom-0 left-0 right-0 pointer-events-none ${isFullscreen ? 'z-[9999]' : 'z-[1]'}`}
             style={{ height: isFullscreen ? '120px' : '100px' }}
           >
             <div className="bg-gradient-to-t from-black/95 via-black/80 to-transparent h-full" />
@@ -264,7 +264,7 @@ export function PlyrVideoPlayer({
 
           {/* Course info text - positioned above controls */}
           <div 
-            className={`absolute left-0 right-0 pointer-events-none ${isFullscreen ? 'z-[9999]' : 'z-10'}`}
+            className={`absolute left-0 right-0 pointer-events-none ${isFullscreen ? 'z-[9999]' : 'z-[2]'}`}
             style={{ bottom: isFullscreen ? '60px' : '54px' }}
           >
             <div className={`${isFullscreen ? 'px-6' : 'px-4'}`}>

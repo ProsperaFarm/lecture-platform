@@ -312,3 +312,11 @@
 - [x] Adicionar fundo próprio aos controles (linear-gradient preto semi-transparente)
 - [x] Controles com z-50 ficam acima do gradiente z-10
 - [ ] Testar visibilidade dos controles
+
+## 🔍 Debug Controls Z-Index Issue
+- [x] Problema: Controles não ficam visíveis mesmo com z-50
+- [x] Causa: Gradiente z-10 estava acima dos controles Plyr (z padrão)
+- [x] Solução: Reduzir z-index do gradiente para z-1
+- [x] Texto em z-2 (acima do gradiente, abaixo dos controles)
+- [x] Controles Plyr com z-50 (acima de tudo)
+- [ ] Testar visibilidade dos controles
