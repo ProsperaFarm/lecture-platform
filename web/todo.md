@@ -387,3 +387,9 @@
 - [x] Ajustar layout quando sidebar está fechada
 - [x] Adicionar transição suave ao abrir/fechar
 - [x] Testar rolagem vertical com muitas aulas
+
+## 🐛 Fix Invalid URL Error in useAuth
+- [x] Investigar erro "Invalid URL" no getLoginUrl
+- [x] Verificar variáveis de ambiente necessárias
+- [x] Corrigir const.ts ou useAuth hook
+- [x] Testar que TopBar funciona sem erro
