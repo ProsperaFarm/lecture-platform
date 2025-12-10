@@ -20,7 +20,7 @@ O projeto foi construído utilizando uma arquitetura moderna e performática de 
 ### Pré-requisitos
 
 - **Node.js**: Versão 18 ou superior
-- **Gerenciador de Pacotes**: pnpm (recomendado), npm ou yarn
+- **Gerenciador de Pacotes**: npm
 
 ### Passo a Passo
 
@@ -32,20 +32,16 @@ O projeto foi construído utilizando uma arquitetura moderna e performática de 
 
 2. **Instale as dependências**:
    ```bash
-   pnpm install
-   # ou
    npm install
    ```
 
 3. **Inicie o servidor de desenvolvimento**:
    ```bash
-   pnpm dev
-   # ou
    npm run dev
    ```
 
 4. **Acesse a aplicação**:
-   Abra seu navegador em `http://localhost:5173` (ou a porta indicada no terminal).
+   Abra seu navegador em `http://localhost:3000` (ou a porta indicada no terminal).
 
 ## 📦 Estrutura do Projeto
 
@@ -70,10 +66,11 @@ web/
 
 ## 📝 Scripts Disponíveis
 
-- `pnpm dev`: Inicia o servidor de desenvolvimento com Hot Module Replacement (HMR).
-- `pnpm build`: Compila o projeto para produção na pasta `dist`.
-- `pnpm preview`: Visualiza a versão de produção localmente.
-- `pnpm check`: Executa a verificação de tipos do TypeScript.
+- `npm run dev`: Inicia o servidor de desenvolvimento com Hot Module Replacement (HMR).
+- `npm run build`: Compila o projeto para produção na pasta `dist`.
+- `npm run check`: Executa a verificação de tipos do TypeScript.
+- `npm run db:push`: Gera e aplica migrações do banco de dados (Drizzle).
+- `npm test`: Executa os testes unitários com Vitest.
 
 ## 📚 Documentação Adicional
 
