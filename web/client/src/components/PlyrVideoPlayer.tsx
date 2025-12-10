@@ -254,12 +254,12 @@ export function PlyrVideoPlayer({
             </div>
           </div>
 
-          {/* Bottom branded bar - gradient from bottom with text above controls */}
+          {/* Bottom branded bar - covers YouTube logo and share buttons */}
           <div 
             className={`absolute bottom-0 left-0 right-0 pointer-events-none ${isFullscreen ? 'z-[9999]' : 'z-10'}`}
-            style={{ height: isFullscreen ? '180px' : '154px' }} /* 120px + 60px or 100px + 54px */
+            style={{ height: isFullscreen ? '120px' : '100px' }}
           >
-            <div className={`bg-gradient-to-t from-black/95 via-black/80 to-transparent h-full flex flex-col justify-end ${isFullscreen ? 'pb-16 px-6 pt-10' : 'pb-14 px-4 pt-8'}`}>
+            <div className={`bg-gradient-to-t from-black/95 via-black/80 to-transparent h-full flex flex-col justify-end ${isFullscreen ? 'p-6 pt-10' : 'p-4 pt-8'}`}>
               <div className="space-y-2">
                 {/* Course info */}
                 {courseTitle && (

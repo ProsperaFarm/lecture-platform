@@ -290,3 +290,11 @@
 - [x] Mudar cor do buffer para verde transparente (rgba 0.25)
 - [x] Mudar cor da barra de volume para verde floresta (#16a34a)
 - [ ] Testar cores no player
+
+## 🔄 Revert Bottom Overlay Changes
+- [x] Reverter commit 9f54d47 (altura e padding incorretos)
+- [x] Voltar gradiente para altura original (100px/120px)
+- [x] Voltar texto para posição original (p-4/p-6 sem padding-bottom extra)
+- [x] Manter z-index: 20 nos controles (já está correto no CSS)
+- [x] Controles ficam em bottom: 0 (posição normal) mas acima do gradiente (z-20 > z-10)
+- [ ] Testar layout final
