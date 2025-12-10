@@ -305,3 +305,10 @@
 - [x] Aumentar z-index dos controles para z-50 (acima de tudo)
 - [x] Manter gradiente em bottom: 0 com altura 100px/120px
 - [ ] Testar layout final
+
+## 🐛 Fix Controls Visibility
+- [x] Remover `position: relative` dos controles (você já fez)
+- [x] Manter gradiente em bottom: 0 (precisa cobrir logo do YouTube)
+- [x] Adicionar fundo próprio aos controles (linear-gradient preto semi-transparente)
+- [x] Controles com z-50 ficam acima do gradiente z-10
+- [ ] Testar visibilidade dos controles

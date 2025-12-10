@@ -66,6 +66,7 @@ export function PlyrVideoPlayer({
       .plyr__controls {
         pointer-events: auto !important;
         z-index: 50 !important; /* Above overlay (z-10) and text (z-10) */
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent) !important;
       }
       /* Customize progress bar color to green */
       .plyr--full-ui input[type=range] {
@@ -253,7 +254,7 @@ export function PlyrVideoPlayer({
             </div>
           </div>
 
-          {/* Bottom gradient overlay */}
+          {/* Bottom gradient overlay - covers YouTube logo */}
           <div 
             className={`absolute bottom-0 left-0 right-0 pointer-events-none ${isFullscreen ? 'z-[9999]' : 'z-10'}`}
             style={{ height: isFullscreen ? '120px' : '100px' }}
