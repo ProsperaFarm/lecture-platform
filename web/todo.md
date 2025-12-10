@@ -235,3 +235,14 @@
 - [ ] Testar navegação próximo/anterior
 - [ ] Atualizar Home.tsx para usar nova estrutura
 - [ ] Substituir arquivos antigos pelos novos
+
+## 🔄 Simplify Navigation with Direct References
+- [x] Remover campos desnecessários da tabela lessons (manter apenas IDs)
+- [x] Adicionar campos nextLessonId e prevLessonId na tabela lessons
+- [x] Atualizar seed para calcular e popular next/prev automaticamente
+- [x] Simplificar helpers do banco (apenas buscar next/prev direto)
+- [x] Atualizar tRPC procedures para usar campos diretos
+- [x] Atualizar Lesson.tsx para ocultar botões quando não houver next/prev
+- [ ] Aplicar schema (npm run db:reset)
+- [ ] Popular dados (npm run db:seed:normalized)
+- [ ] Testar navegação simplificada

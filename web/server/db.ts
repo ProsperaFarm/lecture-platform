@@ -108,8 +108,6 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
-
 /**
  * Get all courses
  */
@@ -139,7 +137,8 @@ export async function getCourseById(courseId: string): Promise<Course | undefine
 }
 
 /**
- * Get all lessons for a course, grouped by module and section
+ * Get all lessons for a course (flat list, properly ordered)
+ * Note: This is kept for backward compatibility, but navigation should use nextLessonId/prevLessonId
  */
 export async function getLessonsByCourse(courseId: string): Promise<Lesson[]> {
   const db = await getDb();
@@ -154,6 +153,7 @@ export async function getLessonsByCourse(courseId: string): Promise<Lesson[]> {
 
 /**
  * Get lesson by lessonId
+ * Includes nextLessonId and prevLessonId for navigation
  */
 export async function getLessonById(lessonId: string): Promise<Lesson | undefined> {
   const db = await getDb();
@@ -164,4 +164,30 @@ export async function getLessonById(lessonId: string): Promise<Lesson | undefine
 
   const result = await db.select().from(lessons).where(eq(lessons.lessonId, lessonId)).limit(1);
   return result.length > 0 ? result[0] : undefined;
+}
+
+/**
+ * Get next lesson (simplified - just fetch by nextLessonId)
+ */
+export async function getNextLesson(currentLessonId: string): Promise<Lesson | null> {
+  const currentLesson = await getLessonById(currentLessonId);
+  if (!currentLesson || !currentLesson.nextLessonId) {
+    return null;
+  }
+  
+  const nextLesson = await getLessonById(currentLesson.nextLessonId);
+  return nextLesson || null;
+}
+
+/**
+ * Get previous lesson (simplified - just fetch by prevLessonId)
+ */
+export async function getPreviousLesson(currentLessonId: string): Promise<Lesson | null> {
+  const currentLesson = await getLessonById(currentLessonId);
+  if (!currentLesson || !currentLesson.prevLessonId) {
+    return null;
+  }
+  
+  const prevLesson = await getLessonById(currentLesson.prevLessonId);
+  return prevLesson || null;
 }

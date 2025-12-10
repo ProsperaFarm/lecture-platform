@@ -69,7 +69,7 @@ CREATE INDEX sections_moduleId_idx ON sections("moduleId");
 CREATE INDEX sections_module_order_idx ON sections("moduleId", "order");
 CREATE INDEX sections_courseId_idx ON sections("courseId");
 
--- Lessons table (UPDATED - normalized)
+-- Lessons table (UPDATED - normalized with next/prev references)
 CREATE TABLE lessons (
   id SERIAL PRIMARY KEY,
   "lessonId" VARCHAR(128) NOT NULL UNIQUE,
@@ -80,6 +80,8 @@ CREATE TABLE lessons (
   "youtubeUrl" TEXT,
   type VARCHAR(16) DEFAULT 'video',
   "order" INTEGER NOT NULL,
+  "nextLessonId" VARCHAR(128),
+  "prevLessonId" VARCHAR(128),
   "createdAt" TIMESTAMP NOT NULL DEFAULT NOW(),
   "updatedAt" TIMESTAMP NOT NULL DEFAULT NOW()
 );
@@ -88,6 +90,8 @@ CREATE INDEX lessons_sectionId_idx ON lessons("sectionId");
 CREATE INDEX lessons_section_order_idx ON lessons("sectionId", "order");
 CREATE INDEX lessons_moduleId_idx ON lessons("moduleId");
 CREATE INDEX lessons_courseId_idx ON lessons("courseId");
+CREATE INDEX lessons_nextLessonId_idx ON lessons("nextLessonId");
+CREATE INDEX lessons_prevLessonId_idx ON lessons("prevLessonId");
 
 -- User progress table
 CREATE TABLE user_progress (

@@ -37,10 +37,15 @@ export default function LessonPage() {
     { enabled: !!courseId }
   );
 
-  // Fetch all lessons for prev/next navigation
-  const { data: allLessons = [] } = trpc.lessons.getByCourse.useQuery(
-    { courseId: courseId || "" },
-    { enabled: !!courseId }
+  // Fetch next and previous lessons using simplified procedures
+  const { data: nextLesson } = trpc.lessons.getNext.useQuery(
+    { lessonId: lessonId || "" },
+    { enabled: !!lessonId }
+  );
+
+  const { data: prevLesson } = trpc.lessons.getPrevious.useQuery(
+    { lessonId: lessonId || "" },
+    { enabled: !!lessonId }
   );
 
   if (isLoadingUser || isLoadingLesson) {
@@ -68,11 +73,6 @@ export default function LessonPage() {
     );
   }
 
-  // Find prev/next lessons
-  const currentIndex = allLessons.findIndex(l => l.lessonId === lessonId);
-  const prevLesson = currentIndex > 0 ? allLessons[currentIndex - 1] : null;
-  const nextLesson = currentIndex < allLessons.length - 1 ? allLessons[currentIndex + 1] : null;
-
   // Extract YouTube ID if URL exists
   const getYoutubeId = (url: string) => {
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -81,11 +81,6 @@ export default function LessonPage() {
   };
 
   const videoId = lesson.youtubeUrl ? getYoutubeId(lesson.youtubeUrl) : null;
-
-  // Debug logs
-  console.log('[Lesson] Current Lesson:', lesson);
-  console.log('[Lesson] YouTube URL:', lesson.youtubeUrl);
-  console.log('[Lesson] Video ID:', videoId);
 
   return (
     <Layout>
@@ -96,15 +91,17 @@ export default function LessonPage() {
           <ChevronRight className="w-4 h-4 shrink-0" />
           <Link href={`/course/${courseId}`} className="hover:text-primary transition-colors">{course.acronym}</Link>
           <ChevronRight className="w-4 h-4 shrink-0" />
-          <span className="truncate">{lesson.moduleName}</span>
-          <ChevronRight className="w-4 h-4 shrink-0" />
           <span className="truncate font-medium text-foreground">{lesson.title}</span>
         </div>
 
         {/* Video Player Container */}
         <div className="relative aspect-video bg-black rounded-xl overflow-hidden shadow-lg border border-border/50 group">
           {lesson.youtubeUrl ? (
-            <PlyrVideoPlayer youtubeUrl={lesson.youtubeUrl} />
+            <PlyrVideoPlayer 
+              youtubeUrl={lesson.youtubeUrl}
+              courseTitle={course.title}
+              lessonTitle={lesson.title}
+            />
           ) : (
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-muted/30 text-center p-8">
               <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
@@ -129,9 +126,6 @@ export default function LessonPage() {
                 {lesson.title}
               </h1>
               <div className="flex items-center gap-3 mt-2">
-                <Badge variant="secondary" className="font-normal">
-                  {lesson.sectionName}
-                </Badge>
                 {lesson.type === 'live' && (
                   <Badge variant="destructive" className="font-normal">
                     Gravação ao Vivo
@@ -152,7 +146,7 @@ export default function LessonPage() {
 
             <div className="prose prose-sm dark:prose-invert max-w-none text-muted-foreground">
               <p>
-                Nesta aula do módulo <strong>{lesson.moduleName}</strong>, abordaremos os conceitos fundamentais 
+                Nesta aula do curso <strong>{course.title}</strong>, abordaremos os conceitos fundamentais 
                 relacionados a {lesson.title.toLowerCase()}. Acompanhe o material de apoio e faça suas anotações.
               </p>
             </div>
@@ -160,22 +154,35 @@ export default function LessonPage() {
 
           {/* Sidebar / Actions */}
           <Card className="w-full md:w-80 shrink-0 p-4 space-y-4">
-            <div className="flex items-center justify-between gap-2">
-              <Link href={prevLesson ? `/course/${courseId}/lesson/${prevLesson.lessonId}` : "#"}>
-                <Button variant="outline" size="sm" disabled={!prevLesson} className="w-full">
-                  <ChevronLeft className="w-4 h-4 mr-1" />
-                  Anterior
-                </Button>
-              </Link>
-              <Link href={nextLesson ? `/course/${courseId}/lesson/${nextLesson.lessonId}` : "#"}>
-                <Button variant="default" size="sm" disabled={!nextLesson} className="w-full">
-                  Próxima
-                  <ChevronRight className="w-4 h-4 ml-1" />
-                </Button>
-              </Link>
-            </div>
-
-            <Separator />
+            {/* Navigation Buttons - Only show if next/prev exist */}
+            {(prevLesson || nextLesson) && (
+              <>
+                <div className="flex items-center justify-between gap-2">
+                  {prevLesson ? (
+                    <Link href={`/course/${courseId}/lesson/${prevLesson.lessonId}`} className="flex-1">
+                      <Button variant="outline" size="sm" className="w-full">
+                        <ChevronLeft className="w-4 h-4 mr-1" />
+                        Anterior
+                      </Button>
+                    </Link>
+                  ) : (
+                    <div className="flex-1" />
+                  )}
+                  
+                  {nextLesson ? (
+                    <Link href={`/course/${courseId}/lesson/${nextLesson.lessonId}`} className="flex-1">
+                      <Button variant="default" size="sm" className="w-full">
+                        Próxima
+                        <ChevronRight className="w-4 h-4 ml-1" />
+                      </Button>
+                    </Link>
+                  ) : (
+                    <div className="flex-1" />
+                  )}
+                </div>
+                <Separator />
+              </>
+            )}
 
             <div className="space-y-2">
               <h4 className="text-sm font-medium flex items-center gap-2">

@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
 /**
- * Database Seed Script (Normalized Schema)
+ * Database Seed Script (Normalized Schema with Next/Prev)
  * Populates courses, modules, sections, and lessons tables from course-metadata.json
+ * Automatically calculates and sets nextLessonId and prevLessonId for navigation
  * 
  * Usage: node scripts/seed-database-normalized.mjs
  */
@@ -25,7 +26,7 @@ const { Pool } = pg;
 // Database connection
 const DATABASE_URL = process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/prospera_academy';
 
-console.log('🌱 Starting database seed (normalized schema)...\n');
+console.log('🌱 Starting database seed (normalized schema with next/prev)...\n');
 console.log(`📦 Connecting to database: ${DATABASE_URL.replace(/:[^:@]+@/, ':****@')}\n`);
 
 const pool = new Pool({
@@ -37,7 +38,7 @@ async function seedDatabase() {
   
   try {
     // Read course metadata JSON
-    const jsonPath = join(__dirname, '..', '..', 'uploader', 'course-metadata.json');
+    const jsonPath = join(__dirname, '..', '..', 'course-metadata.json');
     console.log(`📖 Reading course data from: ${jsonPath}`);
     
     const rawData = readFileSync(jsonPath, 'utf-8');
@@ -92,7 +93,39 @@ async function seedDatabase() {
 
     console.log(`\n✅ Inserted/updated ${totalModules} modules\n`);
 
-    // 3. Insert sections and lessons
+    // 3. Build flat list of all lessons with their order in the course
+    console.log('📝 Building lesson sequence...');
+    const allLessons = [];
+    
+    for (const module of course.modules) {
+      for (const section of module.sections) {
+        for (const lesson of section.lessons) {
+          allLessons.push({
+            lessonId: lesson.id,
+            sectionId: section.id,
+            moduleId: module.id,
+            courseId: course.id,
+            title: lesson.title,
+            youtubeUrl: lesson.youtubeUrl || null,
+            type: lesson.type,
+            order: lesson.order,
+          });
+        }
+      }
+    }
+
+    console.log(`✅ Found ${allLessons.length} lessons in sequence\n`);
+
+    // 4. Calculate next/prev for each lesson
+    console.log('🔗 Calculating next/prev references...');
+    for (let i = 0; i < allLessons.length; i++) {
+      const lesson = allLessons[i];
+      lesson.nextLessonId = i < allLessons.length - 1 ? allLessons[i + 1].lessonId : null;
+      lesson.prevLessonId = i > 0 ? allLessons[i - 1].lessonId : null;
+    }
+    console.log(`✅ Calculated next/prev for all lessons\n`);
+
+    // 5. Insert sections and lessons
     console.log('📝 Inserting sections and lessons...');
     let totalSections = 0;
     let totalLessons = 0;
@@ -114,19 +147,35 @@ async function seedDatabase() {
         totalSections++;
         console.log(`   ✓ Section ${section.order}: ${section.title}`);
 
-        // Insert lessons for this section
+        // Insert lessons for this section with next/prev
         for (const lesson of section.lessons) {
+          // Find this lesson in allLessons to get next/prev
+          const lessonWithNav = allLessons.find(l => l.lessonId === lesson.id);
+          
           await client.query(
-            `INSERT INTO lessons ("lessonId", "sectionId", "moduleId", "courseId", title, "youtubeUrl", type, "order", "createdAt", "updatedAt")
-             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW(), NOW())
+            `INSERT INTO lessons ("lessonId", "sectionId", "moduleId", "courseId", title, "youtubeUrl", type, "order", "nextLessonId", "prevLessonId", "createdAt", "updatedAt")
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, NOW(), NOW())
              ON CONFLICT ("lessonId")
              DO UPDATE SET
                title = EXCLUDED.title,
                "youtubeUrl" = EXCLUDED."youtubeUrl",
                type = EXCLUDED.type,
                "order" = EXCLUDED."order",
+               "nextLessonId" = EXCLUDED."nextLessonId",
+               "prevLessonId" = EXCLUDED."prevLessonId",
                "updatedAt" = NOW()`,
-            [lesson.id, section.id, module.id, course.id, lesson.title, lesson.youtubeUrl, lesson.type, lesson.order]
+            [
+              lesson.id, 
+              section.id, 
+              module.id, 
+              course.id, 
+              lesson.title, 
+              lesson.youtubeUrl || null, 
+              lesson.type, 
+              lesson.order,
+              lessonWithNav.nextLessonId,
+              lessonWithNav.prevLessonId
+            ]
           );
           
           totalLessons++;
@@ -140,7 +189,8 @@ async function seedDatabase() {
     console.log(`\n✅ Inserted/updated ${totalSections} sections`);
     console.log(`✅ Inserted/updated ${totalLessons} lessons`);
     console.log(`   - With YouTube URLs: ${lessonsWithYouTube}`);
-    console.log(`   - Pending upload: ${totalLessons - lessonsWithYouTube}\n`);
+    console.log(`   - Pending upload: ${totalLessons - lessonsWithYouTube}`);
+    console.log(`   - All lessons have next/prev references calculated\n`);
 
     // Commit transaction
     await client.query('COMMIT');

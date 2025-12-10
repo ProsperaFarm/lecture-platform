@@ -88,7 +88,7 @@ export type InsertSection = typeof sections.$inferInsert;
 
 /**
  * Lessons table - stores individual lesson metadata
- * Now properly normalized with references to sections
+ * Simplified with direct next/prev references for fast navigation
  */
 export const lessons = pgTable("lessons", {
   id: serial("id").primaryKey(),
@@ -100,6 +100,8 @@ export const lessons = pgTable("lessons", {
   youtubeUrl: text("youtubeUrl"),
   type: varchar("type", { length: 16 }).default("video"), // "video" or "live"
   order: integer("order").notNull(), // Sequential order within section
+  nextLessonId: varchar("nextLessonId", { length: 128 }), // Direct reference to next lesson
+  prevLessonId: varchar("prevLessonId", { length: 128 }), // Direct reference to previous lesson
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 }, (table) => ({
@@ -107,6 +109,8 @@ export const lessons = pgTable("lessons", {
   sectionOrderIdx: index("lessons_section_order_idx").on(table.sectionId, table.order),
   moduleIdIdx: index("lessons_moduleId_idx").on(table.moduleId),
   courseIdIdx: index("lessons_courseId_idx").on(table.courseId),
+  nextLessonIdx: index("lessons_nextLessonId_idx").on(table.nextLessonId),
+  prevLessonIdx: index("lessons_prevLessonId_idx").on(table.prevLessonId),
 }));
 
 export type Lesson = typeof lessons.$inferSelect;
