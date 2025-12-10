@@ -156,3 +156,15 @@
 - [x] Desabilitar clique direito no player
 - [x] Usar youtube-nocookie.com
 - [ ] Testar que usuário não consegue link facilmente
+
+## 🐛 Fix lessons.getById 404 Error
+- [ ] Verificar se procedure está registrada no appRouter
+- [ ] Verificar se servidor foi reiniciado
+- [ ] Testar endpoint manualmente
+
+## 🎬 Implement Plyr Video Player
+- [x] Criar componente PlyrVideoPlayer com CDN
+- [x] Substituir WhiteLabelVideoPlayer por PlyrVideoPlayer
+- [x] Configurar controles customizados (sem share/copy)
+- [x] Usar youtube-nocookie.com
+- [ ] Testar que player funciona corretamente
