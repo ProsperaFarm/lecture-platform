@@ -54,3 +54,8 @@
 - [x] Resolver conflito de dependências do Vite 7 com @builder.io/vite-plugin-jsx-loc
 - [ ] Testar npm install com --legacy-peer-deps
 - [x] Atualizar README com instruções de instalação corretas
+
+## 🌱 Database Seeding
+- [x] Criar script de seed para popular courses e lessons
+- [x] Adicionar comando npm run db:seed
+- [ ] Testar importação dos dados do course-metadata.json
