@@ -87,3 +87,8 @@
 - [ ] Criar componente de login no cliente
 - [ ] Criar página de callback do Google OAuth
 - [ ] Documentar setup do Google OAuth
+
+## 🔥 Remove Manus OAuth Completely
+- [x] Remover logs de erro do OAUTH_SERVER_URL no sdk.ts
+- [x] Simplificar context.ts para usar apenas Google OAuth
+- [x] Testar que não há mais erros de OAuth do Manus
