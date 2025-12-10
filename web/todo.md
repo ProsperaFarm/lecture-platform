@@ -92,3 +92,8 @@
 - [x] Remover logs de erro do OAUTH_SERVER_URL no sdk.ts
 - [x] Simplificar context.ts para usar apenas Google OAuth
 - [x] Testar que não há mais erros de OAuth do Manus
+
+## 🐛 Missing Client Files
+- [x] Copiar diretório client/src/lib completo (trpc.ts, utils.ts)
+- [x] Adicionar variáveis de ambiente opcionais ao .env.example
+- [x] Remover erro do OAuth do Manus no repositório GitHub
