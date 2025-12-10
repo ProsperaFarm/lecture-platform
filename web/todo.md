@@ -149,3 +149,10 @@
 - [x] Usar trpc.lessons.getById para buscar aula
 - [x] Usar trpc.courses.getById para buscar curso
 - [ ] Testar que vídeos do banco aparecem corretamente
+
+## 🎥 Implement White-Label Video Player
+- [x] Substituir ReactPlayer por iframe YouTube direto
+- [x] Adicionar overlay para bloquear acesso aos controles
+- [x] Desabilitar clique direito no player
+- [x] Usar youtube-nocookie.com
+- [ ] Testar que usuário não consegue link facilmente

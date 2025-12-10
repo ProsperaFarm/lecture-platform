@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useLocation, useRoute, Link } from "wouter";
-import ReactPlayer from "react-player";
 import { trpc } from "@/lib/trpc";
+import { WhiteLabelVideoPlayer } from "@/components/WhiteLabelVideoPlayer";
 import { Layout } from "@/components/Layout";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
@@ -104,26 +104,7 @@ export default function LessonPage() {
         {/* Video Player Container */}
         <div className="relative aspect-video bg-black rounded-xl overflow-hidden shadow-lg border border-border/50 group">
           {lesson.youtubeUrl ? (
-            // @ts-ignore - ReactPlayer types are causing issues but functionality is correct
-            <ReactPlayer
-              url={lesson.youtubeUrl}
-              width="100%"
-              height="100%"
-              controls={true}
-              config={{
-                youtube: {
-                  playerVars: {
-                    modestbranding: 1,
-                    rel: 0,
-                    showinfo: 0,
-                    iv_load_policy: 3, // Hide video annotations
-                    fs: 1, // Allow fullscreen
-                    disablekb: 0, // Enable keyboard controls
-                  }
-                }
-              }}
-              style={{ position: 'absolute', top: 0, left: 0 }}
-            />
+            <WhiteLabelVideoPlayer youtubeUrl={lesson.youtubeUrl} />
           ) : (
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-muted/30 text-center p-8">
               <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
