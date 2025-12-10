@@ -345,3 +345,9 @@
 - [x] Aumentar altura de 30px para 54px (altura dos controles)
 - [x] Mudar de retângulo preto para gradiente (right to left: from-black/95 via-black/70 to-transparent)
 - [ ] Testar cobertura do logo do YouTube
+
+## 🐛 Fix Bottom Gradient Covering Content
+- [x] Gradiente inferior está cobrindo foto da coordenadora e informações do curso
+- [x] Reduzir altura do gradiente inferior (60px/80px → 30px/40px)
+- [x] Deixar gradiente mais transparente (black/95-80 → black/60-30)
+- [ ] Testar que não cobre conteúdo importante

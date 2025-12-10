@@ -272,15 +272,15 @@ export function PlyrVideoPlayer({
             <div className="bg-gradient-to-l from-black/95 via-black/70 to-transparent h-full" />
           </div>
 
-          {/* Main gradient overlay for branding - positioned above controls */}
+          {/* Subtle gradient overlay for text readability - positioned above controls */}
           <div 
             className={`absolute left-0 right-0 pointer-events-none ${isFullscreen ? 'z-[9999]' : ''}`}
             style={{ 
               bottom: isFullscreen ? '60px' : '54px',
-              height: isFullscreen ? '80px' : '60px'
+              height: isFullscreen ? '40px' : '30px'
             }}
           >
-            <div className="bg-gradient-to-t from-black/95 via-black/80 to-transparent h-full" />
+            <div className="bg-gradient-to-t from-black/60 via-black/30 to-transparent h-full" />
           </div>
 
           {/* Course info text - positioned above controls */}
