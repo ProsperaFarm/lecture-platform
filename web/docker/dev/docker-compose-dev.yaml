@@ -2,7 +2,7 @@
 
 services:
   db_dev:
-    image: postgres:15
+    image: postgres:16
     container_name: prospera_academy_dev_db
     environment:
       - POSTGRES_USER=postgres
