@@ -114,3 +114,8 @@
 - [ ] Verificar se GOOGLE_REDIRECT_URI no backend está correta
 - [ ] Adicionar logs de debug no google-oauth.ts
 - [ ] Testar troca de código por token
+
+## 🐛 Fix Double OAuth Code Usage
+- [x] Adicionar proteção contra múltiplas chamadas no GoogleCallback
+- [x] Usar useRef para evitar double render do React Strict Mode
+- [ ] Testar que código é usado apenas uma vez
