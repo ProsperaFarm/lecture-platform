@@ -320,3 +320,10 @@
 - [x] Texto em z-2 (acima do gradiente, abaixo dos controles)
 - [x] Controles Plyr com z-50 (acima de tudo)
 - [ ] Testar visibilidade dos controles
+
+## 🎬 Fix Controls Visibility When Paused
+- [x] Problema acontece especificamente quando vídeo está pausado
+- [x] Adicionar CSS para `.plyr--paused .plyr__controls` (z-50, opacity: 1, visibility: visible)
+- [x] Adicionar CSS para `.plyr__control-bar` (z-50)
+- [x] Forçar controles visíveis com !important
+- [ ] Testar visibilidade em pause e play

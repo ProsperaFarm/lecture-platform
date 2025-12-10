@@ -65,8 +65,18 @@ export function PlyrVideoPlayer({
       /* Re-enable pointer events on Plyr controls and increase z-index */
       .plyr__controls {
         pointer-events: auto !important;
-        z-index: 50 !important; /* Above overlay (z-10) and text (z-10) */
+        z-index: 50 !important; /* Above overlay (z-1) and text (z-2) */
         background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent) !important;
+      }
+      /* Ensure controls visible when paused */
+      .plyr--paused .plyr__controls {
+        z-index: 50 !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
+      /* Force controls to be above everything */
+      .plyr__control-bar {
+        z-index: 50 !important;
       }
       /* Customize progress bar color to green */
       .plyr--full-ui input[type=range] {
