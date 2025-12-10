@@ -59,3 +59,9 @@
 - [x] Criar script de seed para popular courses e lessons
 - [x] Adicionar comando npm run db:seed
 - [ ] Testar importação dos dados do course-metadata.json
+
+## 🎨 UI Restoration
+- [x] Recuperar código original do Home.tsx do histórico git
+- [x] Adaptar UI para usar tRPC ao invés de JSON estático
+- [x] Criar procedures tRPC para courses e lessons
+- [ ] Testar exibição de cursos, módulos e aulas
