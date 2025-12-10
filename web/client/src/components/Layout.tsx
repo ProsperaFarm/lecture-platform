@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { BookOpen, ChevronRight, Menu, PlayCircle, User } from "lucide-react";
+import { BookOpen, ChevronLeft, ChevronRight, Menu, PlayCircle, User } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation, useRoute } from "wouter";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -17,7 +17,8 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   const [location] = useLocation();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [isDesktopSidebarOpen, setIsDesktopSidebarOpen] = useState(true);
   
   // Extract course ID from URL (either /course/:id or /course/:id/lesson/:lessonId)
   const [, paramsCourse] = useRoute("/course/:id");
@@ -35,7 +36,21 @@ export function Layout({ children }: LayoutProps) {
     
     return (
       <div className="sticky top-0 z-20 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-14 max-w-5xl items-center justify-end px-4">
+        <div className="container flex h-14 max-w-5xl items-center justify-between px-4">
+          {/* Toggle button for desktop sidebar */}
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="hidden lg:flex"
+            onClick={() => setIsDesktopSidebarOpen(!isDesktopSidebarOpen)}
+          >
+            {isDesktopSidebarOpen ? (
+              <ChevronLeft className="w-5 h-5" />
+            ) : (
+              <ChevronRight className="w-5 h-5" />
+            )}
+          </Button>
+          
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <User className="w-4 h-4" />
             <span className="font-medium text-foreground">{user?.name || 'Usuário'}</span>
@@ -47,7 +62,7 @@ export function Layout({ children }: LayoutProps) {
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full bg-sidebar border-r border-sidebar-border">
-      <div className="p-6 border-b border-sidebar-border">
+      <div className="p-6 border-b border-sidebar-border shrink-0">
         <Link href={`/course/${currentCourse.id}`}>
           <div className="cursor-pointer hover:opacity-80 transition-opacity">
             <h1 className="text-xl font-bold text-sidebar-foreground font-display">
@@ -66,8 +81,8 @@ export function Layout({ children }: LayoutProps) {
         </Link>
       </div>
       
-      <ScrollArea className="flex-1">
-        <div className="p-4 space-y-6">
+      <ScrollArea className="flex-1 h-[calc(100vh-180px)]">
+        <div className="p-4 space-y-6 pb-8">
           {currentCourse.modules.map((module) => (
             <div key={module.id} className="space-y-2">
               <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-2">
@@ -94,7 +109,7 @@ export function Layout({ children }: LayoutProps) {
                                   ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium" 
                                   : "text-muted-foreground hover:text-sidebar-foreground"
                               )}
-                              onClick={() => setIsSidebarOpen(false)}
+                              onClick={() => setIsMobileSidebarOpen(false)}
                             >
                               <div className="flex items-start gap-2 w-full">
                                 <PlayCircle className={cn(
@@ -120,13 +135,23 @@ export function Layout({ children }: LayoutProps) {
 
   return (
     <div className="min-h-screen flex bg-background">
-      {/* Desktop Sidebar */}
-      <aside className="hidden lg:block w-80 fixed inset-y-0 left-0 z-30">
-        <SidebarContent />
+      {/* Desktop Sidebar - Collapsible */}
+      <aside 
+        className={cn(
+          "hidden lg:block fixed inset-y-0 left-0 z-30 transition-all duration-300",
+          isDesktopSidebarOpen ? "w-80" : "w-0"
+        )}
+      >
+        <div className={cn(
+          "h-full transition-opacity duration-300",
+          isDesktopSidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        )}>
+          <SidebarContent />
+        </div>
       </aside>
 
       {/* Mobile Sidebar */}
-      <Sheet open={isSidebarOpen} onOpenChange={setIsSidebarOpen}>
+      <Sheet open={isMobileSidebarOpen} onOpenChange={setIsMobileSidebarOpen}>
         <SheetTrigger asChild>
           <Button variant="ghost" size="icon" className="lg:hidden fixed top-4 left-4 z-40">
             <Menu className="w-6 h-6" />
@@ -138,7 +163,12 @@ export function Layout({ children }: LayoutProps) {
       </Sheet>
 
       {/* Main Content */}
-      <main className="flex-1 lg:ml-80 min-h-screen flex flex-col">
+      <main 
+        className={cn(
+          "flex-1 min-h-screen flex flex-col transition-all duration-300",
+          isDesktopSidebarOpen ? "lg:ml-80" : "lg:ml-0"
+        )}
+      >
         {/* Top Navigation Bar */}
         <TopBar />
         

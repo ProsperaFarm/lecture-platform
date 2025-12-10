@@ -379,3 +379,11 @@
 - [x] Adicionar useAuth() para obter dados do usuário
 - [x] Exibir nome do usuário na barra superior
 - [x] Testar exibição do nome
+
+## 📂 Collapsible Sidebar with Improved Scrolling
+- [x] Adicionar botão de toggle para fechar/abrir sidebar
+- [x] Implementar estado de sidebar (aberta/fechada)
+- [x] Melhorar ScrollArea para acessar todas as 236 aulas
+- [x] Ajustar layout quando sidebar está fechada
+- [x] Adicionar transição suave ao abrir/fechar
+- [x] Testar rolagem vertical com muitas aulas
