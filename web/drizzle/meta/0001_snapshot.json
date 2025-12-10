@@ -18,155 +18,162 @@
           "name": "courseId",
           "type": "varchar(128)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "lessonId": {
           "name": "lessonId",
           "type": "varchar(128)",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "title": {
           "name": "title",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "description": {
           "name": "description",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "type": {
           "name": "type",
-          "type": "varchar(16)",
+          "type": "enum('pdf','slide','document','other')",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "fileUrl": {
           "name": "fileUrl",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "fileKey": {
           "name": "fileKey",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "fileSize": {
           "name": "fileSize",
-          "type": "integer",
+          "type": "int",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "mimeType": {
           "name": "mimeType",
           "type": "varchar(128)",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "createdAt": {
           "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "autoincrement": false,
+          "default": "(now())"
         },
         "updatedAt": {
           "name": "updatedAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
         }
       },
       "indexes": {
-        "course_materials_courseId_idx": {
-          "name": "course_materials_courseId_idx",
+        "courseId_idx": {
+          "name": "courseId_idx",
           "columns": [
-            {
-              "expression": "courseId",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "courseId"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
         "lessonId_idx": {
           "name": "lessonId_idx",
           "columns": [
-            {
-              "expression": "lessonId",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "lessonId"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {},
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "course_materials_id": {
+          "name": "course_materials_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraint": {}
     },
-    "public.courses": {
+    "courses": {
       "name": "courses",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
         },
         "courseId": {
           "name": "courseId",
           "type": "varchar(128)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "acronym": {
           "name": "acronym",
           "type": "varchar(16)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "title": {
           "name": "title",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "description": {
           "name": "description",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "thumbnail": {
           "name": "thumbnail",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "totalVideos": {
           "name": "totalVideos",
-          "type": "integer",
+          "type": "int",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": 0
         },
         "createdAt": {
@@ -174,102 +181,130 @@
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "autoincrement": false,
+          "default": "(now())"
         },
         "updatedAt": {
           "name": "updatedAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+          "autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
         }
       },
       "indexes": {},
       "foreignKeys": {},
-      "compositePrimaryKeys": {},
+"compositePrimaryKeys": {
+        "courses_id": {
+          "name": "courses_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
       "uniqueConstraints": {
         "courses_courseId_unique": {
           "name": "courses_courseId_unique",
-          "nullsNotDistinct": false,
+
           "columns": [
             "courseId"
           ]
         }
       },
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+"checkConstraint": {}
     },
-    "public.lessons": {
+    "lessons": {
       "name": "lessons",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+
         },
         "lessonId": {
           "name": "lessonId",
           "type": "varchar(128)",
           "primaryKey": false,
-          "notNull": true
+"notNull": true,
+          "autoincrement": false
+
         },
         "courseId": {
           "name": "courseId",
           "type": "varchar(128)",
           "primaryKey": false,
-          "notNull": true
+"notNull": true,
+          "autoincrement": false
+
         },
         "moduleId": {
           "name": "moduleId",
           "type": "varchar(128)",
           "primaryKey": false,
-          "notNull": true
+"notNull": true,
+          "autoincrement": false
+
         },
         "moduleName": {
           "name": "moduleName",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+"notNull": false,
+          "autoincrement": false
+
         },
         "sectionId": {
           "name": "sectionId",
           "type": "varchar(128)",
           "primaryKey": false,
-          "notNull": true
+"notNull": true,
+          "autoincrement": false
+
         },
         "sectionName": {
           "name": "sectionName",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+"notNull": false,
+          "autoincrement": false
+
         },
         "title": {
           "name": "title",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+"notNull": true,
+          "autoincrement": false
+
         },
         "youtubeUrl": {
           "name": "youtubeUrl",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+"notNull": false,
+          "autoincrement": false
         },
         "type": {
           "name": "type",
-          "type": "varchar(16)",
+          "type": "enum('video','live')",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
+
           "default": "'video'"
         },
         "order": {
           "name": "order",
-          "type": "integer",
+"type": "int",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
+
           "default": 0
         },
         "createdAt": {
@@ -277,132 +312,139 @@
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+"autoincrement": false,
+          "default": "(now())"
+
         },
         "updatedAt": {
           "name": "updatedAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+"autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
         }
       },
       "indexes": {
-        "lessons_courseId_idx": {
-          "name": "lessons_courseId_idx",
+        "courseId_idx": {
+          "name": "courseId_idx",
           "columns": [
-            {
-              "expression": "courseId",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "courseId"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {},
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "lessons_id": {
+          "name": "lessons_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
       "uniqueConstraints": {
         "lessons_lessonId_unique": {
           "name": "lessons_lessonId_unique",
-          "nullsNotDistinct": false,
+
           "columns": [
             "lessonId"
           ]
         }
       },
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+"checkConstraint": {}
     },
-    "public.ratings": {
+    "ratings": {
       "name": "ratings",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
         },
         "userId": {
           "name": "userId",
-          "type": "integer",
+          "type": "int",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "targetType": {
           "name": "targetType",
-          "type": "varchar(16)",
+          "type": "enum('lesson','course')",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
+
         },
         "targetId": {
           "name": "targetId",
           "type": "varchar(128)",
           "primaryKey": false,
-          "notNull": true
+"notNull": true,
+          "autoincrement": false
         },
         "ratingType": {
           "name": "ratingType",
-          "type": "varchar(16)",
+          "type": "enum('like','dislike','stars')",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "stars": {
           "name": "stars",
-          "type": "integer",
+          "type": "int",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
+
         },
         "createdAt": {
           "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+"autoincrement": false,
+          "default": "(now())"
+
         },
         "updatedAt": {
           "name": "updatedAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+"autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
+
         }
       },
       "indexes": {
         "target_idx": {
           "name": "target_idx",
           "columns": [
-            {
-              "expression": "targetType",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "targetId",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+"targetType",
+            "targetId"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {},
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "ratings_id": {
+          "name": "ratings_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
       "uniqueConstraints": {
         "user_target_idx": {
           "name": "user_target_idx",
-          "nullsNotDistinct": false,
+
           "columns": [
             "userId",
             "targetType",
@@ -410,129 +452,140 @@
           ]
         }
       },
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+"checkConstraint": {}
     },
-    "public.user_notes": {
+    "user_notes": {
       "name": "user_notes",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
         },
         "userId": {
           "name": "userId",
-          "type": "integer",
+          "type": "int",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
+
         },
         "lessonId": {
           "name": "lessonId",
           "type": "varchar(128)",
           "primaryKey": false,
-          "notNull": true
+"notNull": true,
+          "autoincrement": false
         },
         "timestamp": {
           "name": "timestamp",
-          "type": "integer",
+          "type": "int",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
+
         },
         "content": {
           "name": "content",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+"notNull": true,
+          "autoincrement": false
+
         },
         "createdAt": {
           "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+"autoincrement": false,
+          "default": "(now())"
+
         },
         "updatedAt": {
           "name": "updatedAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+"autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
         }
       },
       "indexes": {
-        "user_notes_user_lesson_idx": {
-          "name": "user_notes_user_lesson_idx",
+        "user_lesson_idx": {
+          "name": "user_lesson_idx",
           "columns": [
-            {
-              "expression": "userId",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "lessonId",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "userId",
+            "lessonId"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {},
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "user_notes_id": {
+          "name": "user_notes_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+      "checkConstraint": {}
     },
-    "public.user_progress": {
+    "user_progress": {
       "name": "user_progress",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
         },
         "userId": {
           "name": "userId",
-          "type": "integer",
+          "type": "int",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
+
         },
         "lessonId": {
           "name": "lessonId",
           "type": "varchar(128)",
           "primaryKey": false,
-          "notNull": true
+"notNull": true,
+          "autoincrement": false
+
         },
         "courseId": {
           "name": "courseId",
           "type": "varchar(128)",
           "primaryKey": false,
-          "notNull": true
+"notNull": true,
+          "autoincrement": false
+
         },
         "completed": {
           "name": "completed",
           "type": "boolean",
           "primaryKey": false,
           "notNull": false,
+"autoincrement": false,
+
           "default": false
         },
         "lastWatchedPosition": {
           "name": "lastWatchedPosition",
-          "type": "integer",
+"type": "int",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
+
           "default": 0
         },
         "watchedAt": {
@@ -540,103 +593,107 @@
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+"autoincrement": false,
+          "default": "(now())"
+
         },
         "updatedAt": {
           "name": "updatedAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+"autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
+
         }
       },
       "indexes": {
         "userId_idx": {
           "name": "userId_idx",
           "columns": [
-            {
-              "expression": "userId",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+"userId"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         },
-        "user_progress_courseId_idx": {
-          "name": "user_progress_courseId_idx",
+        "courseId_idx": {
+          "name": "courseId_idx",
           "columns": [
-            {
-              "expression": "courseId",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
+            "courseId"
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+          "isUnique": false
         }
       },
       "foreignKeys": {},
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "user_progress_id": {
+          "name": "user_progress_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
       "uniqueConstraints": {
         "user_lesson_idx": {
           "name": "user_lesson_idx",
-          "nullsNotDistinct": false,
+
           "columns": [
             "userId",
             "lessonId"
           ]
         }
       },
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+"checkConstraint": {}
     },
-    "public.users": {
+    "users": {
       "name": "users",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+
         },
         "openId": {
           "name": "openId",
           "type": "varchar(64)",
           "primaryKey": false,
-          "notNull": true
+"notNull": true,
+          "autoincrement": false
+
         },
         "name": {
           "name": "name",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+"notNull": false,
+          "autoincrement": false
+
         },
         "email": {
           "name": "email",
           "type": "varchar(320)",
           "primaryKey": false,
-          "notNull": false
+"notNull": false,
+          "autoincrement": false
+
         },
         "loginMethod": {
           "name": "loginMethod",
           "type": "varchar(64)",
           "primaryKey": false,
-          "notNull": false
+"notNull": false,
+          "autoincrement": false
         },
         "role": {
           "name": "role",
-          "type": "varchar(16)",
+          "type": "enum('user','admin')",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false,
+
           "default": "'user'"
         },
         "createdAt": {
@@ -644,114 +701,144 @@
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+"autoincrement": false,
+          "default": "(now())"
+
         },
         "updatedAt": {
           "name": "updatedAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+"autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
+
         },
         "lastSignedIn": {
           "name": "lastSignedIn",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+"autoincrement": false,
+          "default": "(now())"
+
         }
       },
       "indexes": {},
       "foreignKeys": {},
-      "compositePrimaryKeys": {},
+"compositePrimaryKeys": {
+        "users_id": {
+          "name": "users_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
       "uniqueConstraints": {
         "users_openId_unique": {
           "name": "users_openId_unique",
-          "nullsNotDistinct": false,
+
           "columns": [
             "openId"
           ]
         }
       },
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+"checkConstraint": {}
     },
-    "public.video_transcripts": {
+    "video_transcripts": {
       "name": "video_transcripts",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+
         },
         "lessonId": {
           "name": "lessonId",
           "type": "varchar(128)",
           "primaryKey": false,
-          "notNull": true
+"notNull": true,
+          "autoincrement": false
+
         },
         "transcript": {
           "name": "transcript",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+"notNull": true,
+          "autoincrement": false
+
         },
         "summary": {
           "name": "summary",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+"notNull": false,
+          "autoincrement": false
+
         },
         "keywords": {
           "name": "keywords",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+"notNull": false,
+          "autoincrement": false
+
         },
         "createdAt": {
           "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+"autoincrement": false,
+          "default": "(now())"
+
         },
         "updatedAt": {
           "name": "updatedAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
-          "default": "now()"
+"autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
+
         }
       },
       "indexes": {},
       "foreignKeys": {},
-      "compositePrimaryKeys": {},
+"compositePrimaryKeys": {
+        "video_transcripts_id": {
+          "name": "video_transcripts_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
       "uniqueConstraints": {
         "video_transcripts_lessonId_unique": {
           "name": "video_transcripts_lessonId_unique",
-          "nullsNotDistinct": false,
+
           "columns": [
             "lessonId"
           ]
         }
       },
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
+"checkConstraint": {}
     }
   },
-  "enums": {},
-  "schemas": {},
-  "sequences": {},
-  "roles": {},
-  "policies": {},
   "views": {},
   "_meta": {
-    "columns": {},
     "schemas": {},
-    "tables": {}
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "tables": {},
+    "indexes": {}
   }
 }

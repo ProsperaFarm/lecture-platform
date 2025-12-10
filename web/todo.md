@@ -70,3 +70,13 @@
 - [x] Criar script de sincronização que atualiza DB a partir do JSON
 - [x] Adicionar comando npm run db:sync
 - [x] Documentar uso do script após uploads do YouTube
+
+## 🐛 Server Files Missing
+- [x] Verificar e copiar arquivos do diretório server/_core
+- [x] Garantir que todos os arquivos do servidor estejam no repositório
+- [ ] Testar npm run dev localmente
+
+## 🐛 Missing Config Files
+- [x] Corrigir vite.config.ts para remover plugin incompatível
+- [x] Copiar diretório shared/ completo
+- [x] Copiar arquivos de configuração (tsconfig, drizzle.config, etc)
