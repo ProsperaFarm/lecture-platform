@@ -1,4 +1,4 @@
-import { Layout } from "@/components/Layout";
+import { SimpleLayout } from "@/components/SimpleLayout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -128,7 +128,7 @@ export default function Home() {
   const firstLesson = courseStructure.modules[0]?.sections[0]?.lessons[0];
 
   return (
-    <Layout>
+    <SimpleLayout>
       <div className="space-y-8 animate-in fade-in duration-500">
         {/* Hero Section */}
         <div className="relative rounded-xl overflow-hidden bg-card border shadow-sm">
@@ -268,6 +268,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </Layout>
+    </SimpleLayout>
   );
 }

@@ -399,3 +399,9 @@
 - [x] useAuth deve funcionar sem variáveis de ambiente do Manus
 - [x] Manter apenas Google OAuth (já configurado)
 - [x] Testar que TopBar funciona normalmente
+
+## 🐛 Fix Layout Error and Add TopBar to Course Selection
+- [x] Corrigir erro no Layout quando curso não é encontrado
+- [x] Layout deve funcionar sem quebrar quando currentCourse é null
+- [x] Adicionar TopBar na página de seleção de cursos (Home.tsx)
+- [x] Testar ambas as páginas (seleção de cursos e lesson)
