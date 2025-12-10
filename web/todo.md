@@ -327,3 +327,10 @@
 - [x] Adicionar CSS para `.plyr__control-bar` (z-50)
 - [x] Forçar controles visíveis com !important
 - [ ] Testar visibilidade em pause e play
+
+## 🔄 New Strategy: Two Gradients
+- [x] Criar gradiente fino (30px) em bottom: 0 para cobrir logo do YouTube
+- [x] Criar gradiente principal (60px/80px) em bottom: 54px/60px para branding
+- [x] Remover z-index complexo (deixar natural)
+- [x] Controles ficam entre os dois gradientes (visíveis)
+- [ ] Testar se YouTube fica coberto e controles visíveis

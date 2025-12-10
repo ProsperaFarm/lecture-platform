@@ -264,17 +264,28 @@ export function PlyrVideoPlayer({
             </div>
           </div>
 
-          {/* Bottom gradient overlay - covers YouTube logo */}
+          {/* Thin gradient to cover YouTube logo only */}
           <div 
-            className={`absolute bottom-0 left-0 right-0 pointer-events-none ${isFullscreen ? 'z-[9999]' : 'z-[1]'}`}
-            style={{ height: isFullscreen ? '120px' : '100px' }}
+            className="absolute bottom-0 left-0 right-0 pointer-events-none"
+            style={{ height: '30px' }}
+          >
+            <div className="bg-black/90 h-full" />
+          </div>
+
+          {/* Main gradient overlay for branding - positioned above controls */}
+          <div 
+            className={`absolute left-0 right-0 pointer-events-none ${isFullscreen ? 'z-[9999]' : ''}`}
+            style={{ 
+              bottom: isFullscreen ? '60px' : '54px',
+              height: isFullscreen ? '80px' : '60px'
+            }}
           >
             <div className="bg-gradient-to-t from-black/95 via-black/80 to-transparent h-full" />
           </div>
 
           {/* Course info text - positioned above controls */}
           <div 
-            className={`absolute left-0 right-0 pointer-events-none ${isFullscreen ? 'z-[9999]' : 'z-[2]'}`}
+            className={`absolute left-0 right-0 pointer-events-none ${isFullscreen ? 'z-[9999]' : ''}`}
             style={{ bottom: isFullscreen ? '60px' : '54px' }}
           >
             <div className={`${isFullscreen ? 'px-6' : 'px-4'}`}>
