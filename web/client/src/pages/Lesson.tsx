@@ -104,7 +104,12 @@ export default function LessonPage() {
         {/* Video Player Container */}
         <div className="relative aspect-video bg-black rounded-xl overflow-hidden shadow-lg border border-border/50 group">
           {lesson.youtubeUrl ? (
-            <PlyrVideoPlayer youtubeUrl={lesson.youtubeUrl} />
+            <PlyrVideoPlayer 
+              youtubeUrl={lesson.youtubeUrl}
+              courseTitle={course?.title || ""}
+              lessonTitle={lesson.title}
+              moduleTitle={lesson.moduleName || ""}
+            />
           ) : (
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-muted/30 text-center p-8">
               <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
