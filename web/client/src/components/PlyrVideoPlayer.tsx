@@ -1,19 +1,29 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { GraduationCap, Play, BookOpen } from "lucide-react";
+import { GraduationCap, Play, BookOpen, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface PlyrVideoPlayerProps {
   youtubeUrl: string;
   courseTitle?: string;
   lessonTitle?: string;
   moduleTitle?: string;
+  prevLessonId?: string | null;
+  prevLessonTitle?: string | null;
+  nextLessonId?: string | null;
+  nextLessonTitle?: string | null;
+  onNavigate?: (lessonId: string) => void;
 }
 
 export function PlyrVideoPlayer({ 
   youtubeUrl,
   courseTitle = "",
   lessonTitle = "",
-  moduleTitle = ""
+  moduleTitle = "",
+  prevLessonId = null,
+  prevLessonTitle = null,
+  nextLessonId = null,
+  nextLessonTitle = null,
+  onNavigate
 }: PlyrVideoPlayerProps) {
   const videoRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<any>(null);
@@ -22,6 +32,7 @@ export function PlyrVideoPlayer({
   const [showInitialOverlay, setShowInitialOverlay] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [fullscreenContainer, setFullscreenContainer] = useState<HTMLElement | null>(null);
+  const [isHovering, setIsHovering] = useState(false);
   const initialOverlayTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const hasShownInitialOverlay = useRef(false);
 
@@ -333,9 +344,11 @@ export function PlyrVideoPlayer({
 
   return (
     <div 
-      className="absolute inset-0 select-none" 
+      className="absolute inset-0 select-none group" 
       style={{ userSelect: 'none' }}
       onContextMenu={handleContextMenu}
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
     >
       {/* Plyr Player */}
       <div ref={videoRef} className="w-full h-full" />
@@ -345,6 +358,53 @@ export function PlyrVideoPlayer({
         ? createPortal(renderOverlays(), fullscreenContainer)
         : renderOverlays()
       }
+
+      {/* Navigation buttons - show on hover */}
+      {isHovering && (
+        <>
+          {/* Previous button */}
+          {prevLessonId && prevLessonTitle && (
+            <button
+              onClick={() => onNavigate?.(prevLessonId)}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-[100] group/nav"
+              aria-label="Aula anterior"
+            >
+              <div className="relative">
+                <div className="bg-black/70 hover:bg-black/90 rounded-full p-3 transition-all duration-200">
+                  <ChevronLeft className="w-8 h-8 text-white" />
+                </div>
+                {/* Tooltip */}
+                <div className="absolute left-full ml-3 top-1/2 -translate-y-1/2 opacity-0 group-hover/nav:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+                  <div className="bg-black/90 text-white px-4 py-2 rounded-lg text-sm max-w-xs">
+                    {prevLessonTitle}
+                  </div>
+                </div>
+              </div>
+            </button>
+          )}
+
+          {/* Next button */}
+          {nextLessonId && nextLessonTitle && (
+            <button
+              onClick={() => onNavigate?.(nextLessonId)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-[100] group/nav"
+              aria-label="Próxima aula"
+            >
+              <div className="relative">
+                <div className="bg-black/70 hover:bg-black/90 rounded-full p-3 transition-all duration-200">
+                  <ChevronRight className="w-8 h-8 text-white" />
+                </div>
+                {/* Tooltip */}
+                <div className="absolute right-full mr-3 top-1/2 -translate-y-1/2 opacity-0 group-hover/nav:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+                  <div className="bg-black/90 text-white px-4 py-2 rounded-lg text-sm max-w-xs">
+                    {nextLessonTitle}
+                  </div>
+                </div>
+              </div>
+            </button>
+          )}
+        </>
+      )}
     </div>
   );
 }

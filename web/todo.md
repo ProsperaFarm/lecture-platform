@@ -351,3 +351,14 @@
 - [x] Reduzir altura do gradiente inferior (60px/80px → 30px/40px)
 - [x] Deixar gradiente mais transparente (black/95-80 → black/60-30)
 - [ ] Testar que não cobre conteúdo importante
+
+## ⏭️ Add Navigation Buttons Inside Player
+- [x] Adicionar botões de seta (prev/next) dentro do player
+- [x] Posicionar nos cantos (esquerda e direita, verticalmente centrados)
+- [x] Mostrar apenas ao passar mouse sobre o player (isHovering state)
+- [x] Adicionar tooltip com nome da aula ao hover no botão
+- [x] Implementar navegação ao clicar (onNavigate callback)
+- [x] Estilizar com fundo semi-transparente e ícones brancos
+- [x] Adicionar props ao PlyrVideoPlayer (prevLessonId, nextLessonId, etc)
+- [x] Atualizar Lesson.tsx para passar props e handler
+- [ ] Testar navegação e tooltips

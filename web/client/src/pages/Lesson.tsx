@@ -15,6 +15,13 @@ export default function LessonPage() {
   const [, params] = useRoute("/course/:courseId/lesson/:lessonId");
   const courseId = params?.courseId;
   const lessonId = params?.lessonId;
+  
+  // Navigation handler
+  const handleNavigate = (newLessonId: string) => {
+    if (courseId) {
+      setLocation(`/course/${courseId}/lesson/${newLessonId}`);
+    }
+  };
 
   // Check authentication
   const { data: user, isLoading: isLoadingUser } = trpc.auth.me.useQuery();
@@ -101,6 +108,11 @@ export default function LessonPage() {
               youtubeUrl={lesson.youtubeUrl}
               courseTitle={course.title}
               lessonTitle={lesson.title}
+              prevLessonId={prevLesson?.id || null}
+              prevLessonTitle={prevLesson?.title || null}
+              nextLessonId={nextLesson?.id || null}
+              nextLessonTitle={nextLesson?.title || null}
+              onNavigate={handleNavigate}
             />
           ) : (
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-muted/30 text-center p-8">
