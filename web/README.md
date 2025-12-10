@@ -77,5 +77,9 @@ web/
 
 ## 📚 Documentação Adicional
 
-Para detalhes sobre a arquitetura e decisões técnicas, consulte [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md).
-Para informações sobre privacidade de vídeo, veja [VIDEO_PRIVACY_GUIDE.md](./VIDEO_PRIVACY_GUIDE.md).
+- **[Guia de Arquitetura](./docs/ARCHITECTURE.md)**: Detalhes técnicos da solução Full-Stack.
+- **[Opções de Autenticação](./docs/AUTH_OPTIONS.md)**: Manus OAuth vs Google OAuth direto.
+- **[Setup do Google OAuth](./docs/GOOGLE_OAUTH_SETUP.md)**: Passo a passo completo para configurar Google Cloud Console.
+- **[Guia de Deploy](./docs/DEPLOYMENT.md)**: Deploy em VPS, Vercel, Railway ou Cloud.
+- **[Transição para Full-Stack](./docs/TRANSITION_TO_FULLSTACK.md)**: Razões para migrar de estático para Full-Stack.
+- **[Privacidade de Vídeos](./VIDEO_PRIVACY_GUIDE.md)**: Limitações e alternativas para proteção de conteúdo.
