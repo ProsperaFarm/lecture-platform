@@ -168,3 +168,15 @@
 - [x] Configurar controles customizados (sem share/copy)
 - [x] Usar youtube-nocookie.com
 - [ ] Testar que player funciona corretamente
+
+## 🎭 Add CSS Overlay to Hide YouTube Buttons When Paused
+- [x] Adicionar camadas CSS que cobrem botões quando vídeo pausa
+- [x] Integrar YouTube IFrame API para detectar estado
+- [x] Adicionar botão customizado "Continuar" quando pausado
+- [ ] Testar que botões do YouTube ficam ocultos
+
+## 🎨 Add Branded Overlay When Video Paused
+- [x] Adicionar logo da plataforma (Prospera Academy) no overlay
+- [x] Mostrar informações do curso/módulo/aula
+- [x] Tornar overlay visualmente atraente com gradientes
+- [ ] Testar que overlay cobre botões do YouTube
