@@ -1,38 +1,120 @@
-import { useAuth } from "@/_core/hooks/useAuth";
 import { Layout } from "@/components/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { BookOpen, Clock, PlayCircle } from "lucide-react";
+import { BookOpen, Clock, PlayCircle, Loader2 } from "lucide-react";
 import { Link, useRoute } from "wouter";
-import coursesDataRaw from "../lib/courses-data.json";
-import { CoursesData } from "../lib/types";
-
-const coursesData = coursesDataRaw as CoursesData;
+import { trpc } from "@/lib/trpc";
+import { useMemo } from "react";
 
 export default function Home() {
-  // The userAuth hooks provides authentication state
-  // To implement login/logout functionality, simply call logout() or redirect to getLoginUrl()
-  let { user, loading, error, isAuthenticated, logout } = useAuth();
-
   const [, params] = useRoute("/course/:id");
   const courseId = params?.id;
-  const currentCourse = coursesData.courses.find(c => c.id === courseId);
 
-  if (!currentCourse) {
-    return <div className="p-8 text-center">Curso não encontrado. <Link href="/">Voltar</Link></div>;
+  // Fetch course data from database via tRPC
+  const { data: course, isLoading: courseLoading } = trpc.courses.getById.useQuery(
+    { courseId: courseId || "" },
+    { enabled: !!courseId }
+  );
+
+  // Fetch lessons for the course
+  const { data: lessonsData, isLoading: lessonsLoading } = trpc.lessons.getByCourse.useQuery(
+    { courseId: courseId || "" },
+    { enabled: !!courseId }
+  );
+
+  // Group lessons by module and section
+  const courseStructure = useMemo(() => {
+    if (!lessonsData) return { modules: [], totalSections: 0 };
+
+    const modulesMap = new Map<string, {
+      id: string;
+      title: string;
+      order: number;
+      sections: Map<string, {
+        id: string;
+        title: string;
+        order: number;
+        lessons: typeof lessonsData;
+      }>;
+    }>();
+
+    lessonsData.forEach(lesson => {
+      if (!modulesMap.has(lesson.moduleId)) {
+        modulesMap.set(lesson.moduleId, {
+          id: lesson.moduleId,
+          title: lesson.moduleName || "Módulo sem nome",
+          order: parseInt(lesson.moduleId.split('-')[1]) || 0,
+          sections: new Map(),
+        });
+      }
+
+      const module = modulesMap.get(lesson.moduleId)!;
+      
+      if (!module.sections.has(lesson.sectionId)) {
+        module.sections.set(lesson.sectionId, {
+          id: lesson.sectionId,
+          title: lesson.sectionName || "Seção sem nome",
+          order: parseInt(lesson.sectionId.split('-')[2]) || 0,
+          lessons: [],
+        });
+      }
+
+      const section = module.sections.get(lesson.sectionId)!;
+      section.lessons.push(lesson);
+    });
+
+    // Convert maps to arrays and sort
+    const modules = Array.from(modulesMap.values())
+      .sort((a, b) => a.order - b.order)
+      .map(module => ({
+        ...module,
+        sections: Array.from(module.sections.values())
+          .sort((a, b) => a.order - b.order)
+          .map(section => ({
+            ...section,
+            lessons: section.lessons.sort((a, b) => (a.order || 0) - (b.order || 0)),
+          })),
+      }));
+
+    const totalSections = modules.reduce((acc, m) => acc + m.sections.length, 0);
+
+    return { modules, totalSections };
+  }, [lessonsData]);
+
+  // Loading state
+  if (courseLoading || lessonsLoading) {
+    return (
+      <Layout>
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        </div>
+      </Layout>
+    );
   }
 
-  // Calculate total stats
-  const totalModules = currentCourse.modules.length;
-  const totalSections = currentCourse.modules.reduce(
-    (acc, mod) => acc + mod.sections.length, 0
-  );
-  const totalLessons = currentCourse.totalVideos;
-  
-  // Mock progress (would come from local storage or DB in future)
-  const progress = 0; 
+  // Course not found
+  if (!course) {
+    return (
+      <Layout>
+        <div className="p-8 text-center">
+          <p className="text-muted-foreground mb-4">Curso não encontrado.</p>
+          <Link href="/">
+            <Button variant="outline">Voltar</Button>
+          </Link>
+        </div>
+      </Layout>
+    );
+  }
+
+  const totalModules = courseStructure.modules.length;
+  const totalSections = courseStructure.totalSections;
+  const totalLessons = course.totalVideos || 0;
+  const progress = 0; // TODO: Calculate from user progress
+
+  // Get first lesson for "Start Course" button
+  const firstLesson = courseStructure.modules[0]?.sections[0]?.lessons[0];
 
   return (
     <Layout>
@@ -41,29 +123,31 @@ export default function Home() {
         <div className="relative rounded-xl overflow-hidden bg-card border shadow-sm">
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/20 z-10" />
           <img 
-            src={currentCourse.thumbnail || "/images/hero-bg.png"} 
+            src={course.thumbnail || "/images/hero-bg.png"} 
             alt="Farm Landscape" 
             className="absolute inset-0 w-full h-full object-cover"
           />
           <div className="relative z-20 p-8 md:p-12 text-white space-y-4 max-w-2xl">
             <Badge variant="secondary" className="bg-primary/20 text-primary-foreground hover:bg-primary/30 border-none backdrop-blur-sm">
-              {currentCourse.acronym}
+              {course.acronym}
             </Badge>
             <h1 className="text-3xl md:text-4xl font-bold font-display tracking-tight">
-              {currentCourse.title}
+              {course.title}
             </h1>
             <p className="text-lg text-white/80 leading-relaxed">
-              {currentCourse.description}
+              {course.description}
             </p>
             
-            <div className="flex flex-wrap gap-4 pt-4">
-              <Link href={`/course/${currentCourse.id}/lesson/${currentCourse.modules[0].sections[0].lessons[0].id}`}>
-                <Button size="lg" className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground border-none">
-                  <PlayCircle className="w-5 h-5" />
-                  Começar Curso
-                </Button>
-              </Link>
-            </div>
+            {firstLesson && (
+              <div className="flex flex-wrap gap-4 pt-4">
+                <Link href={`/course/${course.courseId}/lesson/${firstLesson.lessonId}`}>
+                  <Button size="lg" className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground border-none">
+                    <PlayCircle className="w-5 h-5" />
+                    Começar Curso
+                  </Button>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
 
@@ -112,7 +196,7 @@ export default function Home() {
         <div className="space-y-6">
           <h2 className="text-2xl font-bold font-display">Conteúdo do Curso</h2>
           <div className="grid gap-4">
-            {currentCourse.modules.map((module) => (
+            {courseStructure.modules.map((module) => (
               <Card key={module.id} className="overflow-hidden hover:shadow-md transition-shadow duration-200">
                 <CardHeader className="bg-muted/30 border-b pb-4">
                   <div className="flex items-center justify-between">
@@ -143,7 +227,7 @@ export default function Home() {
                         </div>
                         <div className="grid gap-2">
                           {section.lessons.map((lesson) => (
-                            <Link key={lesson.id} href={`/course/${currentCourse.id}/lesson/${lesson.id}`}>
+                            <Link key={lesson.lessonId} href={`/course/${course.courseId}/lesson/${lesson.lessonId}`}>
                               <div className="group flex items-center gap-3 text-sm p-2 rounded-md hover:bg-accent/50 cursor-pointer transition-colors">
                                 <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                                   <PlayCircle className="w-3 h-3" />

@@ -4,7 +4,7 @@ import { drizzle as drizzleNode } from "drizzle-orm/node-postgres";
 import { neon } from "@neondatabase/serverless";
 import pkg from 'pg';
 const { Pool } = pkg;
-import { InsertUser, users } from "../drizzle/schema";
+import { InsertUser, users, courses, lessons, Course, Lesson } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzleNeon> | ReturnType<typeof drizzleNode> | null = null;
@@ -109,3 +109,45 @@ export async function getUserByOpenId(openId: string) {
 }
 
 // TODO: add feature queries here as your schema grows.
+
+/**
+ * Get all courses
+ */
+export async function getAllCourses(): Promise<Course[]> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get courses: database not available");
+    return [];
+  }
+
+  const result = await db.select().from(courses).orderBy(courses.createdAt);
+  return result;
+}
+
+/**
+ * Get course by courseId
+ */
+export async function getCourseById(courseId: string): Promise<Course | undefined> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get course: database not available");
+    return undefined;
+  }
+
+  const result = await db.select().from(courses).where(eq(courses.courseId, courseId)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+/**
+ * Get all lessons for a course, grouped by module and section
+ */
+export async function getLessonsByCourse(courseId: string): Promise<Lesson[]> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get lessons: database not available");
+    return [];
+  }
+
+  const result = await db.select().from(lessons).where(eq(lessons.courseId, courseId)).orderBy(lessons.order);
+  return result;
+}
