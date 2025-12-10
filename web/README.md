@@ -35,12 +35,24 @@ O projeto foi construído utilizando uma arquitetura moderna e performática de 
    npm install
    ```
 
-3. **Inicie o servidor de desenvolvimento**:
+3. **Configure o banco de dados local (Docker)**:
+   ```bash
+   # Iniciar PostgreSQL em background
+   docker-compose -f ./docker/dev/docker-compose-dev.yaml up -d
+   
+   # Aguardar inicialização (5-10 segundos)
+   sleep 5
+   
+   # Aplicar schema do banco de dados
+   npm run db:push
+   ```
+
+4. **Inicie o servidor de desenvolvimento**:
    ```bash
    npm run dev
    ```
 
-4. **Acesse a aplicação**:
+5. **Acesse a aplicação**:
    Abra seu navegador em `http://localhost:3000` (ou a porta indicada no terminal).
 
 ## 📦 Estrutura do Projeto
