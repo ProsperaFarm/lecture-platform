@@ -76,6 +76,11 @@ web/
 └── package.json         # Dependências e scripts
 ```
 
+## Iniciando o banco local
+```
+docker-compose -f ./docker/dev/docker-compose-dev.yaml up -d
+```
+
 ## 📝 Scripts Disponíveis
 
 - `npm run dev`: Inicia o servidor de desenvolvimento com Hot Module Replacement (HMR).
