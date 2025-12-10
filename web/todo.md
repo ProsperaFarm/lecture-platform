@@ -298,3 +298,10 @@
 - [x] Manter z-index: 20 nos controles (já está correto no CSS)
 - [x] Controles ficam em bottom: 0 (posição normal) mas acima do gradiente (z-20 > z-10)
 - [ ] Testar layout final
+
+## 🎯 Position Text Above Controls
+- [x] Separar texto do gradiente em div independente
+- [x] Posicionar texto do curso 54px acima (normal) / 60px acima (fullscreen)
+- [x] Aumentar z-index dos controles para z-50 (acima de tudo)
+- [x] Manter gradiente em bottom: 0 com altura 100px/120px
+- [ ] Testar layout final
