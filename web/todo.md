@@ -38,3 +38,10 @@
 - [ ] Testar deploy em preview
 - [ ] Deploy em produção
 - [ ] Configurar domínio customizado (academy.prospera.farm)
+
+## 🐳 Ambiente Local com Docker
+- [x] Configurar docker-compose.yml com PostgreSQL
+- [x] Criar script de inicialização do banco (init.sql)
+- [ ] Atualizar .env.local com DATABASE_URL do Docker
+- [ ] Testar aplicação localmente com Docker
+- [ ] Documentar setup local no README
