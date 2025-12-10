@@ -23,6 +23,7 @@ export function PlyrVideoPlayer({
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [fullscreenContainer, setFullscreenContainer] = useState<HTMLElement | null>(null);
   const initialOverlayTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const hasShownInitialOverlay = useRef(false);
 
   // Extract YouTube video ID
   const getYoutubeId = (url: string): string | null => {
@@ -95,18 +96,21 @@ export function PlyrVideoPlayer({
         playerRef.current.on('playing', () => {
           setIsLoading(false);
           
-          // Start showing overlay for 5 more seconds after loading finishes
-          setShowInitialOverlay(true);
-          
-          // Clear any existing timeout
-          if (initialOverlayTimeoutRef.current) {
-            clearTimeout(initialOverlayTimeoutRef.current);
+          // Show overlay for 3 seconds only on FIRST play after loading
+          if (!hasShownInitialOverlay.current) {
+            hasShownInitialOverlay.current = true;
+            setShowInitialOverlay(true);
+            
+            // Clear any existing timeout
+            if (initialOverlayTimeoutRef.current) {
+              clearTimeout(initialOverlayTimeoutRef.current);
+            }
+            
+            // Hide overlay after 3 seconds
+            initialOverlayTimeoutRef.current = setTimeout(() => {
+              setShowInitialOverlay(false);
+            }, 3000);
           }
-          
-          // Hide overlay after 5 seconds
-          initialOverlayTimeoutRef.current = setTimeout(() => {
-            setShowInitialOverlay(false);
-          }, 5000);
         });
 
         // Listen to fullscreen changes

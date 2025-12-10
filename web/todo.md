@@ -209,3 +209,9 @@
 - [x] Usar isLoading OU showInitialOverlay para exibir tarjas
 - [x] React Portal para fullscreen support
 - [ ] Testar que tarjas aparecem durante loading + 5s após + fullscreen
+
+## ⏱️ Refine Overlay Timing V3
+- [x] Reduzir tempo de 5s para 3s
+- [x] Mostrar overlay apenas na PRIMEIRA vez após carregar (não toda vez que toca)
+- [x] Adicionar flag hasShownInitialOverlay para controlar
+- [ ] Testar que overlay aparece apenas uma vez por carregamento de página
