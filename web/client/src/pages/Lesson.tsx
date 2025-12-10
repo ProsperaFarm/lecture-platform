@@ -91,6 +91,11 @@ export default function LessonPage() {
 
   const videoId = currentLesson.youtubeUrl ? getYoutubeId(currentLesson.youtubeUrl) : null;
 
+  // Debug logs
+  console.log('[Lesson] Current Lesson:', currentLesson);
+  console.log('[Lesson] YouTube URL:', currentLesson.youtubeUrl);
+  console.log('[Lesson] Video ID:', videoId);
+
   return (
     <Layout>
       <div className="space-y-6 animate-in fade-in duration-500">
