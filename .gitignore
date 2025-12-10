@@ -40,3 +40,6 @@ client_secret.json
 youtube_token.json
 upload_progress.json
 upload.log
+
+
+venv/
