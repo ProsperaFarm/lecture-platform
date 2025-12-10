@@ -4,11 +4,11 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { BookOpen, ChevronRight, Menu, PlayCircle } from "lucide-react";
 import { useState } from "react";
-import { Link, useLocation } from "wouter";
-import courseDataRaw from "../lib/course-data.json";
-import { CourseData } from "../lib/types";
+import { Link, useLocation, useRoute } from "wouter";
+import coursesDataRaw from "../lib/courses-data.json";
+import { CoursesData } from "../lib/types";
 
-const courseData = courseDataRaw as CourseData;
+const coursesData = coursesDataRaw as CoursesData;
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -17,21 +17,42 @@ interface LayoutProps {
 export function Layout({ children }: LayoutProps) {
   const [location] = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  
+  // Extract course ID from URL (either /course/:id or /course/:id/lesson/:lessonId)
+  const [, paramsCourse] = useRoute("/course/:id");
+  const [, paramsLesson] = useRoute("/course/:courseId/lesson/:lessonId");
+  
+  const courseId = paramsCourse?.id || paramsLesson?.courseId;
+  const currentCourse = coursesData.courses.find(c => c.id === courseId);
+
+  if (!currentCourse) {
+    return <div className="p-8 text-center">Curso não encontrado. <Link href="/">Voltar</Link></div>;
+  }
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full bg-sidebar border-r border-sidebar-border">
       <div className="p-6 border-b border-sidebar-border">
-        <h1 className="text-xl font-bold text-sidebar-foreground font-display">
-          {courseData.course.acronym}
-        </h1>
-        <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
-          {courseData.course.title}
-        </p>
+        <Link href={`/course/${currentCourse.id}`}>
+          <div className="cursor-pointer hover:opacity-80 transition-opacity">
+            <h1 className="text-xl font-bold text-sidebar-foreground font-display">
+              {currentCourse.acronym}
+            </h1>
+            <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
+              {currentCourse.title}
+            </p>
+          </div>
+        </Link>
+        <Link href="/">
+          <Button variant="outline" size="sm" className="w-full mt-4 text-xs h-7">
+            <ChevronRight className="w-3 h-3 rotate-180 mr-1" />
+            Trocar de Curso
+          </Button>
+        </Link>
       </div>
       
       <ScrollArea className="flex-1">
         <div className="p-4 space-y-6">
-          {courseData.course.modules.map((module) => (
+          {currentCourse.modules.map((module) => (
             <div key={module.id} className="space-y-2">
               <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-2">
                 {module.title}
@@ -45,9 +66,9 @@ export function Layout({ children }: LayoutProps) {
                     </div>
                     <div className="pl-4 space-y-0.5 border-l border-sidebar-border ml-3">
                       {section.lessons.map((lesson) => {
-                        const isActive = location === `/lesson/${lesson.id}`;
+                        const isActive = location === `/course/${currentCourse.id}/lesson/${lesson.id}`;
                         return (
-                          <Link key={lesson.id} href={`/lesson/${lesson.id}`}>
+                          <Link key={lesson.id} href={`/course/${currentCourse.id}/lesson/${lesson.id}`}>
                             <Button
                               variant="ghost"
                               size="sm"

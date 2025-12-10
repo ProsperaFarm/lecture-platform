@@ -27,10 +27,11 @@ export interface Course {
   acronym: string;
   title: string;
   description: string;
+  thumbnail?: string;
   totalVideos: number;
   modules: Module[];
 }
 
-export interface CourseData {
-  course: Course;
+export interface CoursesData {
+  courses: Course[];
 }

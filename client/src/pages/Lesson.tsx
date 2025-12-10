@@ -6,14 +6,31 @@ import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { AlertCircle, ChevronLeft, ChevronRight, FileText, PlayCircle } from "lucide-react";
 import { Link, useRoute } from "wouter";
-import courseDataRaw from "../lib/course-data.json";
-import { CourseData, Lesson, Module, Section } from "../lib/types";
+import coursesDataRaw from "../lib/courses-data.json";
+import { CoursesData, Lesson, Module, Section } from "../lib/types";
 
-const courseData = courseDataRaw as CourseData;
+const coursesData = coursesDataRaw as CoursesData;
 
 export default function LessonPage() {
-  const [, params] = useRoute("/lesson/:id");
-  const lessonId = params?.id;
+  const [, params] = useRoute("/course/:courseId/lesson/:lessonId");
+  const courseId = params?.courseId;
+  const lessonId = params?.lessonId;
+
+  const currentCourse = coursesData.courses.find(c => c.id === courseId);
+
+  if (!currentCourse) {
+    return (
+      <Layout>
+        <div className="flex flex-col items-center justify-center h-[60vh] space-y-4">
+          <AlertCircle className="w-12 h-12 text-muted-foreground" />
+          <h2 className="text-xl font-semibold">Curso não encontrado</h2>
+          <Link href="/">
+            <Button>Voltar para o Início</Button>
+          </Link>
+        </div>
+      </Layout>
+    );
+  }
 
   // Find current lesson and its context
   let currentLesson: Lesson | undefined;
@@ -25,9 +42,9 @@ export default function LessonPage() {
   // Flatten all lessons to find prev/next easily
   const allLessons: { lesson: Lesson; section: Section; module: Module }[] = [];
   
-  courseData.course.modules.forEach(mod => {
-    mod.sections.forEach(sec => {
-      sec.lessons.forEach(les => {
+  currentCourse.modules.forEach((mod: Module) => {
+    mod.sections.forEach((sec: Section) => {
+      sec.lessons.forEach((les: Lesson) => {
         allLessons.push({ lesson: les, section: sec, module: mod });
       });
     });
@@ -56,8 +73,8 @@ export default function LessonPage() {
         <div className="flex flex-col items-center justify-center h-[60vh] space-y-4">
           <AlertCircle className="w-12 h-12 text-muted-foreground" />
           <h2 className="text-xl font-semibold">Aula não encontrada</h2>
-          <Link href="/">
-            <Button>Voltar para o Início</Button>
+          <Link href={`/course/${courseId}`}>
+            <Button>Voltar para o Curso</Button>
           </Link>
         </div>
       </Layout>
@@ -78,7 +95,9 @@ export default function LessonPage() {
       <div className="space-y-6 animate-in fade-in duration-500">
         {/* Breadcrumb / Navigation Header */}
         <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4 overflow-hidden whitespace-nowrap">
-          <Link href="/" className="hover:text-primary transition-colors">Curso</Link>
+          <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+          <ChevronRight className="w-4 h-4 shrink-0" />
+          <Link href={`/course/${courseId}`} className="hover:text-primary transition-colors">{currentCourse.acronym}</Link>
           <ChevronRight className="w-4 h-4 shrink-0" />
           <span className="truncate">{currentModule?.title}</span>
           <ChevronRight className="w-4 h-4 shrink-0" />
@@ -151,13 +170,13 @@ export default function LessonPage() {
           {/* Sidebar / Actions */}
           <Card className="w-full md:w-80 shrink-0 p-4 space-y-4">
             <div className="flex items-center justify-between gap-2">
-              <Link href={prevLessonId ? `/lesson/${prevLessonId}` : "#"}>
+              <Link href={prevLessonId ? `/course/${courseId}/lesson/${prevLessonId}` : "#"}>
                 <Button variant="outline" size="sm" disabled={!prevLessonId} className="w-full">
                   <ChevronLeft className="w-4 h-4 mr-1" />
                   Anterior
                 </Button>
               </Link>
-              <Link href={nextLessonId ? `/lesson/${nextLessonId}` : "#"}>
+              <Link href={nextLessonId ? `/course/${courseId}/lesson/${nextLessonId}` : "#"}>
                 <Button variant="default" size="sm" disabled={!nextLessonId} className="w-full">
                   Próxima
                   <ChevronRight className="w-4 h-4 ml-1" />

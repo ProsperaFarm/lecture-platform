@@ -3,20 +3,28 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { ArrowRight, BookOpen, Clock, PlayCircle } from "lucide-react";
-import { Link } from "wouter";
-import courseDataRaw from "../lib/course-data.json";
-import { CourseData } from "../lib/types";
+import { BookOpen, Clock, PlayCircle } from "lucide-react";
+import { Link, useRoute } from "wouter";
+import coursesDataRaw from "../lib/courses-data.json";
+import { CoursesData } from "../lib/types";
 
-const courseData = courseDataRaw as CourseData;
+const coursesData = coursesDataRaw as CoursesData;
 
 export default function Home() {
+  const [, params] = useRoute("/course/:id");
+  const courseId = params?.id;
+  const currentCourse = coursesData.courses.find(c => c.id === courseId);
+
+  if (!currentCourse) {
+    return <div className="p-8 text-center">Curso não encontrado. <Link href="/">Voltar</Link></div>;
+  }
+
   // Calculate total stats
-  const totalModules = courseData.course.modules.length;
-  const totalSections = courseData.course.modules.reduce(
+  const totalModules = currentCourse.modules.length;
+  const totalSections = currentCourse.modules.reduce(
     (acc, mod) => acc + mod.sections.length, 0
   );
-  const totalLessons = courseData.course.totalVideos;
+  const totalLessons = currentCourse.totalVideos;
   
   // Mock progress (would come from local storage or DB in future)
   const progress = 0; 
@@ -28,23 +36,23 @@ export default function Home() {
         <div className="relative rounded-xl overflow-hidden bg-card border shadow-sm">
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/20 z-10" />
           <img 
-            src="/images/hero-bg.png" 
+            src={currentCourse.thumbnail || "/images/hero-bg.png"} 
             alt="Farm Landscape" 
             className="absolute inset-0 w-full h-full object-cover"
           />
           <div className="relative z-20 p-8 md:p-12 text-white space-y-4 max-w-2xl">
             <Badge variant="secondary" className="bg-primary/20 text-primary-foreground hover:bg-primary/30 border-none backdrop-blur-sm">
-              {courseData.course.acronym}
+              {currentCourse.acronym}
             </Badge>
             <h1 className="text-3xl md:text-4xl font-bold font-display tracking-tight">
-              {courseData.course.title}
+              {currentCourse.title}
             </h1>
             <p className="text-lg text-white/80 leading-relaxed">
-              {courseData.course.description}
+              {currentCourse.description}
             </p>
             
             <div className="flex flex-wrap gap-4 pt-4">
-              <Link href={`/lesson/${courseData.course.modules[0].sections[0].lessons[0].id}`}>
+              <Link href={`/course/${currentCourse.id}/lesson/${currentCourse.modules[0].sections[0].lessons[0].id}`}>
                 <Button size="lg" className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground border-none">
                   <PlayCircle className="w-5 h-5" />
                   Começar Curso
@@ -99,7 +107,7 @@ export default function Home() {
         <div className="space-y-6">
           <h2 className="text-2xl font-bold font-display">Conteúdo do Curso</h2>
           <div className="grid gap-4">
-            {courseData.course.modules.map((module) => (
+            {currentCourse.modules.map((module) => (
               <Card key={module.id} className="overflow-hidden hover:shadow-md transition-shadow duration-200">
                 <CardHeader className="bg-muted/30 border-b pb-4">
                   <div className="flex items-center justify-between">
@@ -130,7 +138,7 @@ export default function Home() {
                         </div>
                         <div className="grid gap-2">
                           {section.lessons.map((lesson) => (
-                            <Link key={lesson.id} href={`/lesson/${lesson.id}`}>
+                            <Link key={lesson.id} href={`/course/${currentCourse.id}/lesson/${lesson.id}`}>
                               <div className="group flex items-center gap-3 text-sm p-2 rounded-md hover:bg-accent/50 cursor-pointer transition-colors">
                                 <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                                   <PlayCircle className="w-3 h-3" />

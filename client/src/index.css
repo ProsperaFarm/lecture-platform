@@ -43,60 +43,60 @@
 }
 
 :root {
-  /* Modern Agrarian Minimalism Theme */
-  /* Primary: Deep Forest Green */
-  --primary: oklch(0.45 0.12 145);
+  /* Prospera Academy Theme */
+  /* Primary: Verde Bandeira (Flag Green) - Clean & Professional */
+  --primary: oklch(0.48 0.16 145);
   --primary-foreground: oklch(0.98 0.02 145);
   
-  /* Sidebar: Slightly lighter green for depth */
-  --sidebar-primary: oklch(0.48 0.11 145);
+  /* Sidebar: Very light warm grey/green tint */
+  --sidebar-primary: oklch(0.52 0.14 145);
   --sidebar-primary-foreground: oklch(0.98 0.02 145);
   
-  /* Charts: Earth tones */
-  --chart-1: oklch(0.65 0.15 145); /* Light Green */
-  --chart-2: oklch(0.55 0.12 85);  /* Warm Earth */
+  /* Charts: Prospera Palette */
+  --chart-1: oklch(0.48 0.16 145); /* Flag Green */
+  --chart-2: oklch(0.62 0.16 45);  /* Terracotta */
   --chart-3: oklch(0.75 0.14 85);  /* Gold/Wheat */
-  --chart-4: oklch(0.45 0.12 145); /* Deep Green */
-  --chart-5: oklch(0.35 0.08 145); /* Dark Forest */
+  --chart-4: oklch(0.35 0.08 145); /* Dark Forest */
+  --chart-5: oklch(0.55 0.08 45);  /* Dark Terracotta */
   
   --radius: 0.5rem;
   
-  /* Background: Off-white / Eggshell */
-  --background: oklch(0.98 0.01 95);
-  --foreground: oklch(0.25 0.02 95); /* Charcoal */
+  /* Background: Clean Warm White (reduces eye strain) */
+  --background: oklch(0.99 0.005 95);
+  --foreground: oklch(0.20 0.02 95); /* Deep Charcoal */
   
-  /* Card: Pure white for contrast against off-white bg */
+  /* Card: Pure white */
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.25 0.02 95);
+  --card-foreground: oklch(0.20 0.02 95);
   
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.25 0.02 95);
+  --popover-foreground: oklch(0.20 0.02 95);
   
-  /* Secondary: Warm Earth/Beige */
-  --secondary: oklch(0.95 0.03 95);
-  --secondary-foreground: oklch(0.35 0.04 95);
+  /* Secondary: Terracotta (Accent) */
+  --secondary: oklch(0.96 0.02 45); /* Very light terracotta tint for backgrounds */
+  --secondary-foreground: oklch(0.45 0.12 45); /* Darker terracotta for text */
   
-  --muted: oklch(0.96 0.01 95);
+  --muted: oklch(0.97 0.005 95);
   --muted-foreground: oklch(0.55 0.02 95);
   
-  /* Accent: Gold/Wheat for highlights */
-  --accent: oklch(0.96 0.02 95);
-  --accent-foreground: oklch(0.45 0.12 145);
+  /* Accent: Terracotta for interactive elements */
+  --accent: oklch(0.96 0.02 45);
+  --accent-foreground: oklch(0.55 0.15 45);
   
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
   
   --border: oklch(0.92 0.01 95);
   --input: oklch(0.92 0.01 95);
-  --ring: oklch(0.45 0.12 145);
+  --ring: oklch(0.48 0.16 145); /* Focus ring matches primary green */
   
-  /* Sidebar: Off-white */
-  --sidebar: oklch(0.99 0.005 95);
-  --sidebar-foreground: oklch(0.35 0.02 95);
-  --sidebar-accent: oklch(0.96 0.02 95);
-  --sidebar-accent-foreground: oklch(0.45 0.12 145);
+  /* Sidebar: Clean & Light */
+  --sidebar: oklch(0.985 0.005 95);
+  --sidebar-foreground: oklch(0.30 0.02 95);
+  --sidebar-accent: oklch(0.95 0.02 145); /* Light green tint */
+  --sidebar-accent-foreground: oklch(0.40 0.14 145);
   --sidebar-border: oklch(0.92 0.01 95);
-  --sidebar-ring: oklch(0.45 0.12 145);
+  --sidebar-ring: oklch(0.48 0.16 145);
 }
 
 .dark {
