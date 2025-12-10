@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { AlertCircle, ChevronLeft, ChevronRight, FileText, PlayCircle } from "lucide-react";
+import ReactPlayer from "react-player";
 import { Link, useRoute } from "wouter";
 import coursesDataRaw from "../lib/courses-data.json";
 import { CoursesData, Lesson, Module, Section } from "../lib/types";
@@ -106,13 +107,26 @@ export default function LessonPage() {
 
         {/* Video Player Container */}
         <div className="relative aspect-video bg-black rounded-xl overflow-hidden shadow-lg border border-border/50 group">
-          {videoId ? (
-            <iframe
-              className="absolute inset-0 w-full h-full"
-              src={`https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1`}
-              title={currentLesson.title}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
+          {currentLesson.youtubeUrl ? (
+            // @ts-ignore - ReactPlayer types are causing issues but functionality is correct
+            <ReactPlayer
+              url={currentLesson.youtubeUrl}
+              width="100%"
+              height="100%"
+              controls={true}
+              config={{
+                youtube: {
+                  playerVars: {
+                    modestbranding: 1,
+                    rel: 0,
+                    showinfo: 0,
+                    iv_load_policy: 3, // Hide video annotations
+                    fs: 1, // Allow fullscreen
+                    disablekb: 0, // Enable keyboard controls
+                  }
+                }
+              }}
+              style={{ position: 'absolute', top: 0, left: 0 }}
             />
           ) : (
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-muted/30 text-center p-8">
