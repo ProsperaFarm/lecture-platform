@@ -188,3 +188,10 @@
 - [x] Tarjas aparecem APENAS quando pausado
 - [x] Tarjas não reduzem tamanho do player (position absolute)
 - [ ] Testar que links do YouTube não são acessíveis
+
+## 🎬 Fix Overlays in Fullscreen and Loading States
+- [x] Mostrar tarjas também em modo fullscreen (z-index 9999)
+- [x] Detectar estado de loading do vídeo (waiting/playing events)
+- [x] Mostrar tarjas durante carregamento (primeiros 5s)
+- [x] Aumentar tamanho das tarjas em fullscreen
+- [ ] Testar em fullscreen e durante loading

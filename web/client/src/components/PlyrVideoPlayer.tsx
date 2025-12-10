@@ -17,6 +17,8 @@ export function PlyrVideoPlayer({
   const videoRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<any>(null);
   const [isPaused, setIsPaused] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   // Extract YouTube video ID
   const getYoutubeId = (url: string): string | null => {
@@ -72,18 +74,65 @@ export function PlyrVideoPlayer({
         });
 
         // Listen to play/pause events
-        playerRef.current.on('play', () => setIsPaused(false));
-        playerRef.current.on('pause', () => setIsPaused(true));
+        playerRef.current.on('play', () => {
+          setIsPaused(false);
+          setIsLoading(false);
+        });
+        
+        playerRef.current.on('pause', () => {
+          setIsPaused(true);
+        });
+
+        // Listen to loading/buffering events
+        playerRef.current.on('waiting', () => {
+          setIsLoading(true);
+        });
+
+        playerRef.current.on('playing', () => {
+          setIsLoading(false);
+        });
+
+        playerRef.current.on('ready', () => {
+          // Keep loading state for first 5 seconds
+          setTimeout(() => {
+            if (playerRef.current && playerRef.current.paused) {
+              setIsLoading(false);
+            }
+          }, 5000);
+        });
+
+        // Listen to fullscreen changes
+        playerRef.current.on('enterfullscreen', () => {
+          setIsFullscreen(true);
+        });
+
+        playerRef.current.on('exitfullscreen', () => {
+          setIsFullscreen(false);
+        });
       }
     };
 
     document.head.appendChild(script);
+
+    // Also listen to native fullscreen API
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+    document.addEventListener('MSFullscreenChange', handleFullscreenChange);
 
     // Cleanup
     return () => {
       if (playerRef.current) {
         playerRef.current.destroy();
       }
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+      document.removeEventListener('mozfullscreenchange', handleFullscreenChange);
+      document.removeEventListener('MSFullscreenChange', handleFullscreenChange);
     };
   }, [videoId]);
 
@@ -101,6 +150,9 @@ export function PlyrVideoPlayer({
     );
   }
 
+  // Show overlays when paused OR loading
+  const showOverlays = isPaused || isLoading;
+
   return (
     <div 
       className="absolute inset-0 select-none" 
@@ -110,41 +162,49 @@ export function PlyrVideoPlayer({
       {/* Plyr Player */}
       <div ref={videoRef} className="w-full h-full" />
 
-      {/* Branded Overlays - Only when paused */}
-      {isPaused && (
+      {/* Branded Overlays - Show when paused OR loading */}
+      {showOverlays && (
         <>
           {/* Top branded bar - covers title area */}
           <div 
-            className="absolute top-0 left-0 right-0 z-50 pointer-events-auto"
-            style={{ height: '80px' }}
+            className={`absolute top-0 left-0 right-0 pointer-events-auto ${isFullscreen ? 'z-[9999]' : 'z-50'}`}
+            style={{ height: isFullscreen ? '100px' : '80px' }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="bg-gradient-to-b from-black/90 via-black/70 to-transparent h-full p-4 flex items-start gap-3">
-              <div className="w-12 h-12 rounded-lg bg-green-600 flex items-center justify-center flex-shrink-0">
-                <GraduationCap className="w-7 h-7 text-white" />
+            <div className={`bg-gradient-to-b from-black/90 via-black/70 to-transparent h-full flex items-start gap-3 ${isFullscreen ? 'p-6' : 'p-4'}`}>
+              <div className={`rounded-lg bg-green-600 flex items-center justify-center flex-shrink-0 ${isFullscreen ? 'w-16 h-16' : 'w-12 h-12'}`}>
+                <GraduationCap className={`text-white ${isFullscreen ? 'w-9 h-9' : 'w-7 h-7'}`} />
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="text-white font-bold text-base leading-tight">Prospera Academy</h3>
-                <p className="text-white/80 text-xs">Plataforma de Cursos</p>
+                <h3 className={`text-white font-bold leading-tight ${isFullscreen ? 'text-xl' : 'text-base'}`}>
+                  Prospera Academy
+                </h3>
+                <p className={`text-white/80 ${isFullscreen ? 'text-sm' : 'text-xs'}`}>
+                  Plataforma de Cursos
+                </p>
               </div>
             </div>
           </div>
 
           {/* Bottom branded bar - covers YouTube logo and share buttons */}
           <div 
-            className="absolute bottom-0 left-0 right-0 z-50 pointer-events-auto"
-            style={{ height: '100px' }}
+            className={`absolute bottom-0 left-0 right-0 pointer-events-auto ${isFullscreen ? 'z-[9999]' : 'z-50'}`}
+            style={{ height: isFullscreen ? '120px' : '100px' }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="bg-gradient-to-t from-black/95 via-black/80 to-transparent h-full p-4 pt-8 flex flex-col justify-end">
+            <div className={`bg-gradient-to-t from-black/95 via-black/80 to-transparent h-full flex flex-col justify-end ${isFullscreen ? 'p-6 pt-10' : 'p-4 pt-8'}`}>
               <div className="space-y-2">
                 {/* Course info */}
                 {courseTitle && (
                   <div className="flex items-center gap-2">
-                    <BookOpen className="w-4 h-4 text-green-400 flex-shrink-0" />
+                    <BookOpen className={`text-green-400 flex-shrink-0 ${isFullscreen ? 'w-5 h-5' : 'w-4 h-4'}`} />
                     <div className="flex-1 min-w-0">
-                      <p className="text-white/60 text-xs uppercase tracking-wide">Curso</p>
-                      <p className="text-white font-semibold text-sm truncate">{courseTitle}</p>
+                      <p className={`text-white/60 uppercase tracking-wide ${isFullscreen ? 'text-xs' : 'text-xs'}`}>
+                        Curso
+                      </p>
+                      <p className={`text-white font-semibold truncate ${isFullscreen ? 'text-base' : 'text-sm'}`}>
+                        {courseTitle}
+                      </p>
                     </div>
                   </div>
                 )}
@@ -152,13 +212,17 @@ export function PlyrVideoPlayer({
                 {/* Module and lesson */}
                 {(moduleTitle || lessonTitle) && (
                   <div className="flex items-center gap-2">
-                    <Play className="w-4 h-4 text-green-400 flex-shrink-0" />
+                    <Play className={`text-green-400 flex-shrink-0 ${isFullscreen ? 'w-5 h-5' : 'w-4 h-4'}`} />
                     <div className="flex-1 min-w-0">
                       {moduleTitle && (
-                        <p className="text-white/80 text-xs truncate">{moduleTitle}</p>
+                        <p className={`text-white/80 truncate ${isFullscreen ? 'text-sm' : 'text-xs'}`}>
+                          {moduleTitle}
+                        </p>
                       )}
                       {lessonTitle && (
-                        <p className="text-white font-medium text-sm truncate">{lessonTitle}</p>
+                        <p className={`text-white font-medium truncate ${isFullscreen ? 'text-base' : 'text-sm'}`}>
+                          {lessonTitle}
+                        </p>
                       )}
                     </div>
                   </div>
@@ -170,16 +234,22 @@ export function PlyrVideoPlayer({
           {/* Corner overlays to block specific YouTube buttons */}
           {/* Bottom-left: "Watch on YouTube" button */}
           <div 
-            className="absolute bottom-2 left-2 w-40 h-12 bg-black/95 rounded z-50 pointer-events-auto"
+            className={`absolute rounded pointer-events-auto ${isFullscreen ? 'z-[9999] bottom-4 left-4 w-48 h-14' : 'z-50 bottom-2 left-2 w-40 h-12'}`}
+            style={{ 
+              background: 'rgba(0, 0, 0, 0.95)',
+              backdropFilter: 'blur(10px)' 
+            }}
             onClick={(e) => e.stopPropagation()}
-            style={{ backdropFilter: 'blur(10px)' }}
           />
 
           {/* Top-right: Share/More buttons */}
           <div 
-            className="absolute top-2 right-2 w-32 h-10 bg-black/95 rounded z-50 pointer-events-auto"
+            className={`absolute rounded pointer-events-auto ${isFullscreen ? 'z-[9999] top-4 right-4 w-40 h-12' : 'z-50 top-2 right-2 w-32 h-10'}`}
+            style={{ 
+              background: 'rgba(0, 0, 0, 0.95)',
+              backdropFilter: 'blur(10px)' 
+            }}
             onClick={(e) => e.stopPropagation()}
-            style={{ backdropFilter: 'blur(10px)' }}
           />
         </>
       )}
