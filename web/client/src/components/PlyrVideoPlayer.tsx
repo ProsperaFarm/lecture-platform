@@ -65,7 +65,8 @@ export function PlyrVideoPlayer({
       /* Re-enable pointer events on Plyr controls and increase z-index */
       .plyr__controls {
         pointer-events: auto !important;
-        z-index: 20 !important; /* Above overlay (z-10) */
+        position: relative !important;
+        z-index: 50 !important; /* Above overlay (z-10) and text (z-10) */
       }
       /* Customize progress bar color to green */
       .plyr--full-ui input[type=range] {
@@ -253,12 +254,20 @@ export function PlyrVideoPlayer({
             </div>
           </div>
 
-          {/* Bottom branded bar - covers YouTube logo and share buttons */}
+          {/* Bottom gradient overlay */}
           <div 
             className={`absolute bottom-0 left-0 right-0 pointer-events-none ${isFullscreen ? 'z-[9999]' : 'z-10'}`}
             style={{ height: isFullscreen ? '120px' : '100px' }}
           >
-            <div className={`bg-gradient-to-t from-black/95 via-black/80 to-transparent h-full flex flex-col justify-end ${isFullscreen ? 'p-6 pt-10' : 'p-4 pt-8'}`}>
+            <div className="bg-gradient-to-t from-black/95 via-black/80 to-transparent h-full" />
+          </div>
+
+          {/* Course info text - positioned above controls */}
+          <div 
+            className={`absolute left-0 right-0 pointer-events-none ${isFullscreen ? 'z-[9999]' : 'z-10'}`}
+            style={{ bottom: isFullscreen ? '60px' : '54px' }}
+          >
+            <div className={`${isFullscreen ? 'px-6' : 'px-4'}`}>
               <div className="space-y-2">
                 {/* Course info */}
                 {courseTitle && (
