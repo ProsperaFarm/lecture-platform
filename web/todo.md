@@ -246,3 +246,9 @@
 - [ ] Aplicar schema (npm run db:reset)
 - [ ] Popular dados (npm run db:seed:normalized)
 - [ ] Testar navegação simplificada
+
+## 🎨 Adjust Overlay Size
+- [x] Reduzir tamanho das tarjas nos cantos
+- [x] Garantir que não cubram conteúdo importante do vídeo
+- [x] Manter branding visível mas discreto
+- [ ] Testar visualização

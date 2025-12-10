@@ -194,34 +194,34 @@ export function PlyrVideoPlayer({
     <>
       {showOverlays && (
         <>
-          {/* Top branded bar - covers title area */}
+          {/* Top branded bar - smaller, only top-left corner */}
           <div 
-            className={`absolute top-0 left-0 right-0 pointer-events-auto ${isFullscreen ? 'z-[9999]' : 'z-50'}`}
-            style={{ height: isFullscreen ? '100px' : '80px' }}
+            className={`absolute top-0 left-0 pointer-events-auto ${isFullscreen ? 'z-[9999]' : 'z-50'}`}
+            style={{ maxWidth: isFullscreen ? '280px' : '240px' }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className={`bg-gradient-to-b from-black/90 via-black/70 to-transparent h-full flex items-start gap-3 ${isFullscreen ? 'p-6' : 'p-4'}`}>
-              <div className={`rounded-lg bg-green-600 flex items-center justify-center flex-shrink-0 ${isFullscreen ? 'w-16 h-16' : 'w-12 h-12'}`}>
-                <GraduationCap className={`text-white ${isFullscreen ? 'w-9 h-9' : 'w-7 h-7'}`} />
+            <div className={`bg-gradient-to-br from-black/85 via-black/60 to-transparent rounded-br-2xl flex items-center gap-2 ${isFullscreen ? 'p-4' : 'p-3'}`}>
+              <div className={`rounded-lg bg-green-600 flex items-center justify-center flex-shrink-0 ${isFullscreen ? 'w-12 h-12' : 'w-10 h-10'}`}>
+                <GraduationCap className={`text-white ${isFullscreen ? 'w-7 h-7' : 'w-6 h-6'}`} />
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className={`text-white font-bold leading-tight ${isFullscreen ? 'text-xl' : 'text-base'}`}>
+                <h3 className={`text-white font-bold leading-tight ${isFullscreen ? 'text-base' : 'text-sm'}`}>
                   Prospera Academy
                 </h3>
-                <p className={`text-white/80 ${isFullscreen ? 'text-sm' : 'text-xs'}`}>
+                <p className={`text-white/70 ${isFullscreen ? 'text-xs' : 'text-[10px]'}`}>
                   Plataforma de Cursos
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Bottom branded bar - covers YouTube logo and share buttons */}
+          {/* Bottom branded bar - smaller, only bottom-left corner */}
           <div 
-            className={`absolute bottom-0 left-0 right-0 pointer-events-auto ${isFullscreen ? 'z-[9999]' : 'z-50'}`}
-            style={{ height: isFullscreen ? '120px' : '100px' }}
+            className={`absolute bottom-0 left-0 pointer-events-auto ${isFullscreen ? 'z-[9999]' : 'z-50'}`}
+            style={{ maxWidth: isFullscreen ? '320px' : '280px' }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className={`bg-gradient-to-t from-black/95 via-black/80 to-transparent h-full flex flex-col justify-end ${isFullscreen ? 'p-6 pt-10' : 'p-4 pt-8'}`}>
+            <div className={`bg-gradient-to-tr from-black/90 via-black/60 to-transparent rounded-tr-2xl flex flex-col justify-end ${isFullscreen ? 'p-4 pb-3' : 'p-3 pb-2'}`}>
               <div className="space-y-2">
                 {/* Course info */}
                 {courseTitle && (
