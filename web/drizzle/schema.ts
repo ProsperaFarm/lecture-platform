@@ -45,24 +45,67 @@ export type Course = typeof courses.$inferSelect;
 export type InsertCourse = typeof courses.$inferInsert;
 
 /**
+ * Modules table - course modules (e.g., "Módulo 1: Introdução")
+ * Normalized structure for better organization and navigation
+ */
+export const modules = pgTable("modules", {
+  id: serial("id").primaryKey(),
+  moduleId: varchar("moduleId", { length: 128 }).notNull().unique(), // e.g., "module-01"
+  courseId: varchar("courseId", { length: 128 }).notNull(), // FK to courses.courseId
+  title: text("title").notNull(),
+  order: integer("order").notNull(), // Sequential order within course
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+}, (table) => ({
+  courseIdIdx: index("modules_courseId_idx").on(table.courseId),
+  courseOrderIdx: index("modules_course_order_idx").on(table.courseId, table.order),
+}));
+
+export type Module = typeof modules.$inferSelect;
+export type InsertModule = typeof modules.$inferInsert;
+
+/**
+ * Sections table - module sections (e.g., "Seção 1.1: Conceitos Básicos")
+ * Normalized structure for better organization and navigation
+ */
+export const sections = pgTable("sections", {
+  id: serial("id").primaryKey(),
+  sectionId: varchar("sectionId", { length: 128 }).notNull().unique(), // e.g., "section-01-01"
+  moduleId: varchar("moduleId", { length: 128 }).notNull(), // FK to modules.moduleId
+  courseId: varchar("courseId", { length: 128 }).notNull(), // FK to courses.courseId (denormalized for easier queries)
+  title: text("title").notNull(),
+  order: integer("order").notNull(), // Sequential order within module
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+}, (table) => ({
+  moduleIdIdx: index("sections_moduleId_idx").on(table.moduleId),
+  moduleOrderIdx: index("sections_module_order_idx").on(table.moduleId, table.order),
+  courseIdIdx: index("sections_courseId_idx").on(table.courseId),
+}));
+
+export type Section = typeof sections.$inferSelect;
+export type InsertSection = typeof sections.$inferInsert;
+
+/**
  * Lessons table - stores individual lesson metadata
- * Linked to courses via courseId
+ * Now properly normalized with references to sections
  */
 export const lessons = pgTable("lessons", {
   id: serial("id").primaryKey(),
   lessonId: varchar("lessonId", { length: 128 }).notNull().unique(), // e.g., "lesson-01-01-01"
-  courseId: varchar("courseId", { length: 128 }).notNull(), // FK to courses.courseId
-  moduleId: varchar("moduleId", { length: 128 }).notNull(),
-  moduleName: text("moduleName"),
-  sectionId: varchar("sectionId", { length: 128 }).notNull(),
-  sectionName: text("sectionName"),
+  sectionId: varchar("sectionId", { length: 128 }).notNull(), // FK to sections.sectionId
+  moduleId: varchar("moduleId", { length: 128 }).notNull(), // FK to modules.moduleId (denormalized)
+  courseId: varchar("courseId", { length: 128 }).notNull(), // FK to courses.courseId (denormalized)
   title: text("title").notNull(),
   youtubeUrl: text("youtubeUrl"),
   type: varchar("type", { length: 16 }).default("video"), // "video" or "live"
-  order: integer("order").default(0),
+  order: integer("order").notNull(), // Sequential order within section
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 }, (table) => ({
+  sectionIdIdx: index("lessons_sectionId_idx").on(table.sectionId),
+  sectionOrderIdx: index("lessons_section_order_idx").on(table.sectionId, table.order),
+  moduleIdIdx: index("lessons_moduleId_idx").on(table.moduleId),
   courseIdIdx: index("lessons_courseId_idx").on(table.courseId),
 }));
 

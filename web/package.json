@@ -12,6 +12,8 @@
     "test": "vitest run",
     "db:push": "drizzle-kit generate && drizzle-kit migrate",
     "db:seed": "node scripts/seed-database.mjs",
+    "db:seed:normalized": "node scripts/seed-database-normalized.mjs",
+    "db:migrate:normalize": "node scripts/migrate-to-normalized-schema.mjs",
     "db:sync": "node scripts/sync-from-json.mjs"
   },
   "dependencies": {

@@ -215,3 +215,23 @@
 - [x] Mostrar overlay apenas na PRIMEIRA vez após carregar (não toda vez que toca)
 - [x] Adicionar flag hasShownInitialOverlay para controlar
 - [ ] Testar que overlay aparece apenas uma vez por carregamento de página
+
+## 🐛 Fix Navigation Issues
+- [x] Investigar lógica de "próxima aula" que está indo para aula aleatória
+- [x] Verificar como a ordem das aulas está sendo determinada
+- [x] Implementar navegação sequencial correta (módulo → seção → aula)
+
+## 🗄️ Normalize Database Schema
+- [x] Criar tabela `modules` separada (id, course_id, title, order)
+- [x] Criar tabela `sections` separada (id, module_id, title, order)
+- [x] Atualizar tabela `lessons` para referenciar section_id
+- [x] Adicionar campos `order` em todas as tabelas para controle de sequência
+- [x] Criar script de migração para dados existentes (migrate-to-normalized-schema.mjs)
+- [x] Criar novo script de seed para estrutura normalizada (seed-database-normalized.mjs)
+- [x] Criar helpers do banco (db-normalized.ts) com getNext/getPrevious
+- [x] Criar tRPC procedures para estrutura normalizada (routers-normalized.ts)
+- [x] Criar nova versão do Lesson.tsx (Lesson-normalized.tsx)
+- [ ] Aplicar migração no banco de dados (npm run db:migrate:normalize)
+- [ ] Testar navegação próximo/anterior
+- [ ] Atualizar Home.tsx para usar nova estrutura
+- [ ] Substituir arquivos antigos pelos novos
