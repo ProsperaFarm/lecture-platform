@@ -2,7 +2,7 @@ import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
-import { getAllCourses, getCourseById, getLessonsByCourse, upsertUser, getUserByOpenId } from "./db";
+import { getAllCourses, getCourseById, getLessonsByCourse, getLessonById, upsertUser, getUserByOpenId } from "./db";
 import { z } from "zod";
 import { completeGoogleOAuth, getGoogleAuthUrl } from "./google-oauth";
 import { SignJWT } from "jose";
@@ -98,6 +98,11 @@ export const appRouter = router({
       .input(z.object({ courseId: z.string() }))
       .query(async ({ input }) => {
         return await getLessonsByCourse(input.courseId);
+      }),
+    getById: publicProcedure
+      .input(z.object({ lessonId: z.string() }))
+      .query(async ({ input }) => {
+        return await getLessonById(input.lessonId);
       }),
   }),
 });
