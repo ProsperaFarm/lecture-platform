@@ -38,14 +38,16 @@
                 "order": 3,
                 "title": "Como usar a plataforma de estudos",
                 "fileName": "Gravações de aula ao vivo - como usar a plataforma de estudos.mp4",
-                "type": "live"
+                "type": "live",
+                "youtubeUrl": "https://www.youtube.com/watch?v=JFZYSFENsVQ"
               },
               {
                 "id": "lesson-01-01-04",
                 "order": 4,
                 "title": "Gravação ao vivo - Boas-vindas e orientações",
                 "fileName": "Gravação de aula on-line ao vivo - Boas-vindas e orientações - 2.mp4",
-                "type": "live"
+                "type": "live",
+                "youtubeUrl": "https://www.youtube.com/watch?v=T4w_xb6AMRo"
               }
             ]
           },
@@ -59,42 +61,48 @@
                 "order": 1,
                 "title": "Introdução - Planejamento da propriedade",
                 "fileName": "Videoaula 01 Introdução - Planejamento da propriedade.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=e0csl1aaZhk"
               },
               {
                 "id": "lesson-01-02-02",
                 "order": 2,
                 "title": "Desempenho e eficiência",
                 "fileName": "Videoaula 02 Desempenho e eficiência.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=yaEjrhbqA4o"
               },
               {
                 "id": "lesson-01-02-03",
                 "order": 3,
                 "title": "Definindo o sistema de produção - Parte I",
                 "fileName": "Videoaula 03 Definindo o sistema de produção - Parte I.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=t1rZmRSUfxE"
               },
               {
                 "id": "lesson-01-02-04",
                 "order": 4,
                 "title": "Definindo o sistema de produção - Parte II",
                 "fileName": "Videoaula 04 Definindo o sistema de produção - Parte II.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=OEHOo3akGPM"
               },
               {
                 "id": "lesson-01-02-05",
                 "order": 5,
                 "title": "Confinamento e Pastejo",
                 "fileName": "Videoaula 05 Confinamento e Pastejo.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=BPp_3I81vig"
               },
               {
                 "id": "lesson-01-02-06",
                 "order": 6,
                 "title": "Gerenciamento do sistema de produção",
                 "fileName": "Videoaula 06Gerenciamento do sistema de produção.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=UmOqpuHGnxo"
               },
               {
                 "id": "lesson-01-02-07",

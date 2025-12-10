@@ -106,7 +106,6 @@ LOG_FILE="upload_$(date +%Y%m%d_%H%M%S).log"
 python youtube_uploader.py \
     --videos-dir "$VIDEOS_DIR" \
     --max-uploads "$MAX_UPLOADS" \
-    --delay 5 \
     2>&1 | tee "$LOG_FILE"
 
 EXIT_CODE=${PIPESTATUS[0]}
