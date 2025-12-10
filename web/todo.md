@@ -368,3 +368,8 @@
 - [x] Permitir quebra de linha no tooltip (removido whitespace-nowrap, max-w-[200px])
 - [x] Adicionar debug logs para investigar navegação
 - [ ] Testar navegação e tooltip (aguardando feedback do usuário)
+
+## 🐛 Fix Navigation Using Wrong ID
+- [x] Navegação está usando `lesson.id` (UUID) em vez de `lesson.lessonId`
+- [x] Corrigir Lesson.tsx para passar `lessonId` em vez de `id`
+- [x] Testar navegação com IDs corretos

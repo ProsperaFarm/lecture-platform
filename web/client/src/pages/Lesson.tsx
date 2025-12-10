@@ -111,9 +111,9 @@ export default function LessonPage() {
               youtubeUrl={lesson.youtubeUrl}
               courseTitle={course.title}
               lessonTitle={lesson.title}
-              prevLessonId={prevLesson?.id || null}
+              prevLessonId={prevLesson?.lessonId || null}
               prevLessonTitle={prevLesson?.title || null}
-              nextLessonId={nextLesson?.id || null}
+              nextLessonId={nextLesson?.lessonId || null}
               nextLessonTitle={nextLesson?.title || null}
               onNavigate={handleNavigate}
             />
