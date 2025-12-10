@@ -104,3 +104,13 @@
 - [x] Adicionar proteção de rotas no Home (redirecionar para login se não autenticado)
 - [x] Atualizar App.tsx com rotas de autenticação
 - [ ] Testar fluxo completo de login
+
+## 🐛 Fix Google OAuth Redirect URL
+- [ ] Corrigir GOOGLE_REDIRECT_URI no .env.example
+- [ ] Atualizar documentação com URL correta
+- [ ] Testar fluxo completo de login com URL corrigida
+
+## 🐛 Fix OAuth invalid_grant Error
+- [ ] Verificar se GOOGLE_REDIRECT_URI no backend está correta
+- [ ] Adicionar logs de debug no google-oauth.ts
+- [ ] Testar troca de código por token
