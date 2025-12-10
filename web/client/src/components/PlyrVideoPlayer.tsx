@@ -374,8 +374,8 @@ export function PlyrVideoPlayer({
                   <ChevronLeft className="w-8 h-8 text-white" />
                 </div>
                 {/* Tooltip */}
-                <div className="absolute left-full ml-3 top-1/2 -translate-y-1/2 opacity-0 group-hover/nav:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
-                  <div className="bg-black/90 text-white px-4 py-2 rounded-lg text-sm max-w-xs">
+                <div className="absolute left-full ml-3 top-1/2 -translate-y-1/2 opacity-0 group-hover/nav:opacity-100 transition-opacity duration-200 pointer-events-none">
+                  <div className="bg-black/90 text-white px-3 py-2 rounded-lg text-xs max-w-[200px] leading-tight">
                     {prevLessonTitle}
                   </div>
                 </div>
@@ -395,8 +395,8 @@ export function PlyrVideoPlayer({
                   <ChevronRight className="w-8 h-8 text-white" />
                 </div>
                 {/* Tooltip */}
-                <div className="absolute right-full mr-3 top-1/2 -translate-y-1/2 opacity-0 group-hover/nav:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
-                  <div className="bg-black/90 text-white px-4 py-2 rounded-lg text-sm max-w-xs">
+                <div className="absolute right-full mr-3 top-1/2 -translate-y-1/2 opacity-0 group-hover/nav:opacity-100 transition-opacity duration-200 pointer-events-none">
+                  <div className="bg-black/90 text-white px-3 py-2 rounded-lg text-xs max-w-[200px] leading-tight">
                     {nextLessonTitle}
                   </div>
                 </div>

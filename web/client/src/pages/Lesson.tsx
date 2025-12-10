@@ -18,8 +18,11 @@ export default function LessonPage() {
   
   // Navigation handler
   const handleNavigate = (newLessonId: string) => {
+    console.log('[Navigation] Navigating to:', { courseId, newLessonId, path: `/course/${courseId}/lesson/${newLessonId}` });
     if (courseId) {
       setLocation(`/course/${courseId}/lesson/${newLessonId}`);
+    } else {
+      console.error('[Navigation] courseId is missing!');
     }
   };
 

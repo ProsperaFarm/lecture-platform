@@ -362,3 +362,9 @@
 - [x] Adicionar props ao PlyrVideoPlayer (prevLessonId, nextLessonId, etc)
 - [x] Atualizar Lesson.tsx para passar props e handler
 - [ ] Testar navegação e tooltips
+
+## 🐛 Fix Navigation Button Issues
+- [x] Reduzir tamanho do texto do tooltip (text-sm → text-xs)
+- [x] Permitir quebra de linha no tooltip (removido whitespace-nowrap, max-w-[200px])
+- [x] Adicionar debug logs para investigar navegação
+- [ ] Testar navegação e tooltip (aguardando feedback do usuário)
