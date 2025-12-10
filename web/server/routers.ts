@@ -49,6 +49,7 @@ export const appRouter = router({
         const secret = new TextEncoder().encode(ENV.cookieSecret);
         const token = await new SignJWT({
           openId: dbUser.openId,
+          appId: ENV.appId,
           email: dbUser.email,
           name: dbUser.name,
           role: dbUser.role,

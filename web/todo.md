@@ -125,3 +125,8 @@
 - [x] Corrigir sameSite para 'lax' em localhost (HTTP)
 - [x] Adicionar logs para debug de sessão
 - [ ] Testar login completo com cookie persistente
+
+## 🐛 Fix JWT Payload Fields
+- [x] Verificar campos esperados pelo context.ts (openId, appId, name)
+- [x] Ajustar JWT payload no googleCallback para incluir appId
+- [ ] Testar autenticação completa
