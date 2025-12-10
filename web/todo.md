@@ -45,3 +45,7 @@
 - [ ] Atualizar .env.local com DATABASE_URL do Docker
 - [ ] Testar aplicação localmente com Docker
 - [ ] Documentar setup local no README
+
+## 📝 SQL e Documentação
+- [x] Criar arquivo SQL completo com DDL (CREATE TABLE)
+- [x] Atualizar README com comandos npm (ao invés de pnpm)
