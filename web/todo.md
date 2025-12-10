@@ -80,3 +80,10 @@
 - [x] Corrigir vite.config.ts para remover plugin incompatível
 - [x] Copiar diretório shared/ completo
 - [x] Copiar arquivos de configuração (tsconfig, drizzle.config, etc)
+
+## 🔐 Replace Manus OAuth with Google OAuth
+- [x] Atualizar env.ts para usar GOOGLE_CLIENT_ID e GOOGLE_CLIENT_SECRET
+- [x] Implementar fluxo de Google OAuth no servidor
+- [ ] Criar componente de login no cliente
+- [ ] Criar página de callback do Google OAuth
+- [ ] Documentar setup do Google OAuth
