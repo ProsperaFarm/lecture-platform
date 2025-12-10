@@ -270,3 +270,10 @@
 - [x] Re-habilitar pointer-events nos controles do Plyr
 - [x] Customizar cor do botão Play para verde floresta (green-600)
 - [ ] Testar cliques e botão verde
+
+## 🎮 Fix Bottom Overlay Blocking Controls
+- [x] Tarja inferior está bloqueando controles do Plyr quando pausado
+- [x] Posicionar tarja acima dos controles (bottom: 54px normal, 60px fullscreen)
+- [x] Manter pointer-events-none para não bloquear cliques
+- [x] Garantir que controles do Plyr fiquem acessíveis quando pausado
+- [ ] Testar controles quando pausado

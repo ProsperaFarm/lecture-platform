@@ -241,11 +241,13 @@ export function PlyrVideoPlayer({
             </div>
           </div>
 
-          {/* Bottom branded bar - covers YouTube logo and share buttons */}
+          {/* Bottom branded bar - positioned above Plyr controls */}
           <div 
-            className={`absolute bottom-0 left-0 right-0 pointer-events-auto ${isFullscreen ? 'z-[9999]' : 'z-10'}`}
-            style={{ height: isFullscreen ? '120px' : '100px' }}
-            onClick={(e) => e.stopPropagation()}
+            className={`absolute left-0 right-0 pointer-events-none ${isFullscreen ? 'z-[9999]' : 'z-10'}`}
+            style={{ 
+              bottom: isFullscreen ? '60px' : '54px', /* Height of Plyr controls bar */
+              height: isFullscreen ? '120px' : '100px' 
+            }}
           >
             <div className={`bg-gradient-to-t from-black/95 via-black/80 to-transparent h-full flex flex-col justify-end ${isFullscreen ? 'p-6 pt-10' : 'p-4 pt-8'}`}>
               <div className="space-y-2">
