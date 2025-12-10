@@ -119,3 +119,9 @@
 - [x] Adicionar proteção contra múltiplas chamadas no GoogleCallback
 - [x] Usar useRef para evitar double render do React Strict Mode
 - [ ] Testar que código é usado apenas uma vez
+
+## 🐛 Fix Session Cookie Not Persisting
+- [x] Verificar se cookie está sendo setado no googleCallback
+- [x] Corrigir sameSite para 'lax' em localhost (HTTP)
+- [x] Adicionar logs para debug de sessão
+- [ ] Testar login completo com cookie persistente

@@ -59,10 +59,13 @@ export const appRouter = router({
         
         // Set cookie
         const cookieOptions = getSessionCookieOptions(ctx.req);
+        console.log('[Google OAuth] Setting cookie:', COOKIE_NAME);
+        console.log('[Google OAuth] Cookie options:', cookieOptions);
         ctx.res.cookie(COOKIE_NAME, token, {
           ...cookieOptions,
           maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
         });
+        console.log('[Google OAuth] Cookie set successfully');
         
         return {
           success: true,
