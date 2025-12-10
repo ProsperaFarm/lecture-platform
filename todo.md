@@ -29,3 +29,12 @@
 - [ ] Atualizar variáveis de ambiente para Google OAuth
 - [x] Documentar deploy em infraestrutura própria (VPS/Cloud)
 - [ ] Testar fluxo de login com Google
+
+## 🚀 Deploy Vercel + Supabase
+- [x] Migrar schema Drizzle de MySQL para PostgreSQL
+- [ ] Criar projeto no Supabase e obter connection string (ver docs/VERCEL_SUPABASE_DEPLOY.md)
+- [ ] Configurar variáveis de ambiente no Vercel (ver docs/VERCEL_SUPABASE_DEPLOY.md)
+- [x] Criar vercel.json com configurações de build
+- [ ] Testar deploy em preview
+- [ ] Deploy em produção
+- [ ] Configurar domínio customizado (academy.prospera.farm)
