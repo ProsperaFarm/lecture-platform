@@ -97,3 +97,10 @@
 - [x] Copiar diretório client/src/lib completo (trpc.ts, utils.ts)
 - [x] Adicionar variáveis de ambiente opcionais ao .env.example
 - [x] Remover erro do OAuth do Manus no repositório GitHub
+
+## 🔐 Authentication & Route Protection
+- [x] Criar página de Login com botão Google OAuth
+- [x] Criar página de callback do Google (/auth/google/callback)
+- [x] Adicionar proteção de rotas no Home (redirecionar para login se não autenticado)
+- [x] Atualizar App.tsx com rotas de autenticação
+- [ ] Testar fluxo completo de login

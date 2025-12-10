@@ -7,15 +7,21 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import CourseSelection from "./pages/CourseSelection";
 import Home from "./pages/Home";
 import Lesson from "./pages/Lesson";
+import Login from "./pages/Login";
+import GoogleCallback from "./pages/GoogleCallback";
 
 
 function Router() {
-  // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
+      {/* Public routes */}
+      <Route path={"/login"} component={Login} />
+      <Route path={"/auth/google/callback"} component={GoogleCallback} />
+      
+      {/* Protected routes (authentication checked inside components) */}
       <Route path={"/"} component={CourseSelection} />
       <Route path={"/course/:id"} component={Home} />
-       <Route path={"/course/:courseId/lesson/:lessonId"} component={Lesson} />
+      <Route path={"/course/:courseId/lesson/:lessonId"} component={Lesson} />
 
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}

@@ -4,13 +4,24 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { BookOpen, Clock, PlayCircle, Loader2 } from "lucide-react";
-import { Link, useRoute } from "wouter";
+import { Link, useRoute, useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 
 export default function Home() {
   const [, params] = useRoute("/course/:id");
+  const [, setLocation] = useLocation();
   const courseId = params?.id;
+
+  // Check authentication
+  const { data: user, isLoading: isLoadingAuth } = trpc.auth.me.useQuery();
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!isLoadingAuth && !user) {
+      setLocation("/login");
+    }
+  }, [user, isLoadingAuth, setLocation]);
 
   // Fetch course data from database via tRPC
   const { data: course, isLoading: courseLoading } = trpc.courses.getById.useQuery(
