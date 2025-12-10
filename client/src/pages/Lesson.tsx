@@ -133,9 +133,9 @@ export default function LessonPage() {
               <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
                 <PlayCircle className="w-8 h-8 text-muted-foreground/50" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Vídeo em processamento</h3>
+              <h3 className="text-xl font-semibold mb-2">Aula em Breve</h3>
               <p className="text-muted-foreground max-w-md">
-                Esta aula ainda não está disponível. O upload está sendo processado e o vídeo aparecerá aqui em breve.
+                O conteúdo desta aula está sendo preparado e será disponibilizado em breve na plataforma.
               </p>
               <Badge variant="outline" className="mt-6 border-dashed">
                 Status: Pendente
