@@ -97,25 +97,25 @@ export default function Home() {
   // Loading state
   if (courseLoading || lessonsLoading) {
     return (
-      <Layout>
+      <SimpleLayout>
         <div className="flex items-center justify-center min-h-[60vh]">
           <Loader2 className="w-8 h-8 animate-spin text-primary" />
         </div>
-      </Layout>
+      </SimpleLayout>
     );
   }
 
   // Course not found
   if (!course) {
     return (
-      <Layout>
+      <SimpleLayout>
         <div className="p-8 text-center">
           <p className="text-muted-foreground mb-4">Curso não encontrado.</p>
           <Link href="/">
-            <Button variant="outline">Voltar</Button>
+            <Button>Voltar para Home</Button>
           </Link>
         </div>
-      </Layout>
+      </SimpleLayout>
     );
   }
 
