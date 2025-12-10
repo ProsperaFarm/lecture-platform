@@ -38,16 +38,17 @@ except ImportError:
 SCOPES = ['https://www.googleapis.com/auth/youtube.upload']
 TOKEN_FILE = 'youtube_token.json'
 CREDENTIALS_FILE = 'client_secret.json'
-METADATA_FILE = 'course-metadata.json'
+DEFAULT_METADATA_FILE = 'course-metadata.json'
 PROGRESS_FILE = 'upload_progress.json'
 
 
 class YouTubeUploader:
     """Gerencia upload de vídeos para o YouTube"""
     
-    def __init__(self, videos_dir: str, credentials_file: str = CREDENTIALS_FILE):
+    def __init__(self, videos_dir: str, credentials_file: str = CREDENTIALS_FILE, metadata_file: str = DEFAULT_METADATA_FILE):
         self.videos_dir = Path(videos_dir)
         self.credentials_file = credentials_file
+        self.metadata_file = metadata_file
         self.youtube = None
         self.metadata = None
         self.progress = self._load_progress()
@@ -106,11 +107,11 @@ class YouTubeUploader:
     
     def load_metadata(self):
         """Carrega metadados do curso"""
-        if not os.path.exists(METADATA_FILE):
-            print(f"❌ Arquivo de metadados não encontrado: {METADATA_FILE}")
+        if not os.path.exists(self.metadata_file):
+            print(f"❌ Arquivo de metadados não encontrado: {self.metadata_file}")
             sys.exit(1)
         
-        with open(METADATA_FILE, 'r', encoding='utf-8') as f:
+        with open(self.metadata_file, 'r', encoding='utf-8') as f:
             self.metadata = json.load(f)
         
         total_videos = self.metadata['course']['totalVideos']
@@ -179,7 +180,7 @@ class YouTubeUploader:
         """
         try:
             # Prepara metadados do vídeo
-            title = f"{lesson['title']}"
+            title = self._build_title(lesson)
             description = self._build_description(lesson)
             tags = self._build_tags(lesson)
             
@@ -244,6 +245,63 @@ class YouTubeUploader:
             print(f"❌ Erro inesperado: {e}")
             return None
     
+    def _build_title(self, lesson: Dict) -> str:
+        """Constrói título do vídeo no formato: SIGLA | MÓDULO | SEÇÃO | 000 NOME"""
+        MAX_LENGTH = 100
+        
+        # Extrai sigla do curso (usa campo 'acronym' ou gera do ID)
+        course_id = self.metadata['course'].get('acronym', self.metadata['course']['id'].upper())
+        
+        module_title = lesson.get('module_title', '')
+        section_title_original = lesson.get('section_title', '')
+        section_title = section_title_original
+        lesson_order = str(lesson.get('order', 0)).zfill(3)  # 001, 002, etc.
+        lesson_title_original = lesson['title']
+        lesson_title = lesson_title_original
+        
+        # Formato: SIGLA | MÓDULO | SEÇÃO | 000 NOME
+        title = f"{course_id} | {module_title} | {section_title} | {lesson_order} {lesson_title}"
+        
+        # Se ultrapassar 100 caracteres, aplica lógica de truncamento
+        if len(title) > MAX_LENGTH:
+            # Partes fixas do título
+            prefix = f"{course_id} | {module_title} | "
+            middle = f" | {lesson_order} "
+            
+            # Espaço disponível para seção + aula
+            available_space = MAX_LENGTH - len(prefix) - len(middle)
+            
+            # Tamanho mínimo da seção (60% do original)
+            min_section_length = int(len(section_title_original) * 0.6)
+            
+            # Tenta encurtar a seção primeiro
+            current_section_length = len(section_title_original)
+            
+            while len(section_title) + len(lesson_title) > available_space:
+                # Se a seção ainda pode ser encurtada (> 60% do original)
+                if current_section_length > min_section_length:
+                    current_section_length -= 1
+                    section_title = section_title_original[:current_section_length]
+                    
+                    # Verifica se agora cabe
+                    if len(section_title) + len(lesson_title) <= available_space:
+                        break
+                else:
+                    # Seção já está no mínimo, encurta a aula
+                    space_for_lesson = available_space - len(section_title)
+                    if space_for_lesson > 0:
+                        lesson_title = lesson_title_original[:space_for_lesson]
+                    else:
+                        # Caso extremo: encurta ambos proporcionalmente
+                        section_title = section_title_original[:min_section_length]
+                        lesson_title = lesson_title_original[:max(1, available_space - min_section_length)]
+                    break
+            
+            # Reconstrói o título com as partes truncadas
+            title = f"{prefix}{section_title}{middle}{lesson_title}"
+        
+        return title
+    
     def _build_description(self, lesson: Dict) -> str:
         """Constrói descrição do vídeo"""
         course_title = self.metadata['course']['title']
@@ -303,7 +361,7 @@ class YouTubeUploader:
         
         if updated:
             # Salva JSON atualizado
-            with open(METADATA_FILE, 'w', encoding='utf-8') as f:
+            with open(self.metadata_file, 'w', encoding='utf-8') as f:
                 json.dump(self.metadata, f, indent=2, ensure_ascii=False)
             print(f"💾 Metadados atualizados no JSON\n")
     
@@ -410,6 +468,9 @@ Exemplos de uso:
   
   # Com delay customizado entre uploads
   python youtube_uploader.py --videos-dir /path/to/videos --max-uploads 10 --delay 10
+  
+  # Com arquivo de metadados customizado
+  python youtube_uploader.py --videos-dir /path/to/videos --metadata-file outro-curso.json
 
 Requisitos:
   1. Instalar dependências: pip install google-api-python-client google-auth-oauthlib
@@ -444,6 +505,12 @@ Requisitos:
         help=f'Arquivo de credenciais OAuth 2.0 (padrão: {CREDENTIALS_FILE})'
     )
     
+    parser.add_argument(
+        '--metadata-file',
+        default=DEFAULT_METADATA_FILE,
+        help=f'Arquivo JSON com metadados do curso (padrão: {DEFAULT_METADATA_FILE})'
+    )
+    
     args = parser.parse_args()
     
     # Valida diretório de vídeos
@@ -453,7 +520,7 @@ Requisitos:
     
     # Executa uploader
     try:
-        uploader = YouTubeUploader(args.videos_dir, args.credentials)
+        uploader = YouTubeUploader(args.videos_dir, args.credentials, args.metadata_file)
         uploader.run(max_uploads=args.max_uploads, delay=args.delay)
     except KeyboardInterrupt:
         print("\n\n⚠️  Upload interrompido pelo usuário.")

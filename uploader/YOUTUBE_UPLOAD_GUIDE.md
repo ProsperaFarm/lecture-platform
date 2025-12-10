@@ -60,31 +60,46 @@ Certifique-se de que os arquivos de vídeo estão acessíveis localmente. O scri
 2. Busque por "YouTube Data API v3"
 3. Clique em **Enable** (Ativar)
 
-### Passo 3: Criar Credenciais OAuth 2.0
+### Passo 3: Configurar OAuth Consent Screen
 
-1. Vá em **APIs & Services** > **Credentials**
-2. Clique em **+ CREATE CREDENTIALS** > **OAuth client ID**
-3. Se solicitado, configure a **OAuth consent screen**:
+1. Vá em **APIs & Services** > **OAuth consent screen**
+2. Configure as informações básicas:
    - User Type: **External**
    - App name: "Lecture Platform Uploader"
    - User support email: seu email
    - Developer contact: seu email
    - Clique em **Save and Continue**
-   - Em **Scopes**, clique em **Add or Remove Scopes** e adicione:
-     - `https://www.googleapis.com/auth/youtube.upload`
-   - Em **Test users**, adicione seu email do Google/YouTube
-   - Clique em **Save and Continue**
 
-4. Volte para **Credentials** e crie o OAuth client ID:
+3. Em **Scopes**, clique em **Add or Remove Scopes** e adicione:
+   - Busque por `youtube` e selecione:
+     - `https://www.googleapis.com/auth/youtube.upload`
+   - Clique em **Update** e depois em **Save and Continue**
+
+4. **IMPORTANTE - Adicionar Test Users** (em **Audience**):
+   - Na seção **Test users**, clique em **+ ADD USERS**
+   - Digite o **email da sua conta Google/YouTube** que você usará para fazer login
+   - Clique em **Add**
+   - Clique em **Save and Continue**
+   
+   > ⚠️ **Sem este passo você receberá erro 403: access_denied ao tentar fazer login!**
+
+5. Revise as configurações e clique em **Back to Dashboard**
+
+### Passo 4: Criar Credenciais OAuth 2.0
+
+1. Vá em **APIs & Services** > **Credentials**
+2. Clique em **+ CREATE CREDENTIALS** > **OAuth client ID**
+3. Configure:
    - Application type: **Desktop app**
    - Name: "YouTube Uploader CLI"
+   - **Authorized redirect URIs**: `http://localhost:8080/`
    - Clique em **Create**
 
-5. **Baixe o arquivo JSON** de credenciais
-6. Renomeie o arquivo para `client_secret.json`
-7. Coloque o arquivo na pasta do projeto (mesma pasta do script)
+4. **Baixe o arquivo JSON** de credenciais
+5. Renomeie o arquivo para `client_secret.json`
+6. Coloque o arquivo na pasta do projeto (mesma pasta do script)
 
-### Passo 4: Estrutura de Arquivos
+### Passo 5: Estrutura de Arquivos
 
 Certifique-se de que você tem:
 
