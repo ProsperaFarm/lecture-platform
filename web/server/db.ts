@@ -151,3 +151,17 @@ export async function getLessonsByCourse(courseId: string): Promise<Lesson[]> {
   const result = await db.select().from(lessons).where(eq(lessons.courseId, courseId)).orderBy(lessons.order);
   return result;
 }
+
+/**
+ * Get lesson by lessonId
+ */
+export async function getLessonById(lessonId: string): Promise<Lesson | undefined> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get lesson: database not available");
+    return undefined;
+  }
+
+  const result = await db.select().from(lessons).where(eq(lessons.lessonId, lessonId)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
