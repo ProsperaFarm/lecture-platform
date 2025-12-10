@@ -9,8 +9,8 @@ import Home from "./pages/Home";
 import Lesson from "./pages/Lesson";
 
 
-
 function Router() {
+  // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
       <Route path={"/"} component={CourseSelection} />
