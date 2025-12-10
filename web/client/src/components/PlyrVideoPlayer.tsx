@@ -42,6 +42,32 @@ export function PlyrVideoPlayer({
     link.rel = "stylesheet";
     link.href = "https://cdn.plyr.io/3.7.8/plyr.css";
     document.head.appendChild(link);
+    
+    // Add custom CSS for green play button and disable right-click on iframe
+    const style = document.createElement("style");
+    style.textContent = `
+      /* Customize Plyr play button to green */
+      .plyr--video .plyr__control.plyr__tab-focus,
+      .plyr--video .plyr__control:hover,
+      .plyr--video .plyr__control[aria-expanded=true] {
+        background: #16a34a !important; /* green-600 */
+      }
+      .plyr__control--overlaid {
+        background: rgba(22, 163, 74, 0.9) !important; /* green-600 with opacity */
+      }
+      .plyr__control--overlaid:hover {
+        background: rgba(22, 163, 74, 1) !important;
+      }
+      /* Disable right-click on YouTube iframe */
+      .plyr iframe {
+        pointer-events: none !important;
+      }
+      /* Re-enable pointer events on Plyr controls */
+      .plyr__controls {
+        pointer-events: auto !important;
+      }
+    `;
+    document.head.appendChild(style);
 
     // Load Plyr JS
     const script = document.createElement("script");
@@ -272,17 +298,6 @@ export function PlyrVideoPlayer({
     >
       {/* Plyr Player */}
       <div ref={videoRef} className="w-full h-full" />
-      
-      {/* Transparent overlay to block right-click on video iframe */}
-      <div 
-        className="absolute inset-0"
-        style={{ 
-          zIndex: 5,
-          pointerEvents: 'auto',
-          background: 'transparent'
-        }}
-        onContextMenu={handleContextMenu}
-      />
 
       {/* Render overlays - use portal when in fullscreen */}
       {isFullscreen && fullscreenContainer

@@ -263,3 +263,10 @@
 - [x] Adicionar overlay transparente sobre vídeo para bloquear clique direito (z-index: 5)
 - [x] Aumentar tarja superior em 15% (100px→115px, 120px→138px)
 - [ ] Testar clique direito em pause e fullscreen
+
+## 🖱️ Fix Overlay Click Behavior
+- [x] Remover overlay transparente (está bloqueando cliques esquerdos)
+- [x] Usar CSS pointer-events: none no iframe do Plyr
+- [x] Re-habilitar pointer-events nos controles do Plyr
+- [x] Customizar cor do botão Play para verde floresta (green-600)
+- [ ] Testar cliques e botão verde
