@@ -246,59 +246,33 @@ class YouTubeUploader:
             return None
     
     def _build_title(self, lesson: Dict) -> str:
-        """Constrói título do vídeo no formato: SIGLA | MÓDULO | SEÇÃO | 000 NOME"""
+        """Constrói título do vídeo no formato: SIGLA | MÓDULO | 000 | NOME AULA"""
         MAX_LENGTH = 100
         
         # Extrai sigla do curso (usa campo 'acronym' ou gera do ID)
         course_id = self.metadata['course'].get('acronym', self.metadata['course']['id'].upper())
         
         module_title = lesson.get('module_title', '')
-        section_title_original = lesson.get('section_title', '')
-        section_title = section_title_original
-        lesson_order = str(lesson.get('order', 0)).zfill(3)  # 001, 002, etc.
-        lesson_title_original = lesson['title']
-        lesson_title = lesson_title_original
+        section_order = str(lesson.get('section_order', 0)).zfill(3)  # 001, 002, etc.
+        lesson_title = lesson['title']
         
-        # Formato: SIGLA | MÓDULO | SEÇÃO | 000 NOME
-        title = f"{course_id} | {module_title} | {section_title} | {lesson_order} {lesson_title}"
+        # Formato: SIGLA | MÓDULO | 000 | NOME AULA
+        title = f"{course_id} | {module_title} | {section_order} | {lesson_title}"
         
-        # Se ultrapassar 100 caracteres, aplica lógica de truncamento
+        # Se ultrapassar 100 caracteres, trunca o nome da aula
         if len(title) > MAX_LENGTH:
             # Partes fixas do título
-            prefix = f"{course_id} | {module_title} | "
-            middle = f" | {lesson_order} "
+            prefix = f"{course_id} | {module_title} | {section_order} | "
             
-            # Espaço disponível para seção + aula
-            available_space = MAX_LENGTH - len(prefix) - len(middle)
+            # Espaço disponível para o nome da aula
+            available_space = MAX_LENGTH - len(prefix)
             
-            # Tamanho mínimo da seção (60% do original)
-            min_section_length = int(len(section_title_original) * 0.6)
+            # Trunca o nome da aula
+            if available_space > 0:
+                lesson_title = lesson_title[:available_space]
             
-            # Tenta encurtar a seção primeiro
-            current_section_length = len(section_title_original)
-            
-            while len(section_title) + len(lesson_title) > available_space:
-                # Se a seção ainda pode ser encurtada (> 60% do original)
-                if current_section_length > min_section_length:
-                    current_section_length -= 1
-                    section_title = section_title_original[:current_section_length]
-                    
-                    # Verifica se agora cabe
-                    if len(section_title) + len(lesson_title) <= available_space:
-                        break
-                else:
-                    # Seção já está no mínimo, encurta a aula
-                    space_for_lesson = available_space - len(section_title)
-                    if space_for_lesson > 0:
-                        lesson_title = lesson_title_original[:space_for_lesson]
-                    else:
-                        # Caso extremo: encurta ambos proporcionalmente
-                        section_title = section_title_original[:min_section_length]
-                        lesson_title = lesson_title_original[:max(1, available_space - min_section_length)]
-                    break
-            
-            # Reconstrói o título com as partes truncadas
-            title = f"{prefix}{section_title}{middle}{lesson_title}"
+            # Reconstrói o título
+            title = f"{prefix}{lesson_title}"
         
         return title
     
