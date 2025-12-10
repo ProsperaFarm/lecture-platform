@@ -104,3 +104,101 @@
 - [x] Adicionar proteção de rotas no Home (redirecionar para login se não autenticado)
 - [x] Atualizar App.tsx com rotas de autenticação
 - [ ] Testar fluxo completo de login
+
+## 🐛 Fix Google OAuth Redirect URL
+- [ ] Corrigir GOOGLE_REDIRECT_URI no .env.example
+- [ ] Atualizar documentação com URL correta
+- [ ] Testar fluxo completo de login com URL corrigida
+
+## 🐛 Fix OAuth invalid_grant Error
+- [ ] Verificar se GOOGLE_REDIRECT_URI no backend está correta
+- [ ] Adicionar logs de debug no google-oauth.ts
+- [ ] Testar troca de código por token
+
+## 🐛 Fix Double OAuth Code Usage
+- [x] Adicionar proteção contra múltiplas chamadas no GoogleCallback
+- [x] Usar useRef para evitar double render do React Strict Mode
+- [ ] Testar que código é usado apenas uma vez
+
+## 🐛 Fix Session Cookie Not Persisting
+- [x] Verificar se cookie está sendo setado no googleCallback
+- [x] Corrigir sameSite para 'lax' em localhost (HTTP)
+- [x] Adicionar logs para debug de sessão
+- [ ] Testar login completo com cookie persistente
+
+## 🐛 Fix JWT Payload Fields
+- [x] Verificar campos esperados pelo context.ts (openId, appId, name)
+- [x] Ajustar JWT payload no googleCallback para incluir appId
+- [ ] Testar autenticação completa
+
+## 🎥 Create Lesson Video Page
+- [ ] Criar página LessonView.tsx com player do YouTube
+- [ ] Adicionar rota /course/:courseId/lesson/:lessonId no App.tsx
+- [ ] Buscar dados da aula do banco via tRPC
+- [ ] Exibir título, descrição e vídeo do YouTube
+- [ ] Adicionar navegação entre aulas (anterior/próxima)
+
+## 🐛 Fix Video Player Not Loading
+- [ ] Verificar se react-player está instalado no package.json
+- [ ] Verificar se lesson tem youtubeUrl no banco de dados
+- [ ] Adicionar logs de debug no componente LessonView
+- [ ] Testar com URL de vídeo hardcoded
+
+## 🔄 Migrate Lesson.tsx to use tRPC
+- [x] Remover import do courses-data.json
+- [x] Usar trpc.lessons.getById para buscar aula
+- [x] Usar trpc.courses.getById para buscar curso
+- [ ] Testar que vídeos do banco aparecem corretamente
+
+## 🎥 Implement White-Label Video Player
+- [x] Substituir ReactPlayer por iframe YouTube direto
+- [x] Adicionar overlay para bloquear acesso aos controles
+- [x] Desabilitar clique direito no player
+- [x] Usar youtube-nocookie.com
+- [ ] Testar que usuário não consegue link facilmente
+
+## 🐛 Fix lessons.getById 404 Error
+- [ ] Verificar se procedure está registrada no appRouter
+- [ ] Verificar se servidor foi reiniciado
+- [ ] Testar endpoint manualmente
+
+## 🎬 Implement Plyr Video Player
+- [x] Criar componente PlyrVideoPlayer com CDN
+- [x] Substituir WhiteLabelVideoPlayer por PlyrVideoPlayer
+- [x] Configurar controles customizados (sem share/copy)
+- [x] Usar youtube-nocookie.com
+- [ ] Testar que player funciona corretamente
+
+## 🎭 Add CSS Overlay to Hide YouTube Buttons When Paused
+- [x] Adicionar camadas CSS que cobrem botões quando vídeo pausa
+- [x] Integrar YouTube IFrame API para detectar estado
+- [x] Adicionar botão customizado "Continuar" quando pausado
+- [ ] Testar que botões do YouTube ficam ocultos
+
+## 🎨 Add Branded Overlay When Video Paused
+- [x] Adicionar logo da plataforma (Prospera Academy) no overlay
+- [x] Mostrar informações do curso/módulo/aula
+- [x] Tornar overlay visualmente atraente com gradientes
+- [ ] Testar que overlay cobre botões do YouTube
+
+## 🎯 Add Branded Overlays on Top of Plyr
+- [x] Manter Plyr player funcionando
+- [x] Adicionar tarjas branded sobre pontos específicos do player
+- [x] Bloquear cliques nas tarjas (pointer-events: auto + stopPropagation)
+- [x] Tarjas aparecem APENAS quando pausado
+- [x] Tarjas não reduzem tamanho do player (position absolute)
+- [ ] Testar que links do YouTube não são acessíveis
+
+## 🎬 Fix Overlays in Fullscreen and Loading States
+- [x] Mostrar tarjas também em modo fullscreen (z-index 9999)
+- [x] Detectar estado de loading do vídeo (waiting/playing events)
+- [x] Mostrar tarjas durante carregamento (primeiros 5s)
+- [x] Aumentar tamanho das tarjas em fullscreen
+- [ ] Testar em fullscreen e durante loading
+
+## ⏱️ Adjust Overlay Timing
+- [x] Mostrar tarjas por 5 segundos APÓS vídeo começar a tocar
+- [x] Remover lógica de loading state
+- [x] Usar timeout de 5s após evento 'playing'
+- [x] Corrigir tarjas não aparecendo em fullscreen (React Portal)
+- [ ] Testar timing correto e fullscreen

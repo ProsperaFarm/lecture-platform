@@ -45,6 +45,10 @@ export async function exchangeCodeForToken(code: string): Promise<{
   expires_in: number;
   token_type: string;
 }> {
+  console.log('[Google OAuth] Exchanging code for token...');
+  console.log('[Google OAuth] Redirect URI:', ENV.googleRedirectUri);
+  console.log('[Google OAuth] Client ID:', ENV.googleClientId.substring(0, 20) + '...');
+  
   const response = await fetch('https://oauth2.googleapis.com/token', {
     method: 'POST',
     headers: {
@@ -61,9 +65,11 @@ export async function exchangeCodeForToken(code: string): Promise<{
 
   if (!response.ok) {
     const error = await response.text();
+    console.error('[Google OAuth] Token exchange failed:', error);
     throw new Error(`Failed to exchange code for token: ${error}`);
   }
 
+  console.log('[Google OAuth] Token exchange successful');
   return response.json();
 }
 

@@ -2,7 +2,7 @@ import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
-import { getAllCourses, getCourseById, getLessonsByCourse, upsertUser, getUserByOpenId } from "./db";
+import { getAllCourses, getCourseById, getLessonsByCourse, getLessonById, upsertUser, getUserByOpenId } from "./db";
 import { z } from "zod";
 import { completeGoogleOAuth, getGoogleAuthUrl } from "./google-oauth";
 import { SignJWT } from "jose";
@@ -49,6 +49,7 @@ export const appRouter = router({
         const secret = new TextEncoder().encode(ENV.cookieSecret);
         const token = await new SignJWT({
           openId: dbUser.openId,
+          appId: ENV.appId,
           email: dbUser.email,
           name: dbUser.name,
           role: dbUser.role,
@@ -59,10 +60,13 @@ export const appRouter = router({
         
         // Set cookie
         const cookieOptions = getSessionCookieOptions(ctx.req);
+        console.log('[Google OAuth] Setting cookie:', COOKIE_NAME);
+        console.log('[Google OAuth] Cookie options:', cookieOptions);
         ctx.res.cookie(COOKIE_NAME, token, {
           ...cookieOptions,
           maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
         });
+        console.log('[Google OAuth] Cookie set successfully');
         
         return {
           success: true,
@@ -94,6 +98,11 @@ export const appRouter = router({
       .input(z.object({ courseId: z.string() }))
       .query(async ({ input }) => {
         return await getLessonsByCourse(input.courseId);
+      }),
+    getById: publicProcedure
+      .input(z.object({ lessonId: z.string() }))
+      .query(async ({ input }) => {
+        return await getLessonById(input.lessonId);
       }),
   }),
 });
