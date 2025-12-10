@@ -264,12 +264,12 @@ export function PlyrVideoPlayer({
             </div>
           </div>
 
-          {/* Thin gradient to cover YouTube logo (bottom-right corner only) */}
+          {/* Gradient to cover YouTube logo (bottom-right corner only) */}
           <div 
             className="absolute bottom-0 right-0 pointer-events-none"
-            style={{ height: '30px', width: '20%' }}
+            style={{ height: '54px', width: '20%' }}
           >
-            <div className="bg-black/90 h-full" />
+            <div className="bg-gradient-to-l from-black/95 via-black/70 to-transparent h-full" />
           </div>
 
           {/* Main gradient overlay for branding - positioned above controls */}

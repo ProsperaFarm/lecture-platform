@@ -340,3 +340,8 @@
 - [x] Usar right: 0, width: 20% (últimos 20% da largura)
 - [x] Manter altura de 30px
 - [ ] Testar se cobre logo do YouTube
+
+## 🔧 Adjust YouTube Cover
+- [x] Aumentar altura de 30px para 54px (altura dos controles)
+- [x] Mudar de retângulo preto para gradiente (right to left: from-black/95 via-black/70 to-transparent)
+- [ ] Testar cobertura do logo do YouTube
