@@ -1,5 +1,5 @@
 # lecture-platform
-Lecture Platform - FarmLecture
+Prospera Academy
 
 Portal privado estilo Udemy
 
