@@ -373,3 +373,9 @@
 - [x] Navegação está usando `lesson.id` (UUID) em vez de `lesson.lessonId`
 - [x] Corrigir Lesson.tsx para passar `lessonId` em vez de `id`
 - [x] Testar navegação com IDs corretos
+
+## 👤 Show User Name in Top Navigation Bar
+- [x] Verificar estrutura atual do Layout.tsx
+- [x] Adicionar useAuth() para obter dados do usuário
+- [x] Exibir nome do usuário na barra superior
+- [x] Testar exibição do nome

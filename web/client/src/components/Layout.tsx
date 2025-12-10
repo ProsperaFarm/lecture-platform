@@ -2,9 +2,10 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { BookOpen, ChevronRight, Menu, PlayCircle } from "lucide-react";
+import { BookOpen, ChevronRight, Menu, PlayCircle, User } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation, useRoute } from "wouter";
+import { useAuth } from "@/_core/hooks/useAuth";
 import coursesDataRaw from "../lib/courses-data.json";
 import { CoursesData } from "../lib/types";
 
@@ -28,6 +29,21 @@ export function Layout({ children }: LayoutProps) {
   if (!currentCourse) {
     return <div className="p-8 text-center">Curso não encontrado. <Link href="/">Voltar</Link></div>;
   }
+
+  const TopBar = () => {
+    const { user } = useAuth();
+    
+    return (
+      <div className="sticky top-0 z-20 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container flex h-14 max-w-5xl items-center justify-end px-4">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <User className="w-4 h-4" />
+            <span className="font-medium text-foreground">{user?.name || 'Usuário'}</span>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full bg-sidebar border-r border-sidebar-border">
@@ -123,6 +139,9 @@ export function Layout({ children }: LayoutProps) {
 
       {/* Main Content */}
       <main className="flex-1 lg:ml-80 min-h-screen flex flex-col">
+        {/* Top Navigation Bar */}
+        <TopBar />
+        
         <div className="flex-1 container py-8 lg:py-12 max-w-5xl mx-auto">
           {children}
         </div>
