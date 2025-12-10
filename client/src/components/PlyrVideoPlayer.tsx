@@ -18,7 +18,8 @@ export function PlyrVideoPlayer({
   const videoRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<any>(null);
   const [isPaused, setIsPaused] = useState(false);
-  const [showInitialOverlay, setShowInitialOverlay] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [showInitialOverlay, setShowInitialOverlay] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [fullscreenContainer, setFullscreenContainer] = useState<HTMLElement | null>(null);
   const initialOverlayTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -85,8 +86,16 @@ export function PlyrVideoPlayer({
           setIsPaused(true);
         });
 
-        // Listen to playing event - show overlay for 5 seconds after video starts
+        // Listen to loading/buffering events
+        playerRef.current.on('waiting', () => {
+          setIsLoading(true);
+        });
+
+        // Listen to playing event - video started playing after loading
         playerRef.current.on('playing', () => {
+          setIsLoading(false);
+          
+          // Start showing overlay for 5 more seconds after loading finishes
           setShowInitialOverlay(true);
           
           // Clear any existing timeout
@@ -173,8 +182,8 @@ export function PlyrVideoPlayer({
     );
   }
 
-  // Show overlays when paused OR during initial 5 seconds
-  const showOverlays = isPaused || showInitialOverlay;
+  // Show overlays when paused OR loading OR during initial 5 seconds after loading
+  const showOverlays = isPaused || isLoading || showInitialOverlay;
 
   // Render overlays component
   const renderOverlays = () => (

@@ -202,3 +202,10 @@
 - [x] Usar timeout de 5s após evento 'playing'
 - [x] Corrigir tarjas não aparecendo em fullscreen (React Portal)
 - [ ] Testar timing correto e fullscreen
+
+## ⏱️ Adjust Overlay Timing V2
+- [x] Manter lógica de isLoading (mostrar tarjas durante carregamento)
+- [x] APÓS loading terminar, manter tarjas por mais 5 segundos
+- [x] Usar isLoading OU showInitialOverlay para exibir tarjas
+- [x] React Portal para fullscreen support
+- [ ] Testar que tarjas aparecem durante loading + 5s após + fullscreen
