@@ -1,0 +1,1967 @@
+{
+  "course": {
+    "id": "gestao-fazendas-gado-leite",
+    "acronym": "GFGL",
+    "title": "Gestão de Fazendas de Gado de Leite - Rehagro",
+    "description": "Curso completo de gestão de fazendas leiteiras",
+    "totalVideos": 236,
+    "modules": [
+      {
+        "id": "module-01",
+        "order": 1,
+        "title": "Ciclo Essencial",
+        "folderName": "01_ciclo_essencial",
+        "sections": [
+          {
+            "id": "section-01-01",
+            "order": 1,
+            "title": "Boas-vindas e Orientações",
+            "lessons": [
+              {
+                "id": "lesson-01-01-01",
+                "order": 1,
+                "title": "Boas-vindas e orientações",
+                "fileName": "Videoaula 01 Boas-vindas e orientações.mp4",
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=EeJz6PDhlb0"
+              },
+              {
+                "id": "lesson-01-01-02",
+                "order": 2,
+                "title": "Conheça a equipe e o contrato de convivência Rehagro",
+                "fileName": "Videoaula 02 Conheça a equipe e o contrato de convivência Rehagr.mp4",
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=z-EC0JZgcRc"
+              },
+              {
+                "id": "lesson-01-01-03",
+                "order": 3,
+                "title": "Como usar a plataforma de estudos",
+                "fileName": "Gravações de aula ao vivo - como usar a plataforma de estudos.mp4",
+                "type": "live",
+                "youtubeUrl": "https://www.youtube.com/watch?v=JFZYSFENsVQ"
+              },
+              {
+                "id": "lesson-01-01-04",
+                "order": 4,
+                "title": "Gravação ao vivo - Boas-vindas e orientações",
+                "fileName": "Gravação de aula on-line ao vivo - Boas-vindas e orientações - 2.mp4",
+                "type": "live",
+                "youtubeUrl": "https://www.youtube.com/watch?v=T4w_xb6AMRo"
+              }
+            ]
+          },
+          {
+            "id": "section-01-02",
+            "order": 2,
+            "title": "Planejamento e Sistema de Produção",
+            "lessons": [
+              {
+                "id": "lesson-01-02-01",
+                "order": 1,
+                "title": "Introdução - Planejamento da propriedade",
+                "fileName": "Videoaula 01 Introdução - Planejamento da propriedade.mp4",
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=e0csl1aaZhk"
+              },
+              {
+                "id": "lesson-01-02-02",
+                "order": 2,
+                "title": "Desempenho e eficiência",
+                "fileName": "Videoaula 02 Desempenho e eficiência.mp4",
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=yaEjrhbqA4o"
+              },
+              {
+                "id": "lesson-01-02-03",
+                "order": 3,
+                "title": "Definindo o sistema de produção - Parte I",
+                "fileName": "Videoaula 03 Definindo o sistema de produção - Parte I.mp4",
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=t1rZmRSUfxE"
+              },
+              {
+                "id": "lesson-01-02-04",
+                "order": 4,
+                "title": "Definindo o sistema de produção - Parte II",
+                "fileName": "Videoaula 04 Definindo o sistema de produção - Parte II.mp4",
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=OEHOo3akGPM"
+              },
+              {
+                "id": "lesson-01-02-05",
+                "order": 5,
+                "title": "Confinamento e Pastejo",
+                "fileName": "Videoaula 05 Confinamento e Pastejo.mp4",
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=BPp_3I81vig"
+              },
+              {
+                "id": "lesson-01-02-06",
+                "order": 6,
+                "title": "Gerenciamento do sistema de produção",
+                "fileName": "Videoaula 06Gerenciamento do sistema de produção.mp4",
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=UmOqpuHGnxo"
+              },
+              {
+                "id": "lesson-01-02-07",
+                "order": 7,
+                "title": "Gravação ao vivo - Sistemas de produção leiteira",
+                "fileName": "gravação de aula online ao vivo - Sistemas de produção leiteira.mp4",
+                "type": "live"
+              }
+            ]
+          },
+          {
+            "id": "section-01-03",
+            "order": 3,
+            "title": "Indicadores Reprodutivos",
+            "lessons": [
+              {
+                "id": "lesson-01-03-01",
+                "order": 1,
+                "title": "Premissas para bons indicadores",
+                "fileName": "Videoaula 01Premissas para bons indicadores.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-01-03-02",
+                "order": 2,
+                "title": "Fatores que influenciam na eficiência reprodutiva",
+                "fileName": "Videoaula 02Fatores que influenciam na eficiência reprodutiva.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-01-03-03",
+                "order": 3,
+                "title": "Período de espera voluntário",
+                "fileName": "Videoaula 03Período de espera voluntário.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-01-03-04",
+                "order": 4,
+                "title": "Período de serviço",
+                "fileName": "Videoaula 04Período de serviço.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-01-03-05",
+                "order": 5,
+                "title": "Taxa de serviço",
+                "fileName": "Videoaula 05Taxa de serviço.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-01-03-06",
+                "order": 6,
+                "title": "Taxa de concepção - Parte I",
+                "fileName": "Videoaula 06Taxa de concepção - Parte 1.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-01-03-07",
+                "order": 7,
+                "title": "Taxa de concepção - Parte II",
+                "fileName": "Videoaula 07 Taxa de concepção - Parte II.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-01-03-08",
+                "order": 8,
+                "title": "Perda de prenhez",
+                "fileName": "Videoaula 08Perda de prenhez.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-01-03-09",
+                "order": 9,
+                "title": "Percentual de vacas em lactação",
+                "fileName": "Videoaula 09Percentual de vacas em lactação.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-01-03-10",
+                "order": 10,
+                "title": "Eficiência reprodutiva e rentabilidade",
+                "fileName": "Videoaula 10Eficiência reprodutiva e rentabilidade.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-01-03-11",
+                "order": 11,
+                "title": "Exemplos de fazendas eficientes",
+                "fileName": "Videoaula 11Exemplos de fazendas eficientes.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-01-03-12",
+                "order": 12,
+                "title": "Gravação ao vivo - Indicadores reprodutivos",
+                "fileName": "Gravação de aula online ao vivo - Indicadores reprodutivos em re.mp4",
+                "type": "live"
+              }
+            ]
+          },
+          {
+            "id": "section-01-04",
+            "order": 4,
+            "title": "Produção Forrageira",
+            "lessons": [
+              {
+                "id": "lesson-01-04-01",
+                "order": 1,
+                "title": "Planejando a produção forrageira",
+                "fileName": "Videoaula 01 Planejando a produção forrageira.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-01-04-02",
+                "order": 2,
+                "title": "Particularidades forrageiras - Parte I",
+                "fileName": "Videoaula 02 Particularidades forrageiras - Parte I.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-01-04-03",
+                "order": 3,
+                "title": "Particularidades forrageiras - Parte II",
+                "fileName": "Videoaula 03 Particularidades forrageiras - Parte II.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-01-04-04",
+                "order": 4,
+                "title": "Otimizando a silagem de milho",
+                "fileName": "Videoaula 04 Otimizando a silagem de milho.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-01-04-05",
+                "order": 5,
+                "title": "Otimizando a pastagem e o pastejo",
+                "fileName": "Videoaula 05 Otimizando a pastagem e o pastejo.mp4",
+                "type": "video"
+              }
+            ]
+          },
+          {
+            "id": "section-01-05",
+            "order": 5,
+            "title": "Evolução de Rebanho",
+            "lessons": [
+              {
+                "id": "lesson-01-05-01",
+                "order": 1,
+                "title": "Evolução de rebanho - Parte I",
+                "fileName": "Videoaula 06 Evolução de rebanho - Parte I.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-01-05-02",
+                "order": 2,
+                "title": "Evolução de rebanho - Parte II",
+                "fileName": "Videoaula 07 Evolução de rebanho - Parte II.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-01-05-03",
+                "order": 3,
+                "title": "Evolução de rebanho - Parte III",
+                "fileName": "Videoaula 08 Evolução de rebanho - Parte III.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-01-05-04",
+                "order": 4,
+                "title": "Evolução de rebanho - Parte IV",
+                "fileName": "Videoaula 09 Evolução de rebanho - Parte IV.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-01-05-05",
+                "order": 5,
+                "title": "Evolução de rebanho - Parte V",
+                "fileName": "Videoaula 10 Evolução de rebanho - Parte V.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-01-05-06",
+                "order": 6,
+                "title": "Evolução de rebanho e planejamento alimentar",
+                "fileName": "Videoaula 11 Evolução de rebanho e planejamento alimentar.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-01-05-07",
+                "order": 7,
+                "title": "Recordando a evolução de rebanho",
+                "fileName": "Videoaula 12 Recordando a evolução de rebanho.mp4",
+                "type": "video"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "module-02",
+        "order": 2,
+        "title": "Ciclo Eficiência Reprodutiva",
+        "folderName": "05_ciclo_eficiencia_reprodutiva",
+        "sections": [
+          {
+            "id": "section-02-01",
+            "order": 1,
+            "title": "Indicadores e Perdas Reprodutivas",
+            "lessons": [
+              {
+                "id": "lesson-02-01-01",
+                "order": 1,
+                "title": "Indicadores reprodutivos",
+                "fileName": "Videoaula 01Indicadores reprodutivos.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-02-01-02",
+                "order": 2,
+                "title": "Perdas gestacionais em vacas leiteiras - Parte I",
+                "fileName": "Videoaula 02Perdas gestacionais em vacas leiteiras - Parte I.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-02-01-03",
+                "order": 3,
+                "title": "Perdas gestacionais em vacas leiteiras - Parte II",
+                "fileName": "Videoaula 03Perdas gestacionais em vacas leiteiras - Parte II.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-02-01-04",
+                "order": 4,
+                "title": "Perdas gestacionais em vacas leiteiras - Parte III",
+                "fileName": "Videoaula 04Perdas gestacionais em vacas leiteiras - Parte III.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-02-01-05",
+                "order": 5,
+                "title": "Impacto das doenças na reprodução de vacas leiteiras",
+                "fileName": "Videoaula 05Impacto das doenças na reprodução de vacas leiteiras.mp4",
+                "type": "video"
+              }
+            ]
+          },
+          {
+            "id": "section-02-02",
+            "order": 2,
+            "title": "Detecção de Estro e Observação de Cio",
+            "lessons": [
+              {
+                "id": "lesson-02-02-01",
+                "order": 1,
+                "title": "Desafios da observação de cio em vacas leiteiras",
+                "fileName": "Videoaula 01Desafios da observação de cio em vacas leiteiras.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-02-02-02",
+                "order": 2,
+                "title": "Importância da observação de cio em fazendas",
+                "fileName": "Videoaula 02Importância da observação de cio em fazendas.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-02-02-03",
+                "order": 3,
+                "title": "Sinais de cio",
+                "fileName": "Videoaula 03Sinais de cio.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-02-02-04",
+                "order": 4,
+                "title": "Ferramentas para auxiliar na detecção de estro - Parte I",
+                "fileName": "Videoaula 04Ferramentas para auxiliar na detecção de estro de va.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-02-02-05",
+                "order": 5,
+                "title": "Ferramentas para auxiliar na detecção de estro - Parte II",
+                "fileName": "Videoaula 05Ferramentas para auxiliar na detecção de estro de va.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-02-02-06",
+                "order": 6,
+                "title": "Ferramentas para auxiliar na detecção de estro - Parte III",
+                "fileName": "Videoaula 06Ferramentas para auxiliar na detecção de estro de va.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-02-02-07",
+                "order": 7,
+                "title": "Ferramentas para auxiliar na detecção de estro - Parte IV",
+                "fileName": "Videoaula 07Ferramentas para auxiliar na detecção de estro de va.mp4",
+                "type": "video"
+              }
+            ]
+          },
+          {
+            "id": "section-02-03",
+            "order": 3,
+            "title": "Saúde Uterina e Fatores Reprodutivos",
+            "lessons": [
+              {
+                "id": "lesson-02-03-01",
+                "order": 1,
+                "title": "Saúde uterina das vacas leiteiras - Parte I",
+                "fileName": "Videoaula 06Saúde uterina das vacas leiteiras - Parte I.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-02-03-02",
+                "order": 2,
+                "title": "Saúde uterina das vacas leiteiras - Parte II",
+                "fileName": "Videoaula 07Saúde uterina das vacas leiteiras - Parte II.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-02-03-03",
+                "order": 3,
+                "title": "Como reduzir o anestro em vacas leiteiras",
+                "fileName": "Videoaula 08Como reduzir o anestro em vacas leiteiras.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-02-03-04",
+                "order": 4,
+                "title": "Efeitos do estresse térmico na reprodução",
+                "fileName": "Videoaula 09Efeitos do estresse térmico na reprodução de vacas l.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-02-03-05",
+                "order": 5,
+                "title": "Seleção genética e fertilidade",
+                "fileName": "Videoaula 10Seleção genética e fertilidade.mp4",
+                "type": "video"
+              }
+            ]
+          },
+          {
+            "id": "section-02-04",
+            "order": 4,
+            "title": "Rotinas Reprodutivas",
+            "lessons": [
+              {
+                "id": "lesson-02-04-01",
+                "order": 1,
+                "title": "Rotinas reprodutivas em fazendas leiteiras - Parte I",
+                "fileName": "Videoaula 08Rotinas reprodutivas em fazendas leiteiras - Parte I.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-02-04-02",
+                "order": 2,
+                "title": "Rotinas reprodutivas em fazendas leiteiras - Parte II",
+                "fileName": "Videoaula 09Rotinas reprodutivas em fazendas leiteiras - Parte I.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-02-04-03",
+                "order": 3,
+                "title": "Rotinas reprodutivas em fazendas leiteiras - Parte III",
+                "fileName": "Videoaula 10Rotinas reprodutivas em fazendas leiteiras - Parte I.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-02-04-04",
+                "order": 4,
+                "title": "Considerações finais - Estratégias de rotinas reprodutivas",
+                "fileName": "Videoaula 11Considerações finais - Estratégias de rotinas reprod.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-02-04-05",
+                "order": 5,
+                "title": "Gravação ao vivo - Busca da eficiência produtiva",
+                "fileName": "Gravação de aula online ao vivo - Busca da eficiência produtiva.mp4",
+                "type": "live"
+              },
+              {
+                "id": "lesson-02-04-06",
+                "order": 6,
+                "title": "Gravação ao vivo - Busca da eficiência produtiva (2)",
+                "fileName": "Gravação de aula online ao vivo - Busca da eficiência produtiva copy.mp4",
+                "type": "live"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "module-03",
+        "order": 3,
+        "title": "Criação de Bezerras e Novilhas",
+        "folderName": "10_bezerras",
+        "sections": [
+          {
+            "id": "section-03-01",
+            "order": 1,
+            "title": "Manejo Inicial e Parto",
+            "lessons": [
+              {
+                "id": "lesson-03-01-01",
+                "order": 1,
+                "title": "Importância do planejamento e custos da recria",
+                "fileName": "Videoaula 01 Importância do planejamento e custos da recria.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-01-02",
+                "order": 2,
+                "title": "Iniciando os cuidados com a bezerra",
+                "fileName": "Videoaula 02 - Iniciando os cuidados com a bezerra.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-01-03",
+                "order": 3,
+                "title": "Fases do parto e especificação da maternidade",
+                "fileName": "Videoaula 03 - Fases do parto e especificação da maternidade.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-01-04",
+                "order": 4,
+                "title": "Resfriamento térmico no período seco",
+                "fileName": "Videoaula 04 - Resfriamento térmico no período seco.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-01-05",
+                "order": 5,
+                "title": "Manejo de parto no composto",
+                "fileName": "Vídeo complementar - Manejo de parto no composto.mp4",
+                "type": "video"
+              }
+            ]
+          },
+          {
+            "id": "section-03-02",
+            "order": 2,
+            "title": "Colostragem",
+            "lessons": [
+              {
+                "id": "lesson-03-02-01",
+                "order": 1,
+                "title": "Colostragem",
+                "fileName": "Videoaula 05 - Colostragem.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-02-02",
+                "order": 2,
+                "title": "Qualidade do colostro",
+                "fileName": "Videoaula 06 - Qualidade do colostro.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-02-03",
+                "order": 3,
+                "title": "Avaliando a eficiência de colostragem",
+                "fileName": "Videoaula 07 - Avaliando a eficiência de colostragem.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-02-04",
+                "order": 4,
+                "title": "Como avaliar a qualidade do colostro",
+                "fileName": "Como avaliar a qualidade do colostro.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-02-05",
+                "order": 5,
+                "title": "Monitorando a eficiência da colostragem",
+                "fileName": "Monitorando a eficiência da colostragem.mp4",
+                "type": "video"
+              }
+            ]
+          },
+          {
+            "id": "section-03-03",
+            "order": 3,
+            "title": "Nutrição e Dieta",
+            "lessons": [
+              {
+                "id": "lesson-03-03-01",
+                "order": 1,
+                "title": "Trato gastrointestinal de bovinos jovens",
+                "fileName": "Videoaula 08 - Trato gastrointestinal de bovinos jovens.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-03-02",
+                "order": 2,
+                "title": "Dieta líquida - Alimentos",
+                "fileName": "Videoaula 09 - Dieta líquida - Alimentos.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-03-03",
+                "order": 3,
+                "title": "Dieta líquida - Métodos de fornecimento",
+                "fileName": "Videoaula 10 - Dieta líquida - Métodos de fornecimento.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-03-04",
+                "order": 4,
+                "title": "Dieta sólida",
+                "fileName": "Videoaula 11 - Dieta sólida.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-03-05",
+                "order": 5,
+                "title": "Desmame",
+                "fileName": "Videoaula 12 - Desmame.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-03-06",
+                "order": 6,
+                "title": "Transição pós-desmame",
+                "fileName": "Videoaula 13 - Transição pós-desmame.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-03-07",
+                "order": 7,
+                "title": "Qualidade da dieta fornecida",
+                "fileName": "Videoaula 09Qualidade da dieta fornecida.mp4",
+                "type": "video"
+              }
+            ]
+          },
+          {
+            "id": "section-03-04",
+            "order": 4,
+            "title": "Recria de Novilhas",
+            "lessons": [
+              {
+                "id": "lesson-03-04-01",
+                "order": 1,
+                "title": "Instalações e manejos da recria",
+                "fileName": "Videoaula 14 Instalações e manejos da recria.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-04-02",
+                "order": 2,
+                "title": "Pontos de atenção para nutrição de novilhas",
+                "fileName": "Videoaula 15 - Pontos de atenção para nutrição de novilhas.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-04-03",
+                "order": 3,
+                "title": "Indicadores zootécnicos em bezerras e novilhas",
+                "fileName": "Videoaula 16 - Indicadores zootécnicos em bezerras e novilhas.mp4",
+                "type": "video"
+              }
+            ]
+          },
+          {
+            "id": "section-03-05",
+            "order": 5,
+            "title": "Sistemas e Primeiros Cuidados",
+            "lessons": [
+              {
+                "id": "lesson-03-05-01",
+                "order": 1,
+                "title": "Fatores relacionados à saúde das bezerras",
+                "fileName": "Videoaula 01Fatores relacionados à saúde das bezerras.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-05-02",
+                "order": 2,
+                "title": "Sistemas de criação de bezerras",
+                "fileName": "Videoaula 02Sistemas de criação de bezerras.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-05-03",
+                "order": 3,
+                "title": "Desafios sanitários na criação de bezerras",
+                "fileName": "Videoaula 03Desafios sanitários na criação de bezerras.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-05-04",
+                "order": 4,
+                "title": "Cuidados com a vaca e bezerra",
+                "fileName": "Videoaula 04Cuidados com a vaca e bezerra.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-05-05",
+                "order": 5,
+                "title": "Primeiros cuidados com as bezerras",
+                "fileName": "Videoaula 05Primeiros cuidados com as bezerras.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-05-06",
+                "order": 6,
+                "title": "Colostragem",
+                "fileName": "Videoaula 06Colostragem.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-05-07",
+                "order": 7,
+                "title": "Cura de umbigo",
+                "fileName": "Videoaula 07Cura de umbigo.mp4",
+                "type": "video"
+              }
+            ]
+          },
+          {
+            "id": "section-03-06",
+            "order": 6,
+            "title": "Doenças e Tratamentos",
+            "lessons": [
+              {
+                "id": "lesson-03-06-01",
+                "order": 1,
+                "title": "Diarreia em bezerras",
+                "fileName": "Videoaula 08Diarreia em bezerras.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-06-02",
+                "order": 2,
+                "title": "Prática - Hidratação oral de bezerras",
+                "fileName": "Videoaula 09Prática - Hidratação oral de bezerras.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-06-03",
+                "order": 3,
+                "title": "Ações importantes no controle de diarreia",
+                "fileName": "Videoaula 10Ações importantes no controle de diarreia.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-06-04",
+                "order": 4,
+                "title": "Doença respiratória - Parte 1",
+                "fileName": "Videoaula 11Doença respiratória - Parte 1.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-06-05",
+                "order": 5,
+                "title": "Doença respiratória - Parte 2",
+                "fileName": "Videoaula 12Doença respiratória - Parte 2.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-06-06",
+                "order": 6,
+                "title": "Tristeza parasitária bovina - Parte 1",
+                "fileName": "Videoaula 13Tristeza parasitária bovina - Parte 1.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-06-07",
+                "order": 7,
+                "title": "Tristeza parasitária bovina - Parte 2",
+                "fileName": "Videoaula 14Tristeza parasitária bovina - Parte 2.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-06-08",
+                "order": 8,
+                "title": "Monitoramento da tristeza parasitária bovina",
+                "fileName": "Videoaula 15Monitoramento da tristeza parasitária bovina.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-06-09",
+                "order": 9,
+                "title": "Tratamento da tristeza parasitária bovina",
+                "fileName": "Videoaula 16Tratamento da tristeza parasitária bovina.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-06-10",
+                "order": 10,
+                "title": "Doenças de umbigo - Onfalites",
+                "fileName": "Videoaula 17Doenças de umbigo - Onfalites.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-06-11",
+                "order": 11,
+                "title": "Outras doenças em bezerras",
+                "fileName": "Videoaula 18Outras doenças em bezerras.mp4",
+                "type": "video"
+              }
+            ]
+          },
+          {
+            "id": "section-03-07",
+            "order": 7,
+            "title": "Programa Sanitário",
+            "lessons": [
+              {
+                "id": "lesson-03-07-01",
+                "order": 1,
+                "title": "Programa de saúde de bezerras",
+                "fileName": "Videoaula 19Programa de saúde de bezerras.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-07-02",
+                "order": 2,
+                "title": "Calendário sanitário",
+                "fileName": "Videoaula 20Calendário sanitário.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-07-03",
+                "order": 3,
+                "title": "Metas na criação de bezerras",
+                "fileName": "Videoaula 21Metas na criação de bezerras.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-03-07-04",
+                "order": 4,
+                "title": "Gravação ao vivo - Sanidade de bezerras e novilhas",
+                "fileName": "Gravação de aula online ao vivo - Sanidade de bezerras e novilha.mp4",
+                "type": "live"
+              },
+              {
+                "id": "lesson-03-07-05",
+                "order": 5,
+                "title": "Gravação ao vivo - Como criar bem as bezerras",
+                "fileName": "Gravações de aula online ao vivo - Como criar bem as bezerras no.mp4",
+                "type": "live"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "module-04",
+        "order": 4,
+        "title": "Produção e Conservação de Forragens",
+        "folderName": "20_producao_conservacao_forragem",
+        "sections": [
+          {
+            "id": "section-04-01",
+            "order": 1,
+            "title": "Silagem de Milho",
+            "lessons": [
+              {
+                "id": "lesson-04-01-01",
+                "order": 1,
+                "title": "Principais desafios na produção de silagem",
+                "fileName": "Videoaula 01Principais desafios na produção de silagem.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-01-02",
+                "order": 2,
+                "title": "Pontos importantes para a ensilagem",
+                "fileName": "Videoaula 02Pontos importantes para a ensilagem.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-01-03",
+                "order": 3,
+                "title": "Colhendo o milho no ponto ideal",
+                "fileName": "Videoaula 03Colhendo o milho no ponto ideal.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-01-04",
+                "order": 4,
+                "title": "Como fazer a avaliação da silagem - Parte I",
+                "fileName": "Videoaula 04 Como fazer a avaliação da silagem - Parte I.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-01-05",
+                "order": 5,
+                "title": "Como fazer a avaliação da silagem - Parte II",
+                "fileName": "Videoaula 05Como fazer a avaliação da silagem - Parte II.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-01-06",
+                "order": 6,
+                "title": "Processamento dos grãos de milho - Parte I",
+                "fileName": "Videoaula 06Processamento dos grãos de milho - Parte I.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-01-07",
+                "order": 7,
+                "title": "Processamento dos grãos de milho - Parte II",
+                "fileName": "Videoaula 07Processamento dos grãos de milho - Parte II.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-01-08",
+                "order": 8,
+                "title": "Etapas importantes para a compactação da silagem",
+                "fileName": "Videoaula 08Etapas importantes para a compactação da silagem.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-01-09",
+                "order": 9,
+                "title": "Abastecimento e compactação",
+                "fileName": "Videoaula 09 Abastecimento e compactação.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-01-10",
+                "order": 10,
+                "title": "Cuidados no fechamento do silo",
+                "fileName": "Videoaula 10Cuidados no fechamento do silo.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-01-11",
+                "order": 11,
+                "title": "Minimizando perdas",
+                "fileName": "Videoaula 11Minimizando perdas.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-01-12",
+                "order": 12,
+                "title": "Manejo da Silagem - Parte I",
+                "fileName": "Videoaula 12Manejo da Silagem - Parte I.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-01-13",
+                "order": 13,
+                "title": "Manejo da Silagem - Parte II",
+                "fileName": "Videoaula 13Manejo da Silagem - Parte II.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-01-14",
+                "order": 14,
+                "title": "Estimando o estoque de silagem na propriedade",
+                "fileName": "Videoaula 14Estimando o estoque de silagem na propriedade.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-01-15",
+                "order": 15,
+                "title": "Doenças na cultura de milho",
+                "fileName": "Videoaula 15Doenças na cultura de milho.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-01-16",
+                "order": 16,
+                "title": "Principais pontos para aumentar a qualidade da silagem",
+                "fileName": "Videoaula 16Principais pontos para aumentar a qualidade da silag.mp4",
+                "type": "video"
+              }
+            ]
+          },
+          {
+            "id": "section-04-02",
+            "order": 2,
+            "title": "Planejamento forrageiro",
+            "lessons": [
+              {
+                "id": "lesson-04-02-01",
+                "order": 1,
+                "title": "Silagem de milho",
+                "fileName": "Videoaula 01Silagem de milho.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-02-02",
+                "order": 2,
+                "title": "A importância de um bom manejo de solo",
+                "fileName": "Videoaula 02A importância de um bom manejo de solo.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-02-03",
+                "order": 3,
+                "title": "Amostragem de solo",
+                "fileName": "Videoaula 03 Amostragem de solo.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-02-04",
+                "order": 4,
+                "title": "A importância da calagem",
+                "fileName": "Videoaula 04A importância da calagem.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-02-05",
+                "order": 5,
+                "title": "Entendendo a importância do gesso",
+                "fileName": "Videoaula 05Entendendo a importância do gesso.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-02-06",
+                "order": 6,
+                "title": "Estratégias de nutrição para a cultura do milho",
+                "fileName": "Videoaula 06Estratégias de nutrição para a cultura do milho.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-02-07",
+                "order": 7,
+                "title": "Compactação e seus prejuízos para o solo",
+                "fileName": "Videoaula 07Compactação e seus prejuizos para o solo.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-02-08",
+                "order": 8,
+                "title": "Estratégias para manter o equilíbrio biológico no solo",
+                "fileName": "Videoaula 08Estratégias para manter o equilíbrio biológico no so.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-02-09",
+                "order": 9,
+                "title": "Estratégias para a rotação de culturas",
+                "fileName": "Videoaula 09Estratégias para a rotação de culturas.mp4",
+                "type": "video"
+              }
+            ]
+          },
+          {
+            "id": "section-04-03",
+            "order": 3,
+            "title": "Cultura do Milho",
+            "lessons": [
+              {
+                "id": "lesson-04-03-01",
+                "order": 1,
+                "title": "Conhecendo a planta de milho",
+                "fileName": "Videoaula 10Conhecendo a planta de milho.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-03-02",
+                "order": 2,
+                "title": "Fases da cultura de milho",
+                "fileName": "Videoaula 11Fases da cultura de milho.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-03-03",
+                "order": 3,
+                "title": "Plantio do milho",
+                "fileName": "Videoaula 12Plantio do milho.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-03-04",
+                "order": 4,
+                "title": "Manejo de plantas daninhas",
+                "fileName": "Videoaula 13Manejo de plantas daninhas.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-03-05",
+                "order": 5,
+                "title": "Manejo de pragas",
+                "fileName": "Videoaula 14Manejo de pragas.mp4",
+                "type": "video"
+              }
+            ]
+          },
+          {
+            "id": "section-04-04",
+            "order": 4,
+            "title": "Nutrição e Manejo Alimentar",
+            "lessons": [
+              {
+                "id": "lesson-04-04-01",
+                "order": 1,
+                "title": "Dieta de vacas leiteiras",
+                "fileName": "Videoaula 01Dieta de vacas leiteiras.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-04-02",
+                "order": 2,
+                "title": "Forragens na alimentação do rebanho",
+                "fileName": "Videoaula 02Forragens na alimentação do rebanho.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-04-03",
+                "order": 3,
+                "title": "Impacto da qualidade da forragem na dieta",
+                "fileName": "Videoaula 03 Impacto da qualidade da forragem na dieta.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-04-04",
+                "order": 4,
+                "title": "Exigência nutricional - Parte I",
+                "fileName": "Videoaula 04Exigência nutricional - Parte I.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-04-05",
+                "order": 5,
+                "title": "Exigência nutricional - Parte II",
+                "fileName": "Videoaula 05Exigência nutricional - Parte II.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-04-06",
+                "order": 6,
+                "title": "Divisão de lotes - Parte I",
+                "fileName": "Videoaula 06Divisão de lotes - Parte I.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-04-07",
+                "order": 7,
+                "title": "Divisão de lotes - Parte II",
+                "fileName": "Videoaula 07 Divisão de lotes - Parte II.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-04-08",
+                "order": 8,
+                "title": "Divisão de lotes - Parte III",
+                "fileName": "Videoaula 08Divisão de lotes - Parte III.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-04-09",
+                "order": 9,
+                "title": "Qualidade da dieta fornecida",
+                "fileName": "Videoaula 09Qualidade da dieta fornecida.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-04-10",
+                "order": 10,
+                "title": "Avaliação da qualidade da dieta fornecida",
+                "fileName": "Videoaula 10Avaliação da qualidade da dieta fornecida.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-04-11",
+                "order": 11,
+                "title": "Manejo alimentar de vacas secas",
+                "fileName": "Videoaula 11Manejo alimentar de vacas secas.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-04-12",
+                "order": 12,
+                "title": "Manejo Alimentar Pré-Parto",
+                "fileName": "Videoaula 12Manejo Alimentar Pré-Parto.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-04-13",
+                "order": 13,
+                "title": "Fatores que impactam o consumo",
+                "fileName": "Videoaula 13Fatores que impactam o consumo.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-04-14",
+                "order": 14,
+                "title": "Desafios Relacionados ao Cálcio",
+                "fileName": "Videoaula 14Desafios Relacionados ao Cálcio.mp4",
+                "type": "video"
+              }
+            ]
+          },
+          {
+            "id": "section-04-05",
+            "order": 5,
+            "title": "Milho Reidratado",
+            "lessons": [
+              {
+                "id": "lesson-04-05-01",
+                "order": 1,
+                "title": "Benefícios do milho reidratado",
+                "fileName": "Videoaula 01Benefícios do milho reidratado.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-05-02",
+                "order": 2,
+                "title": "Benefícios na dieta das vacas",
+                "fileName": "Videoaula 02Benefícios na dieta das vacas.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-05-03",
+                "order": 3,
+                "title": "O que é necessário para produzir o milho reidratado",
+                "fileName": "Videoaula 03O que é necessário para produzir o milho reidratado.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-05-04",
+                "order": 4,
+                "title": "Instalações para a ensilagem do milho reidratado",
+                "fileName": "Videoaula 04Instalações para a ensilagem do milho reidratado.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-05-05",
+                "order": 5,
+                "title": "Pontos importantes na técnica da reidratação",
+                "fileName": "Videoaula 05Pontos importantes na técnica da reidratação.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-05-06",
+                "order": 6,
+                "title": "Garantindo a umidade adequada para o grão reidratado",
+                "fileName": "Videoaula 06Garantindo a umidade adequada para o grão reidratado.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-05-07",
+                "order": 7,
+                "title": "Estratégias para minimizar perdas",
+                "fileName": "Videoaula 07Estratégias para minimizar perdas.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-05-08",
+                "order": 8,
+                "title": "Momento certo de abrir o milho reidratado",
+                "fileName": "Videoaula 08Momento certo de abrir o milho reidratado.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-05-09",
+                "order": 9,
+                "title": "Utilização do milho reidratado na dieta de vacas leiteiras",
+                "fileName": "Videoaula 09Utilização do milho reidratado na dieta de vacas lei.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-05-10",
+                "order": 10,
+                "title": "Monitoramento do amido nas fezes",
+                "fileName": "Videoaula 10Monitoramento do amido nas fezes.mp4",
+                "type": "video"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "module-05",
+        "order": 5,
+        "title": "Ciclo Gestão Financeira e Econômica",
+        "folderName": "30_ciclo_gestao_financeira",
+        "sections": [
+          {
+            "id": "section-05-01",
+            "order": 1,
+            "title": "Introdução à Gestão Financeira",
+            "lessons": [
+              {
+                "id": "lesson-05-01-01",
+                "order": 1,
+                "title": "Introdução à gestão financeira - Parte I",
+                "fileName": "Videoaula 01Introdução à gestão financeira - Parte I.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-01-02",
+                "order": 2,
+                "title": "Introdução à gestão financeira - Parte II",
+                "fileName": "Videoaula 02Introdução à gestão financeira - Parte II.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-01-03",
+                "order": 3,
+                "title": "Qual é o cenário atual da pecuária leiteira",
+                "fileName": "Videoaula 03Qual é o cenário atual da pecuária leiteira.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-01-04",
+                "order": 4,
+                "title": "Como iniciar o trabalho de gestão financeira na fazenda",
+                "fileName": "Videoaula 04Como iniciar o trabalho de gestão financeira na faze.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-01-05",
+                "order": 5,
+                "title": "Financeiro X Econômico",
+                "fileName": "Videoaula 05Financeiro X Econômico.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-01-06",
+                "order": 6,
+                "title": "Conceitos importantes na gestão econômica",
+                "fileName": "Videoaula 06Conceitos importantes na gestão econômica.mp4",
+                "type": "video"
+              }
+            ]
+          },
+          {
+            "id": "section-05-02",
+            "order": 2,
+            "title": "Fluxo de Caixa",
+            "lessons": [
+              {
+                "id": "lesson-05-02-01",
+                "order": 1,
+                "title": "Fluxo de Caixa - Parte I",
+                "fileName": "Videoaula 07Fluxo de Caixa - Parte I.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-02-02",
+                "order": 2,
+                "title": "Fluxo de Caixa - Parte II",
+                "fileName": "Videoaula 08Fluxo de Caixa - Parte II.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-02-03",
+                "order": 3,
+                "title": "Conciliação Bancária",
+                "fileName": "Videoaula 09Conciliação Bancária.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-02-04",
+                "order": 4,
+                "title": "Previsão de Caixa",
+                "fileName": "Videoaula 10 Previsão de Caixa.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-02-05",
+                "order": 5,
+                "title": "Resolução do exercício - Fluxo de caixa",
+                "fileName": "Videoaula 11Resolução do exercício - Fluxo de caixa.mp4",
+                "type": "video"
+              }
+            ]
+          },
+          {
+            "id": "section-05-03",
+            "order": 3,
+            "title": "Orçamento",
+            "lessons": [
+              {
+                "id": "lesson-05-03-01",
+                "order": 1,
+                "title": "Orçamento - Parte I",
+                "fileName": "Videoaula 12 Orçamento - Parte I.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-03-02",
+                "order": 2,
+                "title": "Orçamento - Parte II",
+                "fileName": "Videoaula 13Orçamento - Parte II.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-03-03",
+                "order": 3,
+                "title": "Orçamento - Parte III",
+                "fileName": "Videoaula 14Orçamento - Parte III.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-03-04",
+                "order": 4,
+                "title": "Orçamento - Parte IV",
+                "fileName": "Videoaula 15Orçamento - Parte IV.mp4",
+                "type": "video"
+              }
+            ]
+          },
+          {
+            "id": "section-05-04",
+            "order": 4,
+            "title": "Aplicação Prática na Fazenda",
+            "lessons": [
+              {
+                "id": "lesson-05-04-01",
+                "order": 1,
+                "title": "Exemplo de reunião - Fluxo de caixa - Parte I",
+                "fileName": "Videoaula 16Exemplo de reunião - Fluxo de caixa - Parte I.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-04-02",
+                "order": 2,
+                "title": "Exemplo de reunião - Fluxo de caixa - Parte II",
+                "fileName": "Videoaula 17Exemplo de reunião - Fluxo de caixa - Parte II.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-04-03",
+                "order": 3,
+                "title": "O que levar para a fazenda quando realizar a gestão",
+                "fileName": "Videoaula 18O que levar para a fazenda quando realizar a gestão.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-04-04",
+                "order": 4,
+                "title": "Gravação ao vivo - Gestão Financeira e Econômica",
+                "fileName": "Gravação de aula online ao vivo - Gestão Financeira e Econômica.mp4",
+                "type": "live"
+              },
+              {
+                "id": "lesson-05-04-05",
+                "order": 5,
+                "title": "Gravação ao vivo - Gestão Financeira e Econômica (2)",
+                "fileName": "Gravação de aula online ao vivo - Gestão Financeira e Econômica (1).mp4",
+                "type": "live"
+              }
+            ]
+          },
+          {
+            "id": "section-05-05",
+            "order": 5,
+            "title": "Custo de Produção",
+            "lessons": [
+              {
+                "id": "lesson-05-05-01",
+                "order": 1,
+                "title": "Entendendo o custo de produção",
+                "fileName": "Videaoula 01Entendendo o custo de produção.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-05-02",
+                "order": 2,
+                "title": "Como implementar a gestão econômica e definir centros",
+                "fileName": "Videoaula 02Como implementar a gestão econômica e definir centro.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-05-03",
+                "order": 3,
+                "title": "Reconhecendo os custos fixos e variáveis da fazenda",
+                "fileName": "Videoaula 03Reconhecendo os custos fixos e variáveis da fazenda.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-05-04",
+                "order": 4,
+                "title": "Controle de estoque",
+                "fileName": "Videoaula 04Controle de estoque.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-05-05",
+                "order": 5,
+                "title": "Estruturação da DRE - Demonstrativo de Resultado",
+                "fileName": "Videoaula 05Estruturação da DRE - Demonstrativo de Resultado do.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-05-06",
+                "order": 6,
+                "title": "Resolução do exercício - Fluxo de caixa X Custo de produção",
+                "fileName": "Videoaula 06Resolução do exercício - Fluxo de caixa X Custo de p.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-05-07",
+                "order": 7,
+                "title": "Curva ABC",
+                "fileName": "Videoaula 07 Curva ABC.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-05-08",
+                "order": 8,
+                "title": "Comparativo de análise de custo - Benchmarking",
+                "fileName": "Videoaula 08Comparativo de análise de custo - Benchmarking.mp4",
+                "type": "video"
+              }
+            ]
+          },
+          {
+            "id": "section-05-06",
+            "order": 6,
+            "title": "Gestão por Resultados",
+            "lessons": [
+              {
+                "id": "lesson-05-06-01",
+                "order": 1,
+                "title": "Gestão por Resultados",
+                "fileName": "Videoaula 09Gestão por Resultados.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-06-02",
+                "order": 2,
+                "title": "Gestão por Resultados - Custos detalhados",
+                "fileName": "Videoaula 10 Gestão por Resultados - Custos detalhados.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-06-03",
+                "order": 3,
+                "title": "Gestão por Resultados - Benchmarking",
+                "fileName": "Videoaula 11Gestão por Resultados - Benchmarking.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-06-04",
+                "order": 4,
+                "title": "Gestão por Resultados - Como encontrar as oportunidades",
+                "fileName": "Videoaula 12Gestão por Resultados - Como encontrar as oportunida.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-06-05",
+                "order": 5,
+                "title": "Gestão por Resultados - Custos variáveis",
+                "fileName": "Videoaula 13Gestão por Resultados - Custos variáveis.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-06-06",
+                "order": 6,
+                "title": "Gestão por Resultados - Análise de Problemas",
+                "fileName": "Videoaula 14Gestão por Resultados - Análise de Problemas.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-06-07",
+                "order": 7,
+                "title": "Gestão por Resultados - Como atuar em custos fixos",
+                "fileName": "Videoaula 15Gestão por Resultados - Como atuar em custos fixos.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-05-06-08",
+                "order": 8,
+                "title": "Implantação da gestão por resultados na fazenda",
+                "fileName": "Videoaula 16Implantação da gestão por resultados na fazenda.mp4",
+                "type": "video"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "module-06",
+        "order": 6,
+        "title": "Ciclo Produção de Leite com Qualidade",
+        "folderName": "50_ciclo_producao_leite_qualidade",
+        "sections": [
+          {
+            "id": "section-06-01",
+            "order": 1,
+            "title": "Atuação para a redução da CBT",
+            "lessons": [
+              {
+                "id": "lesson-06-01-01",
+                "order": 1,
+                "title": "Importância da produção de leite de qualidade",
+                "fileName": "Videoaula 01Importância da produção de leite de qualidade.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-01-02",
+                "order": 2,
+                "title": "Resfriamento do leite",
+                "fileName": "Videoaula 02Resfriamento do leite.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-01-03",
+                "order": 3,
+                "title": "Limpeza dos equipamentos - Parte I",
+                "fileName": "Videoaula 03Limpeza dos equipamentos - Parte I.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-01-04",
+                "order": 4,
+                "title": "Limpeza dos equipamentos - Parte II",
+                "fileName": "Videoaula 04Limpeza dos equipamentos - Parte II.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-01-05",
+                "order": 5,
+                "title": "Etapas de limpeza do equipamento",
+                "fileName": "Videoaula 05Etapas de limpeza do equipamento.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-01-06",
+                "order": 6,
+                "title": "Checagem da limpeza do equipamento",
+                "fileName": "Videoaula 06Checagem da limpeza do equipamento.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-01-07",
+                "order": 7,
+                "title": "Sequência de limpeza",
+                "fileName": "Videoaula 07Sequência de limpeza.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-01-08",
+                "order": 8,
+                "title": "Higiene de ordenha",
+                "fileName": "Videoaula 08Higiene de ordenha.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-01-09",
+                "order": 9,
+                "title": "Controle da mastite e redução da CBT",
+                "fileName": "Videoaula 09Controle da mastite e redução da CBT.mp4",
+                "type": "video"
+              }
+            ]
+          },
+          {
+            "id": "section-06-02",
+            "order": 2,
+            "title": "Atuação para redução da CCS",
+            "lessons": [
+              {
+                "id": "lesson-06-02-01",
+                "order": 1,
+                "title": "Definição e impactos da CCS",
+                "fileName": "Videoaula 01Definição e impactos da CCS.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-02-02",
+                "order": 2,
+                "title": "10 pontos de controle da mastite",
+                "fileName": "Videoaula 0210 pontos de controle da mastite.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-02-03",
+                "order": 3,
+                "title": "Rotina de ordenha na prática - Parte I",
+                "fileName": "Videoaula 03Rotina de ordenha na prática - Parte I.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-02-04",
+                "order": 4,
+                "title": "Rotina de ordenha na prática - Parte II",
+                "fileName": "Videoaula 04Rotina de ordenha na prática - Parte II.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-02-05",
+                "order": 5,
+                "title": "Sobreordenha e Hiperqueratose",
+                "fileName": "Videoaula 05Sobreordenha e Hiperqueratose.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-02-06",
+                "order": 6,
+                "title": "Avaliação do filtro de leite",
+                "fileName": "Videoaula 06Avaliação do filtro de leite.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-02-07",
+                "order": 7,
+                "title": "Aplicando a checklist de rotina de ordenha",
+                "fileName": "Videoaula 07Aplicando a checklist de rotina de ordenha.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-02-08",
+                "order": 8,
+                "title": "Manejo do ambiente",
+                "fileName": "Videoaula 08Manejo do ambiente.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-02-09",
+                "order": 9,
+                "title": "Equipamento de ordenha",
+                "fileName": "Videoaula 09Equipamento de ordenha.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-02-10",
+                "order": 10,
+                "title": "Manutenção do equipamento de ordenha",
+                "fileName": "Videoaula 10Manutenção do equipamento de ordenha.mp4",
+                "type": "video"
+              }
+            ]
+          },
+          {
+            "id": "section-06-03",
+            "order": 3,
+            "title": "Controle e monitoramento da mastite",
+            "lessons": [
+              {
+                "id": "lesson-06-03-01",
+                "order": 1,
+                "title": "Mastite clínica",
+                "fileName": "Videoaula 01Mastite clínica.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-03-02",
+                "order": 2,
+                "title": "Tratamento das vacas",
+                "fileName": "Videoaula 02Tratamento das vacas.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-03-03",
+                "order": 3,
+                "title": "Cultura microbiológica do leite",
+                "fileName": "Videoaula 03Cultura microbiológica do leite.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-03-04",
+                "order": 4,
+                "title": "Agentes causadores de mastite",
+                "fileName": "Videoaula 04Agentes causadores de mastite.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-03-05",
+                "order": 5,
+                "title": "Definindo tratamentos e estratégias",
+                "fileName": "Videoaula 05Definindo tratamentos e estratégias.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-03-06",
+                "order": 6,
+                "title": "Mastite subclínica",
+                "fileName": "Viedoaula 06Mastite subclínica.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-03-07",
+                "order": 7,
+                "title": "Coleta de CCS",
+                "fileName": "Videoaula 07Coleta de CCS.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-03-08",
+                "order": 8,
+                "title": "Identificação de vacas com mastite subclínica - CMT",
+                "fileName": "Videoaula 08Identificação de vacas com mastite subclínica - CMT.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-03-09",
+                "order": 9,
+                "title": "Identificação de vacas com mastite subclínica - CCS",
+                "fileName": "Videoaula 09Identificação de vacas com mastite subclínica - CCS.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-03-10",
+                "order": 10,
+                "title": "CCS e CMT",
+                "fileName": "Videoaula 10CCS e CMT.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-03-11",
+                "order": 11,
+                "title": "Indicadores da mastite",
+                "fileName": "Videoaula 11Indicadores da mastite.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-03-12",
+                "order": 12,
+                "title": "Avaliando os resultados",
+                "fileName": "Videoaula 12Avaliando os resultados.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-03-13",
+                "order": 13,
+                "title": "Terapia da vaca seca",
+                "fileName": "Videoaula 13Terapia da vaca seca.mp4",
+                "type": "video"
+              }
+            ]
+          },
+          {
+            "id": "section-06-04",
+            "order": 4,
+            "title": "Agentes de mastite",
+            "lessons": [
+              {
+                "id": "lesson-06-04-01",
+                "order": 1,
+                "title": "Agentes contagiosos - Parte I",
+                "fileName": "Videoaula 01Agentes contagiosos - Parte I.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-04-02",
+                "order": 2,
+                "title": "Agentes contagiosos - Parte II",
+                "fileName": "Videoaula 02Agentes contagiosos - Parte II.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-04-03",
+                "order": 3,
+                "title": "Agentes ambientais e oportunistas",
+                "fileName": "Videoaula 03Agentes ambientais e oportunistas.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-06-04-04",
+                "order": 4,
+                "title": "Gravação ao vivo - Ciclo produção de leite de qualidade",
+                "fileName": "Gravação de Aula ao vivo - Ciclo produção de leite de qualidade.mp4",
+                "type": "live"
+              },
+              {
+                "id": "lesson-06-04-05",
+                "order": 5,
+                "title": "Gravação ao vivo - Ciclo produção de leite de qualidade (2)",
+                "fileName": "Gravação de Aula online ao vivo - Ciclo produção de leite de qua.mp4",
+                "type": "live"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "module-07",
+        "order": 7,
+        "title": "Encerramento e Visão Estratégica",
+        "folderName": "90_ciclo_encerramento",
+        "sections": [
+          {
+            "id": "section-07-01",
+            "order": 1,
+            "title": "Visão Estratégica do Negócio",
+            "lessons": [
+              {
+                "id": "lesson-07-01-01",
+                "order": 1,
+                "title": "Introdução à visão estratégica para domínio do negócio",
+                "fileName": "Videoaula 01Introdução à visão estratégica para domínio do negóc.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-07-01-02",
+                "order": 2,
+                "title": "Oportunidades na eficiência reprodutiva, nutrição e alimentação",
+                "fileName": "Videoaula 03Oportunidades na eficiência reprodutiva nutrição e a.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-07-01-03",
+                "order": 3,
+                "title": "Produção por hectare ano",
+                "fileName": "Videoaula 04Produção por hectare ano.mp4",
+                "type": "video"
+              }
+            ]
+          },
+          {
+            "id": "section-07-02",
+            "order": 2,
+            "title": "Fatores de Produtividade",
+            "lessons": [
+              {
+                "id": "lesson-07-02-01",
+                "order": 1,
+                "title": "Impactos da mastite na produtividade",
+                "fileName": "Videoaula 02Impactos da mastite na produtividade.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-07-02-02",
+                "order": 2,
+                "title": "Fatores que impactam na média de produção de leite",
+                "fileName": "Videoaula 05Fatores que impactam na média de produção de leite.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-07-02-03",
+                "order": 3,
+                "title": "Relação de partos e total de vacas adultas no rebanho",
+                "fileName": "Videoaula 06Relação de partos e total de vacas adultas no rebanh.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-07-02-04",
+                "order": 4,
+                "title": "Eficiência reprodutiva e produção de leite",
+                "fileName": "Videoaula 07Eficiência reprodutiva e produção de leite.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-07-02-05",
+                "order": 5,
+                "title": "Saúde da glândula mamária e produção de leite",
+                "fileName": "Videoaula 08Saúde da glândula mamária e produção de leite.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-07-02-06",
+                "order": 6,
+                "title": "Gravação ao vivo - Visão estratégica para domínio",
+                "fileName": "Gravação de aula online ao vivo - Visão estratégica para domínio.mp4",
+                "type": "live"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

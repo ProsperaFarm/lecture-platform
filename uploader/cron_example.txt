@@ -1,0 +1,65 @@
+# Exemplos de Configuração Cron para Upload Automático
+# 
+# Para editar o crontab: crontab -e
+# Para listar tarefas: crontab -l
+# Para ver logs: tail -f /caminho/para/upload.log
+
+# ============================================================
+# EXEMPLO 1: Upload diário de 10 vídeos às 2h da manhã
+# ============================================================
+0 2 * * * cd /home/user/lecture-platform && ./upload_daily.sh 10 /home/user/videos >> /home/user/upload.log 2>&1
+
+# ============================================================
+# EXEMPLO 2: Upload a cada 6 horas (4x por dia) de 5 vídeos
+# ============================================================
+0 */6 * * * cd /home/user/lecture-platform && ./upload_daily.sh 5 /home/user/videos >> /home/user/upload.log 2>&1
+
+# ============================================================
+# EXEMPLO 3: Upload apenas em dias úteis às 3h da manhã
+# ============================================================
+0 3 * * 1-5 cd /home/user/lecture-platform && ./upload_daily.sh 15 /home/user/videos >> /home/user/upload.log 2>&1
+
+# ============================================================
+# EXEMPLO 4: Upload aos domingos às 1h (processamento semanal)
+# ============================================================
+0 1 * * 0 cd /home/user/lecture-platform && ./upload_daily.sh 50 /home/user/videos >> /home/user/upload.log 2>&1
+
+# ============================================================
+# EXEMPLO 5: Upload usando Python diretamente (sem script bash)
+# ============================================================
+0 2 * * * cd /home/user/lecture-platform && /home/user/lecture-platform/venv/bin/python youtube_uploader.py --videos-dir /home/user/videos --max-uploads 10 >> /home/user/upload.log 2>&1
+
+# ============================================================
+# Formato do Cron:
+# ============================================================
+# ┌───────────── minuto (0 - 59)
+# │ ┌───────────── hora (0 - 23)
+# │ │ ┌───────────── dia do mês (1 - 31)
+# │ │ │ ┌───────────── mês (1 - 12)
+# │ │ │ │ ┌───────────── dia da semana (0 - 6) (Domingo=0)
+# │ │ │ │ │
+# * * * * * comando a ser executado
+
+# ============================================================
+# Dicas:
+# ============================================================
+# 1. Sempre use caminhos absolutos nos comandos cron
+# 2. Redirecione output para arquivo de log (>> /path/to/log.log 2>&1)
+# 3. Teste o comando manualmente antes de adicionar ao cron
+# 4. Use 'cd' para entrar no diretório correto antes de executar
+# 5. Monitore os logs regularmente para detectar problemas
+
+# ============================================================
+# Monitoramento:
+# ============================================================
+# Ver últimas 50 linhas do log:
+#   tail -50 /home/user/upload.log
+#
+# Acompanhar log em tempo real:
+#   tail -f /home/user/upload.log
+#
+# Buscar erros no log:
+#   grep -i "erro\|error\|falha\|failed" /home/user/upload.log
+#
+# Ver progresso de uploads:
+#   cat /home/user/lecture-platform/upload_progress.json
