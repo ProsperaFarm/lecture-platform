@@ -130,3 +130,22 @@
 - [x] Verificar campos esperados pelo context.ts (openId, appId, name)
 - [x] Ajustar JWT payload no googleCallback para incluir appId
 - [ ] Testar autenticação completa
+
+## 🎥 Create Lesson Video Page
+- [ ] Criar página LessonView.tsx com player do YouTube
+- [ ] Adicionar rota /course/:courseId/lesson/:lessonId no App.tsx
+- [ ] Buscar dados da aula do banco via tRPC
+- [ ] Exibir título, descrição e vídeo do YouTube
+- [ ] Adicionar navegação entre aulas (anterior/próxima)
+
+## 🐛 Fix Video Player Not Loading
+- [ ] Verificar se react-player está instalado no package.json
+- [ ] Verificar se lesson tem youtubeUrl no banco de dados
+- [ ] Adicionar logs de debug no componente LessonView
+- [ ] Testar com URL de vídeo hardcoded
+
+## 🔄 Migrate Lesson.tsx to use tRPC
+- [x] Remover import do courses-data.json
+- [x] Usar trpc.lessons.getById para buscar aula
+- [x] Usar trpc.courses.getById para buscar curso
+- [ ] Testar que vídeos do banco aparecem corretamente
