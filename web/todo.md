@@ -65,3 +65,8 @@
 - [x] Adaptar UI para usar tRPC ao invés de JSON estático
 - [x] Criar procedures tRPC para courses e lessons
 - [ ] Testar exibição de cursos, módulos e aulas
+
+## 🔄 Database Sync
+- [x] Criar script de sincronização que atualiza DB a partir do JSON
+- [x] Adicionar comando npm run db:sync
+- [x] Documentar uso do script após uploads do YouTube

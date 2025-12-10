@@ -2,6 +2,89 @@
 
 Scripts utilitários para gerenciamento do banco de dados da Prospera Academy.
 
+## sync-from-json.mjs
+
+Script para **sincronizar** o banco de dados com o arquivo `course-metadata.json` atualizado. Use este script após o uploader do YouTube adicionar novas URLs de vídeos ao JSON.
+
+### Diferença entre seed e sync
+
+- **`db:seed`** (seed-database.mjs): Popula o banco pela primeira vez (inicial)
+- **`db:sync`** (sync-from-json.mjs): Atualiza o banco com mudanças do JSON (incremental)
+
+### Quando usar
+
+✅ **Use `npm run db:sync` quando:**
+- O script do YouTube uploader adicionar novas URLs ao JSON
+- Você atualizar manualmente o JSON com novos vídeos
+- Quiser sincronizar mudanças no título, descrição ou metadados
+
+### Uso
+
+```bash
+# Sincronizar com JSON padrão (../uploader/course-metadata.json)
+npm run db:sync
+
+# Sincronizar com JSON customizado
+node scripts/sync-from-json.mjs /caminho/para/seu/course-metadata.json
+```
+
+### O que o script faz
+
+1. **Lê o arquivo JSON** atualizado pelo uploader
+2. **Detecta mudanças** comparando com o banco atual
+3. **Atualiza apenas o necessário** (upsert inteligente)
+4. **Reporta novos vídeos** adicionados desde a última sincronização
+
+### Saída esperada
+
+```
+🔄 Starting database sync from JSON...
+
+📦 Connecting to database: postgresql://postgres:****@localhost:5432/prospera_academy
+📖 Reading course data from: /path/to/uploader/course-metadata.json
+
+✅ Loaded course: Gestão de Fazendas de Gado de Leite - Rehagro
+   - Acronym: GFGL
+   - Total Videos: 236
+   - Modules: 7
+
+📝 Syncing course...
+✅ Course synced (ID: 1)
+
+📝 Syncing lessons...
+   ✨ New YouTube URL: Boas-vindas e orientações...
+   ✨ New YouTube URL: Conheça a equipe e o contrato de convivência...
+
+✅ Database synced successfully!
+   - Total lessons processed: 236
+   - New lessons added: 0
+   - Existing lessons updated: 236
+   - New YouTube URLs added: 2
+
+🎉 2 new video(s) are now available to watch!
+
+🎉 Sync completed successfully!
+```
+
+### Workflow recomendado
+
+1. **Upload de vídeos**: Execute o script do YouTube uploader
+2. **JSON atualizado**: O uploader adiciona URLs ao `course-metadata.json`
+3. **Sincronize o banco**: `npm run db:sync`
+4. **Vídeos disponíveis**: Usuários podem assistir imediatamente
+
+### Automação (opcional)
+
+Você pode automatizar a sincronização adicionando ao final do script do uploader:
+
+```python
+# No final do youtube_uploader.py
+import subprocess
+subprocess.run(["npm", "run", "db:sync"], cwd="../web")
+```
+
+---
+
 ## seed-database.mjs
 
 Script para popular o banco de dados com os metadados dos cursos a partir do arquivo `course-metadata.json`.
