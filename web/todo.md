@@ -180,3 +180,11 @@
 - [x] Mostrar informações do curso/módulo/aula
 - [x] Tornar overlay visualmente atraente com gradientes
 - [ ] Testar que overlay cobre botões do YouTube
+
+## 🎯 Add Branded Overlays on Top of Plyr
+- [x] Manter Plyr player funcionando
+- [x] Adicionar tarjas branded sobre pontos específicos do player
+- [x] Bloquear cliques nas tarjas (pointer-events: auto + stopPropagation)
+- [x] Tarjas aparecem APENAS quando pausado
+- [x] Tarjas não reduzem tamanho do player (position absolute)
+- [ ] Testar que links do YouTube não são acessíveis

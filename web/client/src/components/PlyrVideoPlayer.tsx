@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Play, BookOpen, GraduationCap } from "lucide-react";
+import { GraduationCap, Play, BookOpen } from "lucide-react";
 
 interface PlyrVideoPlayerProps {
   youtubeUrl: string;
@@ -9,24 +8,15 @@ interface PlyrVideoPlayerProps {
   moduleTitle?: string;
 }
 
-// Declare YouTube IFrame API types
-declare global {
-  interface Window {
-    YT: any;
-    onYouTubeIframeAPIReady: () => void;
-  }
-}
-
 export function PlyrVideoPlayer({ 
-  youtubeUrl, 
+  youtubeUrl,
   courseTitle = "",
   lessonTitle = "",
   moduleTitle = ""
 }: PlyrVideoPlayerProps) {
+  const videoRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<any>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
   const [isPaused, setIsPaused] = useState(false);
-  const [isReady, setIsReady] = useState(false);
 
   // Extract YouTube video ID
   const getYoutubeId = (url: string): string | null => {
@@ -38,86 +28,64 @@ export function PlyrVideoPlayer({
   const videoId = getYoutubeId(youtubeUrl);
 
   useEffect(() => {
-    if (!videoId) return;
+    if (!videoId || !videoRef.current) return;
 
-    // Load YouTube IFrame API
-    const loadYouTubeAPI = () => {
-      if (window.YT && window.YT.Player) {
-        initializePlayer();
-        return;
+    // Load Plyr CSS
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://cdn.plyr.io/3.7.8/plyr.css";
+    document.head.appendChild(link);
+
+    // Load Plyr JS
+    const script = document.createElement("script");
+    script.src = "https://cdn.plyr.io/3.7.8/plyr.js";
+    script.async = true;
+
+    script.onload = () => {
+      if (window.Plyr && videoRef.current) {
+        // Create YouTube iframe
+        const iframe = document.createElement("div");
+        iframe.setAttribute("data-plyr-provider", "youtube");
+        iframe.setAttribute("data-plyr-embed-id", videoId);
+        videoRef.current.appendChild(iframe);
+
+        // Initialize Plyr
+        playerRef.current = new window.Plyr(iframe, {
+          youtube: {
+            noCookie: true,
+            rel: 0,
+            showinfo: 0,
+            iv_load_policy: 3,
+            modestbranding: 1,
+          },
+          controls: [
+            'play-large',
+            'play',
+            'progress',
+            'current-time',
+            'duration',
+            'mute',
+            'volume',
+            'settings',
+            'fullscreen',
+          ],
+        });
+
+        // Listen to play/pause events
+        playerRef.current.on('play', () => setIsPaused(false));
+        playerRef.current.on('pause', () => setIsPaused(true));
       }
-
-      // Check if script is already loading
-      if (document.querySelector('script[src*="youtube.com/iframe_api"]')) {
-        // Wait for it to load
-        const checkYT = setInterval(() => {
-          if (window.YT && window.YT.Player) {
-            clearInterval(checkYT);
-            initializePlayer();
-          }
-        }, 100);
-        return;
-      }
-
-      // Load the script
-      const tag = document.createElement('script');
-      tag.src = 'https://www.youtube.com/iframe_api';
-      const firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
-
-      window.onYouTubeIframeAPIReady = () => {
-        initializePlayer();
-      };
     };
 
-    const initializePlayer = () => {
-      if (!containerRef.current) return;
-
-      // Create iframe element
-      const iframe = document.createElement('div');
-      iframe.id = `youtube-player-${videoId}`;
-      containerRef.current.appendChild(iframe);
-
-      playerRef.current = new window.YT.Player(iframe.id, {
-        videoId: videoId,
-        playerVars: {
-          autoplay: 0,
-          controls: 1,
-          modestbranding: 1,
-          rel: 0,
-          showinfo: 0,
-          iv_load_policy: 3,
-          enablejsapi: 1,
-          origin: window.location.origin,
-        },
-        events: {
-          onReady: () => {
-            setIsReady(true);
-          },
-          onStateChange: (event: any) => {
-            // YT.PlayerState.PAUSED = 2
-            // YT.PlayerState.PLAYING = 1
-            setIsPaused(event.data === 2);
-          },
-        },
-      });
-    };
-
-    loadYouTubeAPI();
+    document.head.appendChild(script);
 
     // Cleanup
     return () => {
-      if (playerRef.current && playerRef.current.destroy) {
+      if (playerRef.current) {
         playerRef.current.destroy();
       }
     };
   }, [videoId]);
-
-  const handlePlay = () => {
-    if (playerRef.current && playerRef.current.playVideo) {
-      playerRef.current.playVideo();
-    }
-  };
 
   // Disable right-click
   const handleContextMenu = (e: React.MouseEvent) => {
@@ -139,64 +107,58 @@ export function PlyrVideoPlayer({
       style={{ userSelect: 'none' }}
       onContextMenu={handleContextMenu}
     >
-      {/* YouTube Player Container */}
-      <div 
-        ref={containerRef}
-        className="w-full h-full"
-        style={{ position: 'relative' }}
-      />
+      {/* Plyr Player */}
+      <div ref={videoRef} className="w-full h-full" />
 
-      {/* Branded Overlay when paused */}
-      {isPaused && isReady && (
+      {/* Branded Overlays - Only when paused */}
+      {isPaused && (
         <>
-          {/* Full overlay with gradient */}
+          {/* Top branded bar - covers title area */}
           <div 
-            className="absolute inset-0 z-10 pointer-events-none"
-            style={{
-              background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%)',
-            }}
-          />
-
-          {/* Top branding bar */}
-          <div className="absolute top-0 left-0 right-0 z-20 pointer-events-none">
-            <div className="bg-gradient-to-b from-black/80 to-transparent p-6">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-lg bg-green-600 flex items-center justify-center">
-                  <GraduationCap className="w-7 h-7 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-white font-bold text-lg">Prospera Academy</h3>
-                  <p className="text-white/80 text-sm">Plataforma de Cursos</p>
-                </div>
+            className="absolute top-0 left-0 right-0 z-50 pointer-events-auto"
+            style={{ height: '80px' }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="bg-gradient-to-b from-black/90 via-black/70 to-transparent h-full p-4 flex items-start gap-3">
+              <div className="w-12 h-12 rounded-lg bg-green-600 flex items-center justify-center flex-shrink-0">
+                <GraduationCap className="w-7 h-7 text-white" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="text-white font-bold text-base leading-tight">Prospera Academy</h3>
+                <p className="text-white/80 text-xs">Plataforma de Cursos</p>
               </div>
             </div>
           </div>
 
-          {/* Bottom info bar - covers YouTube buttons */}
-          <div className="absolute bottom-0 left-0 right-0 z-20 pointer-events-none">
-            <div className="bg-gradient-to-t from-black/95 via-black/90 to-transparent p-6 pt-12">
-              <div className="space-y-3">
+          {/* Bottom branded bar - covers YouTube logo and share buttons */}
+          <div 
+            className="absolute bottom-0 left-0 right-0 z-50 pointer-events-auto"
+            style={{ height: '100px' }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="bg-gradient-to-t from-black/95 via-black/80 to-transparent h-full p-4 pt-8 flex flex-col justify-end">
+              <div className="space-y-2">
                 {/* Course info */}
                 {courseTitle && (
-                  <div className="flex items-start gap-2">
-                    <BookOpen className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                    <div>
+                  <div className="flex items-center gap-2">
+                    <BookOpen className="w-4 h-4 text-green-400 flex-shrink-0" />
+                    <div className="flex-1 min-w-0">
                       <p className="text-white/60 text-xs uppercase tracking-wide">Curso</p>
-                      <p className="text-white font-semibold">{courseTitle}</p>
+                      <p className="text-white font-semibold text-sm truncate">{courseTitle}</p>
                     </div>
                   </div>
                 )}
 
-                {/* Module and lesson info */}
+                {/* Module and lesson */}
                 {(moduleTitle || lessonTitle) && (
-                  <div className="flex items-start gap-2">
-                    <Play className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                    <div>
+                  <div className="flex items-center gap-2">
+                    <Play className="w-4 h-4 text-green-400 flex-shrink-0" />
+                    <div className="flex-1 min-w-0">
                       {moduleTitle && (
-                        <p className="text-white/80 text-sm">{moduleTitle}</p>
+                        <p className="text-white/80 text-xs truncate">{moduleTitle}</p>
                       )}
                       {lessonTitle && (
-                        <p className="text-white font-medium">{lessonTitle}</p>
+                        <p className="text-white font-medium text-sm truncate">{lessonTitle}</p>
                       )}
                     </div>
                   </div>
@@ -205,19 +167,29 @@ export function PlyrVideoPlayer({
             </div>
           </div>
 
-          {/* Custom play button - centered */}
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30">
-            <Button
-              onClick={handlePlay}
-              className="bg-green-600 hover:bg-green-700 text-white shadow-2xl pointer-events-auto"
-              size="lg"
-            >
-              <Play className="w-6 h-6 mr-2 fill-white" />
-              Continuar Assistindo
-            </Button>
-          </div>
+          {/* Corner overlays to block specific YouTube buttons */}
+          {/* Bottom-left: "Watch on YouTube" button */}
+          <div 
+            className="absolute bottom-2 left-2 w-40 h-12 bg-black/95 rounded z-50 pointer-events-auto"
+            onClick={(e) => e.stopPropagation()}
+            style={{ backdropFilter: 'blur(10px)' }}
+          />
+
+          {/* Top-right: Share/More buttons */}
+          <div 
+            className="absolute top-2 right-2 w-32 h-10 bg-black/95 rounded z-50 pointer-events-auto"
+            onClick={(e) => e.stopPropagation()}
+            style={{ backdropFilter: 'blur(10px)' }}
+          />
         </>
       )}
     </div>
   );
+}
+
+// Declare Plyr type
+declare global {
+  interface Window {
+    Plyr: any;
+  }
 }
