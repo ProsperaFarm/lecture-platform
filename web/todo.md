@@ -277,3 +277,10 @@
 - [x] Manter pointer-events-none para não bloquear cliques
 - [x] Garantir que controles do Plyr fiquem acessíveis quando pausado
 - [ ] Testar controles quando pausado
+
+## 🎨 Improve Bottom Overlay Layout
+- [x] Voltar gradiente para bottom: 0 (desde o fundo)
+- [x] Aumentar altura total do overlay (154px/180px)
+- [x] Aumentar z-index dos controles do Plyr para z-20 (acima do gradiente z-10)
+- [x] Ajustar padding-bottom para posicionar texto acima dos controles
+- [ ] Testar layout final
