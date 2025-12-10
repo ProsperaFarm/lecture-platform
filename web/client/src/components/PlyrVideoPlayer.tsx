@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { GraduationCap, Play, BookOpen } from "lucide-react";
 
 interface PlyrVideoPlayerProps {
@@ -18,7 +19,10 @@ export function PlyrVideoPlayer({
   const playerRef = useRef<any>(null);
   const [isPaused, setIsPaused] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [showInitialOverlay, setShowInitialOverlay] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [fullscreenContainer, setFullscreenContainer] = useState<HTMLElement | null>(null);
+  const initialOverlayTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Extract YouTube video ID
   const getYoutubeId = (url: string): string | null => {
@@ -76,7 +80,6 @@ export function PlyrVideoPlayer({
         // Listen to play/pause events
         playerRef.current.on('play', () => {
           setIsPaused(false);
-          setIsLoading(false);
         });
         
         playerRef.current.on('pause', () => {
@@ -88,26 +91,39 @@ export function PlyrVideoPlayer({
           setIsLoading(true);
         });
 
+        // Listen to playing event - video started playing after loading
         playerRef.current.on('playing', () => {
           setIsLoading(false);
-        });
-
-        playerRef.current.on('ready', () => {
-          // Keep loading state for first 5 seconds
-          setTimeout(() => {
-            if (playerRef.current && playerRef.current.paused) {
-              setIsLoading(false);
-            }
+          
+          // Start showing overlay for 5 more seconds after loading finishes
+          setShowInitialOverlay(true);
+          
+          // Clear any existing timeout
+          if (initialOverlayTimeoutRef.current) {
+            clearTimeout(initialOverlayTimeoutRef.current);
+          }
+          
+          // Hide overlay after 5 seconds
+          initialOverlayTimeoutRef.current = setTimeout(() => {
+            setShowInitialOverlay(false);
           }, 5000);
         });
 
         // Listen to fullscreen changes
         playerRef.current.on('enterfullscreen', () => {
           setIsFullscreen(true);
+          // Find the fullscreen container (Plyr wraps the player in a fullscreen element)
+          setTimeout(() => {
+            const fsElement = videoRef.current?.closest('.plyr--fullscreen-active');
+            if (fsElement) {
+              setFullscreenContainer(fsElement as HTMLElement);
+            }
+          }, 100);
         });
 
         playerRef.current.on('exitfullscreen', () => {
           setIsFullscreen(false);
+          setFullscreenContainer(null);
         });
       }
     };
@@ -116,7 +132,18 @@ export function PlyrVideoPlayer({
 
     // Also listen to native fullscreen API
     const handleFullscreenChange = () => {
-      setIsFullscreen(!!document.fullscreenElement);
+      const isFs = !!document.fullscreenElement;
+      setIsFullscreen(isFs);
+      
+      if (isFs) {
+        // Find the fullscreen element
+        const fsElement = document.fullscreenElement;
+        if (fsElement) {
+          setFullscreenContainer(fsElement as HTMLElement);
+        }
+      } else {
+        setFullscreenContainer(null);
+      }
     };
 
     document.addEventListener('fullscreenchange', handleFullscreenChange);
@@ -133,6 +160,11 @@ export function PlyrVideoPlayer({
       document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
       document.removeEventListener('mozfullscreenchange', handleFullscreenChange);
       document.removeEventListener('MSFullscreenChange', handleFullscreenChange);
+      
+      // Clear timeout
+      if (initialOverlayTimeoutRef.current) {
+        clearTimeout(initialOverlayTimeoutRef.current);
+      }
     };
   }, [videoId]);
 
@@ -150,19 +182,12 @@ export function PlyrVideoPlayer({
     );
   }
 
-  // Show overlays when paused OR loading
-  const showOverlays = isPaused || isLoading;
+  // Show overlays when paused OR loading OR during initial 5 seconds after loading
+  const showOverlays = isPaused || isLoading || showInitialOverlay;
 
-  return (
-    <div 
-      className="absolute inset-0 select-none" 
-      style={{ userSelect: 'none' }}
-      onContextMenu={handleContextMenu}
-    >
-      {/* Plyr Player */}
-      <div ref={videoRef} className="w-full h-full" />
-
-      {/* Branded Overlays - Show when paused OR loading */}
+  // Render overlays component
+  const renderOverlays = () => (
+    <>
       {showOverlays && (
         <>
           {/* Top branded bar - covers title area */}
@@ -253,6 +278,23 @@ export function PlyrVideoPlayer({
           />
         </>
       )}
+    </>
+  );
+
+  return (
+    <div 
+      className="absolute inset-0 select-none" 
+      style={{ userSelect: 'none' }}
+      onContextMenu={handleContextMenu}
+    >
+      {/* Plyr Player */}
+      <div ref={videoRef} className="w-full h-full" />
+
+      {/* Render overlays - use portal when in fullscreen */}
+      {isFullscreen && fullscreenContainer
+        ? createPortal(renderOverlays(), fullscreenContainer)
+        : renderOverlays()
+      }
     </div>
   );
 }
