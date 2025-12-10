@@ -1,3 +1,4 @@
+import { useAuth } from "@/_core/hooks/useAuth";
 import { Layout } from "@/components/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -11,6 +12,10 @@ import { CoursesData } from "../lib/types";
 const coursesData = coursesDataRaw as CoursesData;
 
 export default function Home() {
+  // The userAuth hooks provides authentication state
+  // To implement login/logout functionality, simply call logout() or redirect to getLoginUrl()
+  let { user, loading, error, isAuthenticated, logout } = useAuth();
+
   const [, params] = useRoute("/course/:id");
   const courseId = params?.id;
   const currentCourse = coursesData.courses.find(c => c.id === courseId);
