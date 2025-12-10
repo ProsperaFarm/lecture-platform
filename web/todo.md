@@ -393,3 +393,9 @@
 - [x] Verificar variáveis de ambiente necessárias
 - [x] Corrigir const.ts ou useAuth hook
 - [x] Testar que TopBar funciona sem erro
+
+## 🔧 Remove Manus OAuth Dependency from useAuth
+- [x] Simplificar useAuth para não chamar getLoginUrl() por padrão
+- [x] useAuth deve funcionar sem variáveis de ambiente do Manus
+- [x] Manter apenas Google OAuth (já configurado)
+- [x] Testar que TopBar funciona normalmente
