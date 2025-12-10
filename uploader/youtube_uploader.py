@@ -240,6 +240,30 @@ class YouTubeUploader:
             
         except HttpError as e:
             print(f"❌ Erro HTTP ao fazer upload: {e}")
+            
+            # Verifica se é erro de limite de upload diário
+            if 'uploadLimitExceeded' in str(e):
+                print("\n" + "="*70)
+                print("⚠️  LIMITE DIÁRIO DE UPLOADS ATINGIDO")
+                print("="*70)
+                print("\nO YouTube limita o número de vídeos que podem ser enviados")
+                print("em um período de 24 horas (rolante).")
+                print("\n📋 Informações importantes:")
+                print("   • O limite é baseado em 24 horas ROLANTES (não dias de calendário)")
+                print("   • Canais novos: ~10-15 vídeos/dia")
+                print("   • Canais estabelecidos: ~50-100 vídeos/dia")
+                print("   • O limite aumenta gradualmente com bom histórico do canal")
+                print("\n⏰ Quando você poderá enviar novamente:")
+                print("   • 24 horas após o PRIMEIRO upload de hoje")
+                print("   • Exemplo: Primeiro upload às 10h → Próximo upload às 10h de amanhã")
+                print("\n💡 Recomendação:")
+                print("   • Execute o script novamente amanhã no mesmo horário")
+                print("   • Considere usar --max-uploads 10 para evitar atingir o limite")
+                print("\n" + "="*70)
+                print("\n🛑 Parando execução. Não é possível enviar mais vídeos hoje.\n")
+                # Retorna um código especial para indicar limite atingido
+                return 'UPLOAD_LIMIT_EXCEEDED'
+            
             return None
         except Exception as e:
             print(f"❌ Erro inesperado: {e}")
@@ -393,7 +417,20 @@ class YouTubeUploader:
             # Faz upload
             youtube_url = self.upload_video(lesson, video_path)
             
-            if youtube_url:
+            # Verifica se atingiu limite diário
+            if youtube_url == 'UPLOAD_LIMIT_EXCEEDED':
+                # Registra falha com razão específica
+                self.progress['failed'].append({
+                    'id': lesson['id'],
+                    'reason': 'upload_limit_exceeded',
+                    'filename': lesson['fileName']
+                })
+                fail_count += 1
+                # Salva progresso antes de parar
+                self._save_progress()
+                # Para a execução imediatamente
+                break
+            elif youtube_url:
                 # Atualiza JSON
                 self.update_metadata_file(lesson['id'], youtube_url)
                 
