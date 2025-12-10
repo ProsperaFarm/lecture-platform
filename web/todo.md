@@ -215,3 +215,161 @@
 - [x] Mostrar overlay apenas na PRIMEIRA vez após carregar (não toda vez que toca)
 - [x] Adicionar flag hasShownInitialOverlay para controlar
 - [ ] Testar que overlay aparece apenas uma vez por carregamento de página
+
+## 🐛 Fix Navigation Issues
+- [x] Investigar lógica de "próxima aula" que está indo para aula aleatória
+- [x] Verificar como a ordem das aulas está sendo determinada
+- [x] Implementar navegação sequencial correta (módulo → seção → aula)
+
+## 🗄️ Normalize Database Schema
+- [x] Criar tabela `modules` separada (id, course_id, title, order)
+- [x] Criar tabela `sections` separada (id, module_id, title, order)
+- [x] Atualizar tabela `lessons` para referenciar section_id
+- [x] Adicionar campos `order` em todas as tabelas para controle de sequência
+- [x] Criar script de migração para dados existentes (migrate-to-normalized-schema.mjs)
+- [x] Criar novo script de seed para estrutura normalizada (seed-database-normalized.mjs)
+- [x] Criar helpers do banco (db-normalized.ts) com getNext/getPrevious
+- [x] Criar tRPC procedures para estrutura normalizada (routers-normalized.ts)
+- [x] Criar nova versão do Lesson.tsx (Lesson-normalized.tsx)
+- [ ] Aplicar migração no banco de dados (npm run db:migrate:normalize)
+- [ ] Testar navegação próximo/anterior
+- [ ] Atualizar Home.tsx para usar nova estrutura
+- [ ] Substituir arquivos antigos pelos novos
+
+## 🔄 Simplify Navigation with Direct References
+- [x] Remover campos desnecessários da tabela lessons (manter apenas IDs)
+- [x] Adicionar campos nextLessonId e prevLessonId na tabela lessons
+- [x] Atualizar seed para calcular e popular next/prev automaticamente
+- [x] Simplificar helpers do banco (apenas buscar next/prev direto)
+- [x] Atualizar tRPC procedures para usar campos diretos
+- [x] Atualizar Lesson.tsx para ocultar botões quando não houver next/prev
+- [ ] Aplicar schema (npm run db:reset)
+- [ ] Popular dados (npm run db:seed:normalized)
+- [ ] Testar navegação simplificada
+
+## 🎨 Adjust Overlay Size
+- [x] Reduzir tamanho das tarjas nos cantos
+- [x] Garantir que não cubram conteúdo importante do vídeo
+- [x] Manter branding visível mas discreto
+- [ ] Testar visualização
+
+## 🎨 Improve Top Overlay
+- [x] Aumentar altura da tarja superior para cobrir botão "copiar link" (80px→100px, 100px→120px)
+- [x] Deixar tarja superior mais escura (black/90→black/95, black/70→black/85)
+- [x] Desabilitar clique direito no player de vídeo (já estava implementado)
+- [ ] Testar cobertura do botão e clique direito
+
+## 🚫 Fix Right-Click on Video
+- [x] Adicionar overlay transparente sobre vídeo para bloquear clique direito (z-index: 5)
+- [x] Aumentar tarja superior em 15% (100px→115px, 120px→138px)
+- [ ] Testar clique direito em pause e fullscreen
+
+## 🖱️ Fix Overlay Click Behavior
+- [x] Remover overlay transparente (está bloqueando cliques esquerdos)
+- [x] Usar CSS pointer-events: none no iframe do Plyr
+- [x] Re-habilitar pointer-events nos controles do Plyr
+- [x] Customizar cor do botão Play para verde floresta (green-600)
+- [ ] Testar cliques e botão verde
+
+## 🎮 Fix Bottom Overlay Blocking Controls
+- [x] Tarja inferior está bloqueando controles do Plyr quando pausado
+- [x] Posicionar tarja acima dos controles (bottom: 54px normal, 60px fullscreen)
+- [x] Manter pointer-events-none para não bloquear cliques
+- [x] Garantir que controles do Plyr fiquem acessíveis quando pausado
+- [ ] Testar controles quando pausado
+
+## 🎨 Improve Bottom Overlay Layout
+- [x] Voltar gradiente para bottom: 0 (desde o fundo)
+- [x] Aumentar altura total do overlay (154px/180px)
+- [x] Aumentar z-index dos controles do Plyr para z-20 (acima do gradiente z-10)
+- [x] Ajustar padding-bottom para posicionar texto acima dos controles
+- [ ] Testar layout final
+
+## 🎨 Customize Plyr Progress and Volume Colors
+- [x] Mudar cor da barra de progresso para verde floresta (#16a34a)
+- [x] Mudar cor do buffer para verde transparente (rgba 0.25)
+- [x] Mudar cor da barra de volume para verde floresta (#16a34a)
+- [ ] Testar cores no player
+
+## 🔄 Revert Bottom Overlay Changes
+- [x] Reverter commit 9f54d47 (altura e padding incorretos)
+- [x] Voltar gradiente para altura original (100px/120px)
+- [x] Voltar texto para posição original (p-4/p-6 sem padding-bottom extra)
+- [x] Manter z-index: 20 nos controles (já está correto no CSS)
+- [x] Controles ficam em bottom: 0 (posição normal) mas acima do gradiente (z-20 > z-10)
+- [ ] Testar layout final
+
+## 🎯 Position Text Above Controls
+- [x] Separar texto do gradiente em div independente
+- [x] Posicionar texto do curso 54px acima (normal) / 60px acima (fullscreen)
+- [x] Aumentar z-index dos controles para z-50 (acima de tudo)
+- [x] Manter gradiente em bottom: 0 com altura 100px/120px
+- [ ] Testar layout final
+
+## 🐛 Fix Controls Visibility
+- [x] Remover `position: relative` dos controles (você já fez)
+- [x] Manter gradiente em bottom: 0 (precisa cobrir logo do YouTube)
+- [x] Adicionar fundo próprio aos controles (linear-gradient preto semi-transparente)
+- [x] Controles com z-50 ficam acima do gradiente z-10
+- [ ] Testar visibilidade dos controles
+
+## 🔍 Debug Controls Z-Index Issue
+- [x] Problema: Controles não ficam visíveis mesmo com z-50
+- [x] Causa: Gradiente z-10 estava acima dos controles Plyr (z padrão)
+- [x] Solução: Reduzir z-index do gradiente para z-1
+- [x] Texto em z-2 (acima do gradiente, abaixo dos controles)
+- [x] Controles Plyr com z-50 (acima de tudo)
+- [ ] Testar visibilidade dos controles
+
+## 🎬 Fix Controls Visibility When Paused
+- [x] Problema acontece especificamente quando vídeo está pausado
+- [x] Adicionar CSS para `.plyr--paused .plyr__controls` (z-50, opacity: 1, visibility: visible)
+- [x] Adicionar CSS para `.plyr__control-bar` (z-50)
+- [x] Forçar controles visíveis com !important
+- [ ] Testar visibilidade em pause e play
+
+## 🔄 New Strategy: Two Gradients
+- [x] Criar gradiente fino (30px) em bottom: 0 para cobrir logo do YouTube
+- [x] Criar gradiente principal (60px/80px) em bottom: 54px/60px para branding
+- [x] Remover z-index complexo (deixar natural)
+- [x] Controles ficam entre os dois gradientes (visíveis)
+- [ ] Testar se YouTube fica coberto e controles visíveis
+
+## 🎯 Optimize YouTube Cover Gradient
+- [x] Mudar gradiente do YouTube para cobrir apenas bottom-right
+- [x] Usar right: 0, width: 20% (últimos 20% da largura)
+- [x] Manter altura de 30px
+- [ ] Testar se cobre logo do YouTube
+
+## 🔧 Adjust YouTube Cover
+- [x] Aumentar altura de 30px para 54px (altura dos controles)
+- [x] Mudar de retângulo preto para gradiente (right to left: from-black/95 via-black/70 to-transparent)
+- [ ] Testar cobertura do logo do YouTube
+
+## 🐛 Fix Bottom Gradient Covering Content
+- [x] Gradiente inferior está cobrindo foto da coordenadora e informações do curso
+- [x] Reduzir altura do gradiente inferior (60px/80px → 30px/40px)
+- [x] Deixar gradiente mais transparente (black/95-80 → black/60-30)
+- [ ] Testar que não cobre conteúdo importante
+
+## ⏭️ Add Navigation Buttons Inside Player
+- [x] Adicionar botões de seta (prev/next) dentro do player
+- [x] Posicionar nos cantos (esquerda e direita, verticalmente centrados)
+- [x] Mostrar apenas ao passar mouse sobre o player (isHovering state)
+- [x] Adicionar tooltip com nome da aula ao hover no botão
+- [x] Implementar navegação ao clicar (onNavigate callback)
+- [x] Estilizar com fundo semi-transparente e ícones brancos
+- [x] Adicionar props ao PlyrVideoPlayer (prevLessonId, nextLessonId, etc)
+- [x] Atualizar Lesson.tsx para passar props e handler
+- [ ] Testar navegação e tooltips
+
+## 🐛 Fix Navigation Button Issues
+- [x] Reduzir tamanho do texto do tooltip (text-sm → text-xs)
+- [x] Permitir quebra de linha no tooltip (removido whitespace-nowrap, max-w-[200px])
+- [x] Adicionar debug logs para investigar navegação
+- [ ] Testar navegação e tooltip (aguardando feedback do usuário)
+
+## 🐛 Fix Navigation Using Wrong ID
+- [x] Navegação está usando `lesson.id` (UUID) em vez de `lesson.lessonId`
+- [x] Corrigir Lesson.tsx para passar `lessonId` em vez de `id`
+- [x] Testar navegação com IDs corretos

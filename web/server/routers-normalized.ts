@@ -5,13 +5,17 @@ import { publicProcedure, router } from "./_core/trpc";
 import { 
   getAllCourses, 
   getCourseById, 
+  getCourseStructure,
+  getModulesByCourse,
+  getSectionsByModule,
+  getLessonsBySection,
   getLessonsByCourse, 
   getLessonById, 
   getNextLesson,
   getPreviousLesson,
   upsertUser, 
   getUserByOpenId 
-} from "./db";
+} from "./db-normalized";
 import { z } from "zod";
 import { completeGoogleOAuth, getGoogleAuthUrl } from "./google-oauth";
 import { SignJWT } from "jose";
@@ -99,6 +103,29 @@ export const appRouter = router({
       .query(async ({ input }) => {
         return await getCourseById(input.courseId);
       }),
+    getStructure: publicProcedure
+      .input(z.object({ courseId: z.string() }))
+      .query(async ({ input }) => {
+        return await getCourseStructure(input.courseId);
+      }),
+  }),
+
+  // Modules router
+  modules: router({
+    getByCourse: publicProcedure
+      .input(z.object({ courseId: z.string() }))
+      .query(async ({ input }) => {
+        return await getModulesByCourse(input.courseId);
+      }),
+  }),
+
+  // Sections router
+  sections: router({
+    getByModule: publicProcedure
+      .input(z.object({ moduleId: z.string() }))
+      .query(async ({ input }) => {
+        return await getSectionsByModule(input.moduleId);
+      }),
   }),
 
   // Lessons router
@@ -107,6 +134,11 @@ export const appRouter = router({
       .input(z.object({ courseId: z.string() }))
       .query(async ({ input }) => {
         return await getLessonsByCourse(input.courseId);
+      }),
+    getBySection: publicProcedure
+      .input(z.object({ sectionId: z.string() }))
+      .query(async ({ input }) => {
+        return await getLessonsBySection(input.sectionId);
       }),
     getById: publicProcedure
       .input(z.object({ lessonId: z.string() }))

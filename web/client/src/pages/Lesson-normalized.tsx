@@ -15,16 +15,6 @@ export default function LessonPage() {
   const [, params] = useRoute("/course/:courseId/lesson/:lessonId");
   const courseId = params?.courseId;
   const lessonId = params?.lessonId;
-  
-  // Navigation handler
-  const handleNavigate = (newLessonId: string) => {
-    console.log('[Navigation] Navigating to:', { courseId, newLessonId, path: `/course/${courseId}/lesson/${newLessonId}` });
-    if (courseId) {
-      setLocation(`/course/${courseId}/lesson/${newLessonId}`);
-    } else {
-      console.error('[Navigation] courseId is missing!');
-    }
-  };
 
   // Check authentication
   const { data: user, isLoading: isLoadingUser } = trpc.auth.me.useQuery();
@@ -47,7 +37,7 @@ export default function LessonPage() {
     { enabled: !!courseId }
   );
 
-  // Fetch next and previous lessons using simplified procedures
+  // Fetch next and previous lessons using new procedures
   const { data: nextLesson } = trpc.lessons.getNext.useQuery(
     { lessonId: lessonId || "" },
     { enabled: !!lessonId }
@@ -101,7 +91,7 @@ export default function LessonPage() {
           <ChevronRight className="w-4 h-4 shrink-0" />
           <Link href={`/course/${courseId}`} className="hover:text-primary transition-colors">{course.acronym}</Link>
           <ChevronRight className="w-4 h-4 shrink-0" />
-          <span className="truncate font-medium text-foreground">{lesson.title}</span>
+          <span className="truncate">{lesson.title}</span>
         </div>
 
         {/* Video Player Container */}
@@ -111,11 +101,6 @@ export default function LessonPage() {
               youtubeUrl={lesson.youtubeUrl}
               courseTitle={course.title}
               lessonTitle={lesson.title}
-              prevLessonId={prevLesson?.lessonId || null}
-              prevLessonTitle={prevLesson?.title || null}
-              nextLessonId={nextLesson?.lessonId || null}
-              nextLessonTitle={nextLesson?.title || null}
-              onNavigate={handleNavigate}
             />
           ) : (
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-muted/30 text-center p-8">
@@ -169,35 +154,22 @@ export default function LessonPage() {
 
           {/* Sidebar / Actions */}
           <Card className="w-full md:w-80 shrink-0 p-4 space-y-4">
-            {/* Navigation Buttons - Only show if next/prev exist */}
-            {(prevLesson || nextLesson) && (
-              <>
-                <div className="flex items-center justify-between gap-2">
-                  {prevLesson ? (
-                    <Link href={`/course/${courseId}/lesson/${prevLesson.lessonId}`} className="flex-1">
-                      <Button variant="outline" size="sm" className="w-full">
-                        <ChevronLeft className="w-4 h-4 mr-1" />
-                        Anterior
-                      </Button>
-                    </Link>
-                  ) : (
-                    <div className="flex-1" />
-                  )}
-                  
-                  {nextLesson ? (
-                    <Link href={`/course/${courseId}/lesson/${nextLesson.lessonId}`} className="flex-1">
-                      <Button variant="default" size="sm" className="w-full">
-                        Próxima
-                        <ChevronRight className="w-4 h-4 ml-1" />
-                      </Button>
-                    </Link>
-                  ) : (
-                    <div className="flex-1" />
-                  )}
-                </div>
-                <Separator />
-              </>
-            )}
+            <div className="flex items-center justify-between gap-2">
+              <Link href={prevLesson ? `/course/${courseId}/lesson/${prevLesson.lessonId}` : "#"}>
+                <Button variant="outline" size="sm" disabled={!prevLesson} className="w-full">
+                  <ChevronLeft className="w-4 h-4 mr-1" />
+                  Anterior
+                </Button>
+              </Link>
+              <Link href={nextLesson ? `/course/${courseId}/lesson/${nextLesson.lessonId}` : "#"}>
+                <Button variant="default" size="sm" disabled={!nextLesson} className="w-full">
+                  Próxima
+                  <ChevronRight className="w-4 h-4 ml-1" />
+                </Button>
+              </Link>
+            </div>
+
+            <Separator />
 
             <div className="space-y-2">
               <h4 className="text-sm font-medium flex items-center gap-2">

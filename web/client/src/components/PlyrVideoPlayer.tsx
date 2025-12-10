@@ -1,19 +1,29 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { GraduationCap, Play, BookOpen } from "lucide-react";
+import { GraduationCap, Play, BookOpen, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface PlyrVideoPlayerProps {
   youtubeUrl: string;
   courseTitle?: string;
   lessonTitle?: string;
   moduleTitle?: string;
+  prevLessonId?: string | null;
+  prevLessonTitle?: string | null;
+  nextLessonId?: string | null;
+  nextLessonTitle?: string | null;
+  onNavigate?: (lessonId: string) => void;
 }
 
 export function PlyrVideoPlayer({ 
   youtubeUrl,
   courseTitle = "",
   lessonTitle = "",
-  moduleTitle = ""
+  moduleTitle = "",
+  prevLessonId = null,
+  prevLessonTitle = null,
+  nextLessonId = null,
+  nextLessonTitle = null,
+  onNavigate
 }: PlyrVideoPlayerProps) {
   const videoRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<any>(null);
@@ -22,6 +32,7 @@ export function PlyrVideoPlayer({
   const [showInitialOverlay, setShowInitialOverlay] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [fullscreenContainer, setFullscreenContainer] = useState<HTMLElement | null>(null);
+  const [isHovering, setIsHovering] = useState(false);
   const initialOverlayTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const hasShownInitialOverlay = useRef(false);
 
@@ -42,6 +53,55 @@ export function PlyrVideoPlayer({
     link.rel = "stylesheet";
     link.href = "https://cdn.plyr.io/3.7.8/plyr.css";
     document.head.appendChild(link);
+    
+    // Add custom CSS for green play button and disable right-click on iframe
+    const style = document.createElement("style");
+    style.textContent = `
+      /* Customize Plyr play button to green */
+      .plyr--video .plyr__control.plyr__tab-focus,
+      .plyr--video .plyr__control:hover,
+      .plyr--video .plyr__control[aria-expanded=true] {
+        background: #16a34a !important; /* green-600 */
+      }
+      .plyr__control--overlaid {
+        background: rgba(22, 163, 74, 0.9) !important; /* green-600 with opacity */
+      }
+      .plyr__control--overlaid:hover {
+        background: rgba(22, 163, 74, 1) !important;
+      }
+      /* Disable right-click on YouTube iframe */
+      .plyr iframe {
+        pointer-events: none !important;
+      }
+      /* Re-enable pointer events on Plyr controls and increase z-index */
+      .plyr__controls {
+        pointer-events: auto !important;
+        z-index: 50 !important; /* Above overlay (z-1) and text (z-2) */
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent) !important;
+      }
+      /* Ensure controls visible when paused */
+      .plyr--paused .plyr__controls {
+        z-index: 50 !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
+      /* Force controls to be above everything */
+      .plyr__control-bar {
+        z-index: 50 !important;
+      }
+      /* Customize progress bar color to green */
+      .plyr--full-ui input[type=range] {
+        color: #16a34a !important; /* green-600 */
+      }
+      .plyr__progress__buffer {
+        color: rgba(22, 163, 74, 0.25) !important;
+      }
+      /* Customize volume bar color to green */
+      .plyr--video .plyr__volume input[type=range] {
+        color: #16a34a !important; /* green-600 */
+      }
+    `;
+    document.head.appendChild(style);
 
     // Load Plyr JS
     const script = document.createElement("script");
@@ -196,11 +256,11 @@ export function PlyrVideoPlayer({
         <>
           {/* Top branded bar - covers title area */}
           <div 
-            className={`absolute top-0 left-0 right-0 pointer-events-auto ${isFullscreen ? 'z-[9999]' : 'z-50'}`}
-            style={{ height: isFullscreen ? '100px' : '80px' }}
+            className={`absolute top-0 left-0 right-0 pointer-events-auto ${isFullscreen ? 'z-[9999]' : 'z-10'}`}
+            style={{ height: isFullscreen ? '138px' : '115px' }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className={`bg-gradient-to-b from-black/90 via-black/70 to-transparent h-full flex items-start gap-3 ${isFullscreen ? 'p-6' : 'p-4'}`}>
+            <div className={`bg-gradient-to-b from-black/95 via-black/85 to-transparent h-full flex items-start gap-3 ${isFullscreen ? 'p-6' : 'p-4'}`}>
               <div className={`rounded-lg bg-green-600 flex items-center justify-center flex-shrink-0 ${isFullscreen ? 'w-16 h-16' : 'w-12 h-12'}`}>
                 <GraduationCap className={`text-white ${isFullscreen ? 'w-9 h-9' : 'w-7 h-7'}`} />
               </div>
@@ -215,13 +275,31 @@ export function PlyrVideoPlayer({
             </div>
           </div>
 
-          {/* Bottom branded bar - covers YouTube logo and share buttons */}
+          {/* Gradient to cover YouTube logo (bottom-right corner only) */}
           <div 
-            className={`absolute bottom-0 left-0 right-0 pointer-events-auto ${isFullscreen ? 'z-[9999]' : 'z-50'}`}
-            style={{ height: isFullscreen ? '120px' : '100px' }}
-            onClick={(e) => e.stopPropagation()}
+            className="absolute bottom-0 right-0 pointer-events-none"
+            style={{ height: '54px', width: '20%' }}
           >
-            <div className={`bg-gradient-to-t from-black/95 via-black/80 to-transparent h-full flex flex-col justify-end ${isFullscreen ? 'p-6 pt-10' : 'p-4 pt-8'}`}>
+            <div className="bg-gradient-to-l from-black/95 via-black/70 to-transparent h-full" />
+          </div>
+
+          {/* Subtle gradient overlay for text readability - positioned above controls */}
+          <div 
+            className={`absolute left-0 right-0 pointer-events-none ${isFullscreen ? 'z-[9999]' : ''}`}
+            style={{ 
+              bottom: isFullscreen ? '60px' : '54px',
+              height: isFullscreen ? '40px' : '30px'
+            }}
+          >
+            <div className="bg-gradient-to-t from-black/60 via-black/30 to-transparent h-full" />
+          </div>
+
+          {/* Course info text - positioned above controls */}
+          <div 
+            className={`absolute left-0 right-0 pointer-events-none ${isFullscreen ? 'z-[9999]' : ''}`}
+            style={{ bottom: isFullscreen ? '60px' : '54px' }}
+          >
+            <div className={`${isFullscreen ? 'px-6' : 'px-4'}`}>
               <div className="space-y-2">
                 {/* Course info */}
                 {courseTitle && (
@@ -259,27 +337,6 @@ export function PlyrVideoPlayer({
               </div>
             </div>
           </div>
-
-          {/* Corner overlays to block specific YouTube buttons */}
-          {/* Bottom-left: "Watch on YouTube" button */}
-          <div 
-            className={`absolute rounded pointer-events-auto ${isFullscreen ? 'z-[9999] bottom-4 left-4 w-48 h-14' : 'z-50 bottom-2 left-2 w-40 h-12'}`}
-            style={{ 
-              background: 'rgba(0, 0, 0, 0.95)',
-              backdropFilter: 'blur(10px)' 
-            }}
-            onClick={(e) => e.stopPropagation()}
-          />
-
-          {/* Top-right: Share/More buttons */}
-          <div 
-            className={`absolute rounded pointer-events-auto ${isFullscreen ? 'z-[9999] top-4 right-4 w-40 h-12' : 'z-50 top-2 right-2 w-32 h-10'}`}
-            style={{ 
-              background: 'rgba(0, 0, 0, 0.95)',
-              backdropFilter: 'blur(10px)' 
-            }}
-            onClick={(e) => e.stopPropagation()}
-          />
         </>
       )}
     </>
@@ -287,9 +344,11 @@ export function PlyrVideoPlayer({
 
   return (
     <div 
-      className="absolute inset-0 select-none" 
+      className="absolute inset-0 select-none group" 
       style={{ userSelect: 'none' }}
       onContextMenu={handleContextMenu}
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
     >
       {/* Plyr Player */}
       <div ref={videoRef} className="w-full h-full" />
@@ -299,6 +358,53 @@ export function PlyrVideoPlayer({
         ? createPortal(renderOverlays(), fullscreenContainer)
         : renderOverlays()
       }
+
+      {/* Navigation buttons - show on hover */}
+      {isHovering && (
+        <>
+          {/* Previous button */}
+          {prevLessonId && prevLessonTitle && (
+            <button
+              onClick={() => onNavigate?.(prevLessonId)}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-[100] group/nav"
+              aria-label="Aula anterior"
+            >
+              <div className="relative">
+                <div className="bg-black/70 hover:bg-black/90 rounded-full p-3 transition-all duration-200">
+                  <ChevronLeft className="w-8 h-8 text-white" />
+                </div>
+                {/* Tooltip */}
+                <div className="absolute left-full ml-3 top-1/2 -translate-y-1/2 opacity-0 group-hover/nav:opacity-100 transition-opacity duration-200 pointer-events-none">
+                  <div className="bg-black/90 text-white px-3 py-2 rounded-lg text-xs max-w-[200px] leading-tight">
+                    {prevLessonTitle}
+                  </div>
+                </div>
+              </div>
+            </button>
+          )}
+
+          {/* Next button */}
+          {nextLessonId && nextLessonTitle && (
+            <button
+              onClick={() => onNavigate?.(nextLessonId)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-[100] group/nav"
+              aria-label="Próxima aula"
+            >
+              <div className="relative">
+                <div className="bg-black/70 hover:bg-black/90 rounded-full p-3 transition-all duration-200">
+                  <ChevronRight className="w-8 h-8 text-white" />
+                </div>
+                {/* Tooltip */}
+                <div className="absolute right-full mr-3 top-1/2 -translate-y-1/2 opacity-0 group-hover/nav:opacity-100 transition-opacity duration-200 pointer-events-none">
+                  <div className="bg-black/90 text-white px-3 py-2 rounded-lg text-xs max-w-[200px] leading-tight">
+                    {nextLessonTitle}
+                  </div>
+                </div>
+              </div>
+            </button>
+          )}
+        </>
+      )}
     </div>
   );
 }
