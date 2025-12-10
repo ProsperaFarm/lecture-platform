@@ -87,7 +87,8 @@ docker-compose -f ./docker/dev/docker-compose-dev.yaml up -d
 - `npm run build`: Compila o projeto para produção na pasta `dist`.
 - `npm run check`: Executa a verificação de tipos do TypeScript.
 - `npm run db:push`: Gera e aplica migrações do banco de dados (Drizzle).
-- `npm run db:seed`: Popula o banco com os dados dos cursos do course-metadata.json.
+- `npm run db:seed`: Popula o banco pela primeira vez com os dados do course-metadata.json.
+- `npm run db:sync`: Sincroniza o banco com o JSON atualizado (após uploads do YouTube).
 - `npm test`: Executa os testes unitários com Vitest.
 
 ## 📚 Documentação Adicional
