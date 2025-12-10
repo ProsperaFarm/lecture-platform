@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { Loader2, AlertCircle } from "lucide-react";
@@ -8,8 +8,13 @@ export default function GoogleCallback() {
   const [, setLocation] = useLocation();
   const [error, setError] = useState<string | null>(null);
   const googleCallback = trpc.auth.googleCallback.useMutation();
+  const hasProcessed = useRef(false);
 
   useEffect(() => {
+    // Prevent double execution in React Strict Mode
+    if (hasProcessed.current) return;
+    hasProcessed.current = true;
+
     const handleCallback = async () => {
       // Get code from URL query params
       const params = new URLSearchParams(window.location.search);
@@ -42,7 +47,8 @@ export default function GoogleCallback() {
     };
 
     handleCallback();
-  }, [googleCallback, setLocation]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (error) {
     return (
