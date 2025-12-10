@@ -68,6 +68,17 @@ export function PlyrVideoPlayer({
         position: relative !important;
         z-index: 20 !important; /* Above overlay (z-10) */
       }
+      /* Customize progress bar color to green */
+      .plyr--full-ui input[type=range] {
+        color: #16a34a !important; /* green-600 */
+      }
+      .plyr__progress__buffer {
+        color: rgba(22, 163, 74, 0.25) !important;
+      }
+      /* Customize volume bar color to green */
+      .plyr--video .plyr__volume input[type=range] {
+        color: #16a34a !important; /* green-600 */
+      }
     `;
     document.head.appendChild(style);
 

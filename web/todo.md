@@ -284,3 +284,9 @@
 - [x] Aumentar z-index dos controles do Plyr para z-20 (acima do gradiente z-10)
 - [x] Ajustar padding-bottom para posicionar texto acima dos controles
 - [ ] Testar layout final
+
+## 🎨 Customize Plyr Progress and Volume Colors
+- [x] Mudar cor da barra de progresso para verde floresta (#16a34a)
+- [x] Mudar cor do buffer para verde transparente (rgba 0.25)
+- [x] Mudar cor da barra de volume para verde floresta (#16a34a)
+- [ ] Testar cores no player
