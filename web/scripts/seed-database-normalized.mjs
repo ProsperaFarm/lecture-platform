@@ -38,7 +38,7 @@ async function seedDatabase() {
   
   try {
     // Read course metadata JSON
-    const jsonPath = join(__dirname, '..', '..', 'course-metadata.json');
+    const jsonPath = join(__dirname, '..', '..', 'uploader', 'course-metadata.json');
     console.log(`📖 Reading course data from: ${jsonPath}`);
     
     const rawData = readFileSync(jsonPath, 'utf-8');
