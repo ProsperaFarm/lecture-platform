@@ -70,3 +70,37 @@
 - [x] Criar script de sincronização que atualiza DB a partir do JSON
 - [x] Adicionar comando npm run db:sync
 - [x] Documentar uso do script após uploads do YouTube
+
+## 🐛 Server Files Missing
+- [x] Verificar e copiar arquivos do diretório server/_core
+- [x] Garantir que todos os arquivos do servidor estejam no repositório
+- [ ] Testar npm run dev localmente
+
+## 🐛 Missing Config Files
+- [x] Corrigir vite.config.ts para remover plugin incompatível
+- [x] Copiar diretório shared/ completo
+- [x] Copiar arquivos de configuração (tsconfig, drizzle.config, etc)
+
+## 🔐 Replace Manus OAuth with Google OAuth
+- [x] Atualizar env.ts para usar GOOGLE_CLIENT_ID e GOOGLE_CLIENT_SECRET
+- [x] Implementar fluxo de Google OAuth no servidor
+- [ ] Criar componente de login no cliente
+- [ ] Criar página de callback do Google OAuth
+- [ ] Documentar setup do Google OAuth
+
+## 🔥 Remove Manus OAuth Completely
+- [x] Remover logs de erro do OAUTH_SERVER_URL no sdk.ts
+- [x] Simplificar context.ts para usar apenas Google OAuth
+- [x] Testar que não há mais erros de OAuth do Manus
+
+## 🐛 Missing Client Files
+- [x] Copiar diretório client/src/lib completo (trpc.ts, utils.ts)
+- [x] Adicionar variáveis de ambiente opcionais ao .env.example
+- [x] Remover erro do OAuth do Manus no repositório GitHub
+
+## 🔐 Authentication & Route Protection
+- [x] Criar página de Login com botão Google OAuth
+- [x] Criar página de callback do Google (/auth/google/callback)
+- [x] Adicionar proteção de rotas no Home (redirecionar para login se não autenticado)
+- [x] Atualizar App.tsx com rotas de autenticação
+- [ ] Testar fluxo completo de login

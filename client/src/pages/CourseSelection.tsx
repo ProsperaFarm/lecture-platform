@@ -1,14 +1,32 @@
+import { Layout } from "@/components/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { BookOpen, PlayCircle, TrendingUp } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import coursesDataRaw from "../lib/courses-data.json";
 import { CoursesData } from "../lib/types";
+import { trpc } from "@/lib/trpc";
+import { useEffect } from "react";
 
 const coursesData = coursesDataRaw as CoursesData;
 
 export default function CourseSelection() {
+  const [, setLocation] = useLocation();
+  const { data: user, isLoading: isLoadingAuth } = trpc.auth.me.useQuery();
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!isLoadingAuth && !user) {
+      setLocation("/login");
+    }
+  }, [user, isLoadingAuth, setLocation]);
+
+  // Show loading while checking auth
+  if (isLoadingAuth) {
+    return null;
+  }
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
