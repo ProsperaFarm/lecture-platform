@@ -252,3 +252,9 @@
 - [x] Garantir que não cubram conteúdo importante do vídeo
 - [x] Manter branding visível mas discreto
 - [ ] Testar visualização
+
+## 🎨 Improve Top Overlay
+- [x] Aumentar altura da tarja superior para cobrir botão "copiar link" (80px→100px, 100px→120px)
+- [x] Deixar tarja superior mais escura (black/90→black/95, black/70→black/85)
+- [x] Desabilitar clique direito no player de vídeo (já estava implementado)
+- [ ] Testar cobertura do botão e clique direito

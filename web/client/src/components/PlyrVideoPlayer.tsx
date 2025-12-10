@@ -197,10 +197,10 @@ export function PlyrVideoPlayer({
           {/* Top branded bar - covers title area */}
           <div 
             className={`absolute top-0 left-0 right-0 pointer-events-auto ${isFullscreen ? 'z-[9999]' : 'z-10'}`}
-            style={{ height: isFullscreen ? '100px' : '80px' }}
+            style={{ height: isFullscreen ? '120px' : '100px' }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className={`bg-gradient-to-b from-black/90 via-black/70 to-transparent h-full flex items-start gap-3 ${isFullscreen ? 'p-6' : 'p-4'}`}>
+            <div className={`bg-gradient-to-b from-black/95 via-black/85 to-transparent h-full flex items-start gap-3 ${isFullscreen ? 'p-6' : 'p-4'}`}>
               <div className={`rounded-lg bg-green-600 flex items-center justify-center flex-shrink-0 ${isFullscreen ? 'w-16 h-16' : 'w-12 h-12'}`}>
                 <GraduationCap className={`text-white ${isFullscreen ? 'w-9 h-9' : 'w-7 h-7'}`} />
               </div>
