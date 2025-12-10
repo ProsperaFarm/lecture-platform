@@ -264,10 +264,10 @@ export function PlyrVideoPlayer({
             </div>
           </div>
 
-          {/* Thin gradient to cover YouTube logo only */}
+          {/* Thin gradient to cover YouTube logo (bottom-right corner only) */}
           <div 
-            className="absolute bottom-0 left-0 right-0 pointer-events-none"
-            style={{ height: '30px' }}
+            className="absolute bottom-0 right-0 pointer-events-none"
+            style={{ height: '30px', width: '20%' }}
           >
             <div className="bg-black/90 h-full" />
           </div>

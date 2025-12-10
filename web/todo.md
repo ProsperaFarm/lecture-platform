@@ -334,3 +334,9 @@
 - [x] Remover z-index complexo (deixar natural)
 - [x] Controles ficam entre os dois gradientes (visíveis)
 - [ ] Testar se YouTube fica coberto e controles visíveis
+
+## 🎯 Optimize YouTube Cover Gradient
+- [x] Mudar gradiente do YouTube para cobrir apenas bottom-right
+- [x] Usar right: 0, width: 20% (últimos 20% da largura)
+- [x] Manter altura de 30px
+- [ ] Testar se cobre logo do YouTube
