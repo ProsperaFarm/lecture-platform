@@ -1,10 +1,10 @@
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import { drizzle as drizzleNeon } from "drizzle-orm/neon-http";
 import { drizzle as drizzleNode } from "drizzle-orm/node-postgres";
 import { neon } from "@neondatabase/serverless";
 import pkg from 'pg';
 const { Pool } = pkg;
-import { InsertUser, users, courses, lessons, modules, sections, Course, Lesson } from "../drizzle/schema";
+import { InsertUser, users, courses, lessons, modules, sections, userProgress, Course, Lesson, UserProgress, InsertUserProgress } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzleNeon> | ReturnType<typeof drizzleNode> | null = null;
@@ -231,4 +231,96 @@ export async function getPreviousLesson(currentLessonId: string): Promise<Lesson
   
   const prevLesson = await getLessonById(currentLesson.prevLessonId);
   return prevLesson || null;
+}
+
+/**
+ * User Progress Management
+ */
+
+/**
+ * Get user progress for a specific course
+ */
+export async function getUserProgressByCourse(userId: number, courseId: string): Promise<UserProgress[]> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get user progress: database not available");
+    return [];
+  }
+
+  const result = await db
+    .select()
+    .from(userProgress)
+    .where(and(eq(userProgress.userId, userId), eq(userProgress.courseId, courseId)));
+  
+  return result;
+}
+
+/**
+ * Get user progress for a specific lesson
+ */
+export async function getUserProgressByLesson(userId: number, lessonId: string): Promise<UserProgress | undefined> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get user progress: database not available");
+    return undefined;
+  }
+
+  const result = await db
+    .select()
+    .from(userProgress)
+    .where(and(eq(userProgress.userId, userId), eq(userProgress.lessonId, lessonId)))
+    .limit(1);
+  
+  return result.length > 0 ? result[0] : undefined;
+}
+
+/**
+ * Mark lesson as completed or update watch position
+ */
+export async function upsertUserProgress(data: {
+  userId: number;
+  lessonId: string;
+  courseId: string;
+  completed?: boolean;
+  lastWatchedPosition?: number;
+}): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot upsert user progress: database not available");
+    return;
+  }
+
+  const now = new Date();
+  
+  await db
+    .insert(userProgress)
+    .values({
+      userId: data.userId,
+      lessonId: data.lessonId,
+      courseId: data.courseId,
+      completed: data.completed ?? false,
+      lastWatchedPosition: data.lastWatchedPosition ?? 0,
+      watchedAt: now,
+      updatedAt: now,
+    })
+    .onConflictDoUpdate({
+      target: [userProgress.userId, userProgress.lessonId],
+      set: {
+        completed: data.completed ?? false,
+        lastWatchedPosition: data.lastWatchedPosition ?? 0,
+        updatedAt: now,
+      },
+    });
+}
+
+/**
+ * Toggle lesson completion status
+ */
+export async function toggleLessonCompletion(userId: number, lessonId: string, courseId: string, completed: boolean): Promise<void> {
+  await upsertUserProgress({
+    userId,
+    lessonId,
+    courseId,
+    completed,
+  });
 }

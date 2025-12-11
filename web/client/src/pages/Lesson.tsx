@@ -109,6 +109,8 @@ export default function LessonPage() {
           {lesson.youtubeUrl ? (
             <PlyrVideoPlayer 
               youtubeUrl={lesson.youtubeUrl}
+              lessonId={lesson.lessonId}
+              courseId={courseId}
               courseTitle={course.title}
               lessonTitle={lesson.title}
               prevLessonId={prevLesson?.lessonId || null}

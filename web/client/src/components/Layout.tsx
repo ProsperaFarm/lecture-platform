@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import {
   DropdownMenu,
@@ -57,6 +58,37 @@ export function Layout({ children }: LayoutProps) {
     { enabled: !!courseId }
   );
 
+  // Fetch user progress for this course
+  const { data: userProgressData = [] } = trpc.progress.getByCourse.useQuery(
+    { courseId: courseId || "" },
+    { enabled: !!courseId }
+  );
+
+  // Create a map of lessonId -> completed status for quick lookup
+  const progressMap = useMemo(() => {
+    const map = new Map<string, boolean>();
+    userProgressData.forEach(progress => {
+      map.set(progress.lessonId, progress.completed || false);
+    });
+    return map;
+  }, [userProgressData]);
+
+  // Mutation to toggle lesson completion
+  const toggleCompletionMutation = trpc.progress.toggleCompletion.useMutation({
+    onSuccess: () => {
+      // Invalidate queries to refetch progress
+      trpc.useContext().progress.getByCourse.invalidate({ courseId: courseId || "" });
+    },
+  });
+
+  const handleToggleCompletion = (e: React.MouseEvent, lessonId: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (courseId) {
+      toggleCompletionMutation.mutate({ courseId, lessonId });
+    }
+  };
+
   // Group lessons by module and section
   const courseStructure = useMemo(() => {
     if (!lessonsData || lessonsData.length === 0) {
@@ -68,11 +100,15 @@ export function Layout({ children }: LayoutProps) {
       title: string;
       order: number;
       totalDuration: number;
+      completedCount: number;
+      totalCount: number;
       sections: Map<string, {
         id: string;
         title: string;
         order: number;
         totalDuration: number;
+        completedCount: number;
+        totalCount: number;
         lessons: typeof lessonsData;
       }>;
     }>();
@@ -83,7 +119,9 @@ export function Layout({ children }: LayoutProps) {
           id: lesson.moduleId,
           title: lesson.moduleName || "Módulo sem nome",
           order: lesson.moduleOrder || 0,
-          totalDuration: lesson.moduleTotalDuration || 0, // Use pre-calculated value from database
+          totalDuration: lesson.moduleTotalDuration || 0,
+          completedCount: 0,
+          totalCount: 0,
           sections: new Map(),
         });
       }
@@ -95,13 +133,25 @@ export function Layout({ children }: LayoutProps) {
           id: lesson.sectionId,
           title: lesson.sectionName || "Seção sem nome",
           order: lesson.sectionOrder || 0,
-          totalDuration: lesson.sectionTotalDuration || 0, // Use pre-calculated value from database
+          totalDuration: lesson.sectionTotalDuration || 0,
+          completedCount: 0,
+          totalCount: 0,
           lessons: [],
         });
       }
 
       const section = module.sections.get(lesson.sectionId)!;
       section.lessons.push(lesson);
+      
+      // Update counters
+      section.totalCount++;
+      module.totalCount++;
+      
+      const isCompleted = progressMap.get(lesson.lessonId) || false;
+      if (isCompleted) {
+        section.completedCount++;
+        module.completedCount++;
+      }
     });
 
     // Convert maps to arrays and sort
@@ -118,9 +168,14 @@ export function Layout({ children }: LayoutProps) {
       }));
 
     const totalSections = modules.reduce((acc, m) => acc + m.sections.length, 0);
+    
+    // Calculate total course progress
+    const totalLessons = lessonsData.length;
+    const completedLessons = lessonsData.filter(lesson => progressMap.get(lesson.lessonId)).length;
+    const progressPercentage = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
 
-    return { modules, totalSections };
-  }, [lessonsData]);
+    return { modules, totalSections, totalLessons, completedLessons, progressPercentage };
+  }, [lessonsData, progressMap]);
 
   // Loading state
   if (courseLoading || lessonsLoading) {
@@ -167,12 +222,22 @@ export function Layout({ children }: LayoutProps) {
               )}
             </Button>
             
-            {/* Platform Name */}
+            {/* Platform Name + Course Progress */}
             <div className="hidden sm:flex items-center gap-2">
               <div className="w-7 h-7 bg-primary rounded flex items-center justify-center text-primary-foreground font-bold text-xs">
                 P
               </div>
               <span className="font-bold">Prospera Academy</span>
+              {course && (
+                <>
+                  <span className="text-muted-foreground">|</span>
+                  <span className="font-medium text-sm truncate max-w-[200px]">{course.title}</span>
+                  <span className="text-muted-foreground">-</span>
+                  <span className="text-sm text-muted-foreground">Seu progresso</span>
+                  <span className="font-semibold text-primary">{courseStructure.progressPercentage}%</span>
+                  <span className="text-xs text-muted-foreground">({courseStructure.completedLessons}/{courseStructure.totalLessons})</span>
+                </>
+              )}
             </div>
           </div>
           
@@ -229,11 +294,16 @@ export function Layout({ children }: LayoutProps) {
                 <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                   {module.title}
                 </h3>
-                {module.totalDuration > 0 && (
-                  <span className="text-xs text-muted-foreground/60">
-                    {formatDuration(module.totalDuration)}
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-medium text-primary">
+                    {module.completedCount}/{module.totalCount}
                   </span>
-                )}
+                  {module.totalDuration > 0 && (
+                    <span className="text-xs text-muted-foreground/60">
+                      {formatDuration(module.totalDuration)}
+                    </span>
+                  )}
+                </div>
               </div>
               <div className="space-y-1">
                 {module.sections.map((section) => (
@@ -241,7 +311,10 @@ export function Layout({ children }: LayoutProps) {
                     <div className="px-2 py-1.5 text-sm font-medium text-sidebar-foreground/80 flex items-center justify-between gap-2">
                       <div className="flex items-center gap-2">
                         <BookOpen className="w-3 h-3" />
-                        {section.title}
+                        <span>{section.title}</span>
+                        <span className="text-xs font-medium text-primary">
+                          {section.completedCount}/{section.totalCount}
+                        </span>
                       </div>
                       {section.totalDuration > 0 && (
                         <span className="text-xs text-muted-foreground/60">
@@ -252,37 +325,50 @@ export function Layout({ children }: LayoutProps) {
                     <div className="pl-4 space-y-0.5 border-l border-sidebar-border ml-3">
                       {section.lessons.map((lesson) => {
                         const isActive = location === `/course/${course.courseId}/lesson/${lesson.lessonId}`;
+                        const isCompleted = progressMap.get(lesson.lessonId) || false;
                         return (
-                          <Link key={lesson.lessonId} href={`/course/${course.courseId}/lesson/${lesson.lessonId}`}>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className={cn(
-                                "w-full justify-start text-xs h-auto py-2 whitespace-normal text-left font-normal",
-                                isActive 
-                                  ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium" 
-                                  : "text-muted-foreground hover:text-sidebar-foreground"
-                              )}
-                              onClick={() => setIsMobileSidebarOpen(false)}
-                            >
-                              <div className="flex items-start gap-2 w-full">
-                                <PlayCircle className={cn(
-                                  "w-3 h-3 mt-0.5 shrink-0",
-                                  isActive ? "fill-current" : "opacity-50"
-                                )} />
-                                <div className="flex-1 min-w-0">
-                                  <div className="flex items-start justify-between gap-2">
-                                    <span className="line-clamp-2 flex-1">{lesson.title}</span>
-                                    {lesson.duration && (
-                                      <span className="text-[10px] text-muted-foreground/60 shrink-0 mt-0.5">
-                                        {formatDuration(lesson.duration)}
-                                      </span>
-                                    )}
+                          <div key={lesson.lessonId} className="flex items-start gap-1.5">
+                            <Checkbox
+                              checked={isCompleted}
+                              onCheckedChange={(checked) => handleToggleCompletion(new MouseEvent('click') as any, lesson.lessonId)}
+                              className="mt-2.5 shrink-0"
+                            />
+                            <Link href={`/course/${course.courseId}/lesson/${lesson.lessonId}`} className="flex-1">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className={cn(
+                                  "w-full justify-start text-xs h-auto py-2 whitespace-normal text-left font-normal",
+                                  isActive 
+                                    ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium" 
+                                    : "text-muted-foreground hover:text-sidebar-foreground",
+                                  isCompleted && "opacity-70"
+                                )}
+                                onClick={() => setIsMobileSidebarOpen(false)}
+                              >
+                                <div className="flex items-start gap-2 w-full">
+                                  <PlayCircle className={cn(
+                                    "w-3 h-3 mt-0.5 shrink-0",
+                                    isActive ? "fill-current" : "opacity-50",
+                                    isCompleted && "text-green-500"
+                                  )} />
+                                  <div className="flex-1 min-w-0">
+                                    <div className="flex items-start justify-between gap-2">
+                                      <span className={cn(
+                                        "line-clamp-2 flex-1",
+                                        isCompleted && "line-through"
+                                      )}>{lesson.title}</span>
+                                      {lesson.duration && (
+                                        <span className="text-[10px] text-muted-foreground/60 shrink-0 mt-0.5">
+                                          {formatDuration(lesson.duration)}
+                                        </span>
+                                      )}
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            </Button>
-                          </Link>
+                              </Button>
+                            </Link>
+                          </div>
                         );
                       })}
                     </div>

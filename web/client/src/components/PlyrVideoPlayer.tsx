@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { GraduationCap, Play, BookOpen, ChevronLeft, ChevronRight } from "lucide-react";
+import { trpc } from "@/lib/trpc";
 
 interface PlyrVideoPlayerProps {
   youtubeUrl: string;
+  lessonId: string;
+  courseId: string;
   courseTitle?: string;
   lessonTitle?: string;
   moduleTitle?: string;
@@ -16,6 +19,8 @@ interface PlyrVideoPlayerProps {
 
 export function PlyrVideoPlayer({ 
   youtubeUrl,
+  lessonId,
+  courseId,
   courseTitle = "",
   lessonTitle = "",
   moduleTitle = "",
@@ -35,6 +40,10 @@ export function PlyrVideoPlayer({
   const [isHovering, setIsHovering] = useState(false);
   const initialOverlayTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const hasShownInitialOverlay = useRef(false);
+  const hasMarkedComplete = useRef(false); // Track if we've already marked this lesson as complete
+
+  // Mutation to update progress
+  const updateProgress = trpc.progress.upsert.useMutation();
 
   // Extract YouTube video ID
   const getYoutubeId = (url: string): string | null => {
@@ -188,6 +197,34 @@ export function PlyrVideoPlayer({
         playerRef.current.on('exitfullscreen', () => {
           setIsFullscreen(false);
           setFullscreenContainer(null);
+        });
+
+        // Listen to time updates to detect completion
+        playerRef.current.on('timeupdate', (event: any) => {
+          if (hasMarkedComplete.current) return; // Already marked, skip
+
+          const currentTime = playerRef.current.currentTime;
+          const duration = playerRef.current.duration;
+
+          if (!duration || duration === 0) return;
+
+          // Mark as complete if:
+          // 1. Reached 90% of the video, OR
+          // 2. Within last 30 seconds
+          const percentComplete = (currentTime / duration) * 100;
+          const secondsRemaining = duration - currentTime;
+
+          if (percentComplete >= 90 || secondsRemaining <= 30) {
+            hasMarkedComplete.current = true;
+            console.log(`[Progress] Auto-marking lesson ${lessonId} as complete (${percentComplete.toFixed(1)}% watched)`);
+            
+            updateProgress.mutate({
+              lessonId,
+              courseId,
+              completed: true,
+              lastWatchedPosition: Math.floor(currentTime),
+            });
+          }
         });
       }
     };
