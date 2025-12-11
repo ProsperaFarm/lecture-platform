@@ -511,3 +511,11 @@
 - [x] Transformar módulos em accordions com "X/Y | HHhMMm"
 - [x] Transformar seções em accordions (nested) com mesmo formato
 - [x] Mostrar duração de cada aula + checkbox para marcação manual
+
+## 🎯 Course Listing Page (/) Updates (Dec 10, 2024)
+- [x] Add completion percentage display on course cards
+- [x] Add visual progress bar overlay on course thumbnails
+- [x] Display total course duration with clock icon
+- [x] Show completed/total lessons count
+- [x] Change button text to "Continuar Curso" when progress exists
+- [x] Fetch user progress data via tRPC
