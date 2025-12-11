@@ -484,3 +484,9 @@
 - [x] Converter módulos para Accordion colapsável (shadcn/ui)
 - [x] Exibir progresso no header do módulo: "X/Y | HHhMMm"
 - [x] Todos os módulos abertos por padrão para melhor UX
+
+## 🐛 Fix Checkbox Toggle Error (Dec 10, 2024)
+- [x] Investigar endpoint progress.toggleCompletion no backend
+- [x] Corrigir parâmetros enviados pelo handleToggleCompletion
+- [x] Adicionar campo 'completed' com toggle do estado atual
+- [ ] Testar que checkbox marca/desmarca corretamente

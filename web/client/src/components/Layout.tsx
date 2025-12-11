@@ -92,7 +92,13 @@ export function Layout({ children }: LayoutProps) {
 
   const handleToggleCompletion = (lessonId: string) => {
     if (courseId) {
-      toggleCompletionMutation.mutate({ courseId, lessonId });
+      // Get current completion status and toggle it
+      const currentStatus = progressMap.get(lessonId) || false;
+      toggleCompletionMutation.mutate({ 
+        courseId, 
+        lessonId, 
+        completed: !currentStatus 
+      });
     }
   };
 
