@@ -519,3 +519,14 @@
 - [x] Show completed/total lessons count
 - [x] Change button text to "Continuar Curso" when progress exists
 - [x] Fetch user progress data via tRPC
+
+## 🐛 Fix Progress Display on Course Listing (Dec 10, 2024)
+- [x] Investigate why progress percentage is not showing
+- [x] Debug tRPC progress.getAll query
+- [x] Identified root cause: DATABASE_URL points to TiDB (MySQL) but code expects PostgreSQL
+- [ ] Setup local PostgreSQL in sandbox with Docker
+- [ ] Run database migrations (db:push)
+- [ ] Seed database with course and lesson data
+- [ ] Add test user progress data
+- [ ] Test database connection and verify progress data loads
+- [ ] Remove debug console.log statements
