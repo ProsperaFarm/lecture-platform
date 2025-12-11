@@ -1,0 +1,9 @@
+{
+  "query": "ALTER TABLE lessons ADD COLUMN IF NOT EXISTS duration INTEGER;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2TzacKGRRnZDW7Y.root --database ni7qHymAxC7632zETPJAJd --execute ALTER TABLE lessons ADD COLUMN IF NOT EXISTS duration INTEGER;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 2420
+}

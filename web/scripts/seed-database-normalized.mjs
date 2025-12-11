@@ -153,13 +153,14 @@ async function seedDatabase() {
           const lessonWithNav = allLessons.find(l => l.lessonId === lesson.id);
           
           await client.query(
-            `INSERT INTO lessons ("lessonId", "sectionId", "moduleId", "courseId", title, "youtubeUrl", type, "order", "nextLessonId", "prevLessonId", "createdAt", "updatedAt")
-             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, NOW(), NOW())
+            `INSERT INTO lessons ("lessonId", "sectionId", "moduleId", "courseId", title, "youtubeUrl", type, duration, "order", "nextLessonId", "prevLessonId", "createdAt", "updatedAt")
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, NOW(), NOW())
              ON CONFLICT ("lessonId")
              DO UPDATE SET
                title = EXCLUDED.title,
                "youtubeUrl" = EXCLUDED."youtubeUrl",
                type = EXCLUDED.type,
+               duration = EXCLUDED.duration,
                "order" = EXCLUDED."order",
                "nextLessonId" = EXCLUDED."nextLessonId",
                "prevLessonId" = EXCLUDED."prevLessonId",
@@ -171,7 +172,8 @@ async function seedDatabase() {
               course.id, 
               lesson.title, 
               lesson.youtubeUrl || null, 
-              lesson.type, 
+              lesson.type,
+              lesson.duration || null,
               lesson.order,
               lessonWithNav.nextLessonId,
               lessonWithNav.prevLessonId

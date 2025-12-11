@@ -438,3 +438,12 @@
 - [x] Corrigir useAuth hook para evitar re-fetches infinitos
 - [x] Adicionar configurações de cache/staleTime nas queries tRPC
 - [x] Testar que auth.me não é chamado infinitamente
+
+## ⏱️ Add Video Duration Tracking
+- [x] Modificar youtube_uploader.py para buscar duração após upload
+- [x] Adicionar campo `duration` (em segundos) no course-metadata.json
+- [x] Criar script fetch_durations.py para buscar durações de vídeos já enviados
+- [x] Adicionar coluna `duration` na tabela `lessons` do banco
+- [x] Atualizar seeding para incluir duração
+- [x] Exibir duração total por módulo/seção/curso na interface
+- [ ] Testar busca de duração via YouTube API

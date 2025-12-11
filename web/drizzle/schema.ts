@@ -99,6 +99,7 @@ export const lessons = pgTable("lessons", {
   title: text("title").notNull(),
   youtubeUrl: text("youtubeUrl"),
   type: varchar("type", { length: 16 }).default("video"), // "video" or "live"
+  duration: integer("duration"), // Duration in seconds (fetched from YouTube API)
   order: integer("order").notNull(), // Sequential order within section
   nextLessonId: varchar("nextLessonId", { length: 128 }), // Direct reference to next lesson
   prevLessonId: varchar("prevLessonId", { length: 128 }), // Direct reference to previous lesson
