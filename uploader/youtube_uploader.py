@@ -341,8 +341,60 @@ class YouTubeUploader:
             size_bytes /= 1024.0
         return f"{size_bytes:.1f} TB"
     
-    def update_metadata_file(self, lesson_id: str, youtube_url: str):
-        """Atualiza o arquivo JSON com a URL do YouTube"""
+    def _parse_duration(self, iso_duration: str) -> int:
+        """Converte duração ISO 8601 (ex: PT15M33S) para segundos"""
+        import re
+        
+        # Regex para extrair horas, minutos e segundos
+        pattern = r'PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?'
+        match = re.match(pattern, iso_duration)
+        
+        if not match:
+            return 0
+        
+        hours = int(match.group(1) or 0)
+        minutes = int(match.group(2) or 0)
+        seconds = int(match.group(3) or 0)
+        
+        return hours * 3600 + minutes * 60 + seconds
+    
+    def _get_video_duration(self, video_id: str) -> Optional[int]:
+        """
+        Busca a duração do vídeo via YouTube API
+        Retorna duração em segundos ou None em caso de erro
+        """
+        try:
+            request = self.youtube.videos().list(
+                part='contentDetails',
+                id=video_id
+            )
+            response = request.execute()
+            
+            if 'items' in response and len(response['items']) > 0:
+                duration_iso = response['items'][0]['contentDetails']['duration']
+                duration_seconds = self._parse_duration(duration_iso)
+                return duration_seconds
+            
+            return None
+        except Exception as e:
+            print(f"⚠️  Erro ao buscar duração: {e}")
+            return None
+    
+    def _format_duration(self, seconds: int) -> str:
+        """Formata duração em segundos para HH:MM:SS"""
+        hours = seconds // 3600
+        minutes = (seconds % 3600) // 60
+        secs = seconds % 60
+        
+        if hours > 0:
+            return f"{hours}h{minutes:02d}m{secs:02d}s"
+        elif minutes > 0:
+            return f"{minutes}m{secs:02d}s"
+        else:
+            return f"{secs}s"
+    
+    def update_metadata_file(self, lesson_id: str, youtube_url: str, duration_seconds: Optional[int] = None):
+        """Atualiza o arquivo JSON com a URL do YouTube e duração"""
         updated = False
         
         for module in self.metadata['course']['modules']:
@@ -350,6 +402,8 @@ class YouTubeUploader:
                 for lesson in section['lessons']:
                     if lesson['id'] == lesson_id:
                         lesson['youtubeUrl'] = youtube_url
+                        if duration_seconds is not None:
+                            lesson['duration'] = duration_seconds
                         updated = True
                         break
                 if updated:
@@ -361,7 +415,11 @@ class YouTubeUploader:
             # Salva JSON atualizado
             with open(self.metadata_file, 'w', encoding='utf-8') as f:
                 json.dump(self.metadata, f, indent=2, ensure_ascii=False)
-            print(f"💾 Metadados atualizados no JSON\n")
+            
+            if duration_seconds:
+                print(f"💾 Metadados atualizados (URL + duração: {self._format_duration(duration_seconds)})\n")
+            else:
+                print(f"💾 Metadados atualizados (URL)\n")
     
     def run(self, max_uploads: Optional[int] = None, delay: int = 5):
         """
@@ -431,8 +489,18 @@ class YouTubeUploader:
                 # Para a execução imediatamente
                 break
             elif youtube_url:
-                # Atualiza JSON
-                self.update_metadata_file(lesson['id'], youtube_url)
+                # Extrai video_id da URL
+                video_id = youtube_url.split('v=')[-1]
+                
+                # Busca duração do vídeo
+                print(f"⏱️  Buscando duração do vídeo...")
+                duration_seconds = self._get_video_duration(video_id)
+                
+                if duration_seconds:
+                    print(f"✅ Duração: {self._format_duration(duration_seconds)}")
+                
+                # Atualiza JSON com URL e duração
+                self.update_metadata_file(lesson['id'], youtube_url, duration_seconds)
                 
                 # Registra sucesso
                 self.progress['uploaded'].append(lesson['id'])

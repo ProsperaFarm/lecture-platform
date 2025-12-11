@@ -18,6 +18,22 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
+// Helper function to format duration in seconds to readable format
+function formatDuration(seconds: number | null | undefined): string {
+  if (!seconds || seconds === 0) return "";
+  
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  
+  if (hours > 0) {
+    return `${hours}h${minutes > 0 ? minutes.toString().padStart(2, '0') + 'm' : ''}`;
+  } else if (minutes > 0) {
+    return `${minutes}m`;
+  } else {
+    return `${seconds}s`;
+  }
+}
+
 export function Layout({ children }: LayoutProps) {
   const [location] = useLocation();
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
@@ -51,10 +67,12 @@ export function Layout({ children }: LayoutProps) {
       id: string;
       title: string;
       order: number;
+      totalDuration: number;
       sections: Map<string, {
         id: string;
         title: string;
         order: number;
+        totalDuration: number;
         lessons: typeof lessonsData;
       }>;
     }>();
@@ -64,7 +82,8 @@ export function Layout({ children }: LayoutProps) {
         modulesMap.set(lesson.moduleId, {
           id: lesson.moduleId,
           title: lesson.moduleName || "Módulo sem nome",
-          order: parseInt(lesson.moduleId.split('-')[1]) || 0,
+          order: lesson.moduleOrder || 0,
+          totalDuration: lesson.moduleTotalDuration || 0, // Use pre-calculated value from database
           sections: new Map(),
         });
       }
@@ -75,7 +94,8 @@ export function Layout({ children }: LayoutProps) {
         module.sections.set(lesson.sectionId, {
           id: lesson.sectionId,
           title: lesson.sectionName || "Seção sem nome",
-          order: parseInt(lesson.sectionId.split('-')[2]) || 0,
+          order: lesson.sectionOrder || 0,
+          totalDuration: lesson.sectionTotalDuration || 0, // Use pre-calculated value from database
           lessons: [],
         });
       }
@@ -186,6 +206,11 @@ export function Layout({ children }: LayoutProps) {
             <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
               {course.title}
             </p>
+            {course.totalDuration && course.totalDuration > 0 && (
+              <p className="text-xs text-muted-foreground/60 mt-2">
+                Duração total: {formatDuration(course.totalDuration)}
+              </p>
+            )}
           </div>
         </Link>
         <Link href="/">
@@ -200,15 +225,29 @@ export function Layout({ children }: LayoutProps) {
         <div className="p-4 space-y-6 pb-8">
           {courseStructure.modules.map((module) => (
             <div key={module.id} className="space-y-2">
-              <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-2">
-                {module.title}
-              </h3>
+              <div className="flex items-center justify-between px-2">
+                <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  {module.title}
+                </h3>
+                {module.totalDuration > 0 && (
+                  <span className="text-xs text-muted-foreground/60">
+                    {formatDuration(module.totalDuration)}
+                  </span>
+                )}
+              </div>
               <div className="space-y-1">
                 {module.sections.map((section) => (
                   <div key={section.id} className="space-y-1">
-                    <div className="px-2 py-1.5 text-sm font-medium text-sidebar-foreground/80 flex items-center gap-2">
-                      <BookOpen className="w-3 h-3" />
-                      {section.title}
+                    <div className="px-2 py-1.5 text-sm font-medium text-sidebar-foreground/80 flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2">
+                        <BookOpen className="w-3 h-3" />
+                        {section.title}
+                      </div>
+                      {section.totalDuration > 0 && (
+                        <span className="text-xs text-muted-foreground/60">
+                          {formatDuration(section.totalDuration)}
+                        </span>
+                      )}
                     </div>
                     <div className="pl-4 space-y-0.5 border-l border-sidebar-border ml-3">
                       {section.lessons.map((lesson) => {
@@ -231,7 +270,16 @@ export function Layout({ children }: LayoutProps) {
                                   "w-3 h-3 mt-0.5 shrink-0",
                                   isActive ? "fill-current" : "opacity-50"
                                 )} />
-                                <span className="line-clamp-2">{lesson.title}</span>
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-start justify-between gap-2">
+                                    <span className="line-clamp-2 flex-1">{lesson.title}</span>
+                                    {lesson.duration && (
+                                      <span className="text-[10px] text-muted-foreground/60 shrink-0 mt-0.5">
+                                        {formatDuration(lesson.duration)}
+                                      </span>
+                                    )}
+                                  </div>
+                                </div>
                               </div>
                             </Button>
                           </Link>

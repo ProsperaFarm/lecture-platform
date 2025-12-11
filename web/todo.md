@@ -438,3 +438,29 @@
 - [x] Corrigir useAuth hook para evitar re-fetches infinitos
 - [x] Adicionar configurações de cache/staleTime nas queries tRPC
 - [x] Testar que auth.me não é chamado infinitamente
+
+## ⏱️ Add Video Duration Tracking
+- [x] Modificar youtube_uploader.py para buscar duração após upload
+- [x] Adicionar campo `duration` (em segundos) no course-metadata.json
+- [x] Criar script fetch_durations.py para buscar durações de vídeos já enviados
+- [x] Adicionar coluna `duration` na tabela `lessons` do banco
+- [x] Atualizar seeding para incluir duração
+- [x] Exibir duração total por módulo/seção/curso na interface
+- [ ] Testar busca de duração via YouTube API
+
+## 🗄️ Local Database Setup
+- [x] Criar script SQL para inicializar banco de dados local
+- [x] Documentar processo de setup do banco local
+- [ ] Testar criação de tabelas localmente
+
+## ⚡ Optimize Duration Calculations with Pre-calculated Fields
+- [x] Adicionar coluna `totalDuration` na tabela `sections`
+- [x] Adicionar coluna `totalDuration` na tabela `modules`
+- [x] Adicionar coluna `totalDuration` na tabela `courses`
+- [x] Atualizar seeding para calcular e armazenar totalDuration
+- [x] Atualizar queries para usar totalDuration pré-calculado
+- [x] Remover cálculos de duração em tempo real no frontend
+
+## 🐛 Add Missing Users Table to init-database.sql
+- [x] Adicionar tabela users ao init-database.sql
+- [ ] Testar criação completa do banco local

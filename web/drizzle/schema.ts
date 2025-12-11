@@ -37,6 +37,7 @@ export const courses = pgTable("courses", {
   description: text("description"),
   thumbnail: text("thumbnail"),
   totalVideos: integer("totalVideos").default(0),
+  totalDuration: integer("totalDuration").default(0), // Total duration in seconds (sum of all lessons)
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 });
@@ -54,6 +55,7 @@ export const modules = pgTable("modules", {
   courseId: varchar("courseId", { length: 128 }).notNull(), // FK to courses.courseId
   title: text("title").notNull(),
   order: integer("order").notNull(), // Sequential order within course
+  totalDuration: integer("totalDuration").default(0), // Total duration in seconds (sum of all lessons in module)
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 }, (table) => ({
@@ -75,6 +77,7 @@ export const sections = pgTable("sections", {
   courseId: varchar("courseId", { length: 128 }).notNull(), // FK to courses.courseId (denormalized for easier queries)
   title: text("title").notNull(),
   order: integer("order").notNull(), // Sequential order within module
+  totalDuration: integer("totalDuration").default(0), // Total duration in seconds (sum of all lessons in section)
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 }, (table) => ({
@@ -99,6 +102,7 @@ export const lessons = pgTable("lessons", {
   title: text("title").notNull(),
   youtubeUrl: text("youtubeUrl"),
   type: varchar("type", { length: 16 }).default("video"), // "video" or "live"
+  duration: integer("duration"), // Duration in seconds (fetched from YouTube API)
   order: integer("order").notNull(), // Sequential order within section
   nextLessonId: varchar("nextLessonId", { length: 128 }), // Direct reference to next lesson
   prevLessonId: varchar("prevLessonId", { length: 128 }), // Direct reference to previous lesson
