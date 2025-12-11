@@ -469,9 +469,10 @@
 - [x] Criar endpoints tRPC para marcar/desmarcar aula como completa
 - [x] Criar endpoint para buscar progresso do usuário por curso
 - [x] Adicionar detecção automática de conclusão no player (90% ou últimos 30s)
-- [ ] Adicionar checkbox na sidebar para marcação manual
-- [ ] Adicionar indicadores visuais (check verde para completo, cinza para pendente)
-- [ ] Calcular e exibir % de conclusão por seção
-- [ ] Calcular e exibir % de conclusão por módulo
-- [ ] Calcular e exibir % de conclusão do curso completo
+- [x] Adicionar checkbox na sidebar para marcação manual
+- [x] Adicionar indicadores visuais (check verde para completo, line-through)
+- [x] Exibir progresso na TopBar: "Prospera Academy | Nome do curso - Seu progresso 2% (4/200)"
+- [x] Exibir contagem de aulas completas nas seções: "Boas-vindas e Orientações 3/4"
+- [x] Exibir contagem de aulas completas nos módulos: "X/Y aulas"
+- [x] Calcular e exibir % de conclusão do curso completo
 - [ ] Testar marcação automática e manual
