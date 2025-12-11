@@ -82,8 +82,8 @@ export function Layout({ children }: LayoutProps) {
         modulesMap.set(lesson.moduleId, {
           id: lesson.moduleId,
           title: lesson.moduleName || "Módulo sem nome",
-          order: parseInt(lesson.moduleId.split('-')[1]) || 0,
-          totalDuration: 0,
+          order: lesson.moduleOrder || 0,
+          totalDuration: lesson.moduleTotalDuration || 0, // Use pre-calculated value from database
           sections: new Map(),
         });
       }
@@ -94,20 +94,14 @@ export function Layout({ children }: LayoutProps) {
         module.sections.set(lesson.sectionId, {
           id: lesson.sectionId,
           title: lesson.sectionName || "Seção sem nome",
-          order: parseInt(lesson.sectionId.split('-')[2]) || 0,
-          totalDuration: 0,
+          order: lesson.sectionOrder || 0,
+          totalDuration: lesson.sectionTotalDuration || 0, // Use pre-calculated value from database
           lessons: [],
         });
       }
 
       const section = module.sections.get(lesson.sectionId)!;
       section.lessons.push(lesson);
-      
-      // Add lesson duration to section and module totals
-      if (lesson.duration) {
-        section.totalDuration += lesson.duration;
-        module.totalDuration += lesson.duration;
-      }
     });
 
     // Convert maps to arrays and sort
@@ -212,14 +206,11 @@ export function Layout({ children }: LayoutProps) {
             <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
               {course.title}
             </p>
-            {courseStructure.modules.length > 0 && (() => {
-              const totalCourseDuration = courseStructure.modules.reduce((acc, m) => acc + m.totalDuration, 0);
-              return totalCourseDuration > 0 ? (
-                <p className="text-xs text-muted-foreground/60 mt-2">
-                  Duração total: {formatDuration(totalCourseDuration)}
-                </p>
-              ) : null;
-            })()}
+            {course.totalDuration && course.totalDuration > 0 && (
+              <p className="text-xs text-muted-foreground/60 mt-2">
+                Duração total: {formatDuration(course.totalDuration)}
+              </p>
+            )}
           </div>
         </Link>
         <Link href="/">

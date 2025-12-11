@@ -452,3 +452,11 @@
 - [x] Criar script SQL para inicializar banco de dados local
 - [x] Documentar processo de setup do banco local
 - [ ] Testar criação de tabelas localmente
+
+## ⚡ Optimize Duration Calculations with Pre-calculated Fields
+- [x] Adicionar coluna `totalDuration` na tabela `sections`
+- [x] Adicionar coluna `totalDuration` na tabela `modules`
+- [x] Adicionar coluna `totalDuration` na tabela `courses`
+- [x] Atualizar seeding para calcular e armazenar totalDuration
+- [x] Atualizar queries para usar totalDuration pré-calculado
+- [x] Remover cálculos de duração em tempo real no frontend

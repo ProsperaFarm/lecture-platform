@@ -155,13 +155,18 @@ export async function getLessonsWithDetails(courseId: string) {
       courseId: lessons.courseId,
       title: lessons.title,
       youtubeUrl: lessons.youtubeUrl,
+      duration: lessons.duration,
       order: lessons.order,
       nextLessonId: lessons.nextLessonId,
       prevLessonId: lessons.prevLessonId,
       createdAt: lessons.createdAt,
       updatedAt: lessons.updatedAt,
       moduleName: modules.title,
+      moduleOrder: modules.order,
+      moduleTotalDuration: modules.totalDuration,
       sectionName: sections.title,
+      sectionOrder: sections.order,
+      sectionTotalDuration: sections.totalDuration,
     })
     .from(lessons)
     .leftJoin(modules, eq(lessons.moduleId, modules.moduleId))

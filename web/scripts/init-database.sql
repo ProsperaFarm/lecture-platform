@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS courses (
   description TEXT,
   thumbnail TEXT,
   "totalVideos" INTEGER DEFAULT 0,
+  "totalDuration" INTEGER DEFAULT 0, -- Total duration in seconds (sum of all lessons)
   "createdAt" TIMESTAMP NOT NULL DEFAULT NOW(),
   "updatedAt" TIMESTAMP NOT NULL DEFAULT NOW()
 );
@@ -33,6 +34,7 @@ CREATE TABLE IF NOT EXISTS modules (
   "courseId" VARCHAR(128) NOT NULL,
   title TEXT NOT NULL,
   "order" INTEGER NOT NULL,
+  "totalDuration" INTEGER DEFAULT 0, -- Total duration in seconds (sum of all lessons in module)
   "createdAt" TIMESTAMP NOT NULL DEFAULT NOW(),
   "updatedAt" TIMESTAMP NOT NULL DEFAULT NOW()
 );
@@ -48,6 +50,7 @@ CREATE TABLE IF NOT EXISTS sections (
   "courseId" VARCHAR(128) NOT NULL,
   title TEXT NOT NULL,
   "order" INTEGER NOT NULL,
+  "totalDuration" INTEGER DEFAULT 0, -- Total duration in seconds (sum of all lessons in section)
   "createdAt" TIMESTAMP NOT NULL DEFAULT NOW(),
   "updatedAt" TIMESTAMP NOT NULL DEFAULT NOW()
 );

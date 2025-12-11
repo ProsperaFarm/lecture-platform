@@ -53,11 +53,22 @@ async function seedDatabase() {
     // Start transaction
     await client.query('BEGIN');
 
-    // 1. Insert or update course
+    // 1. Calculate course total duration
+    const courseTotalDuration = course.modules.reduce((courseSum, module) => {
+      const moduleDuration = module.sections.reduce((moduleSum, section) => {
+        const sectionDuration = section.lessons.reduce((sectionSum, lesson) => {
+          return sectionSum + (lesson.duration || 0);
+        }, 0);
+        return moduleSum + sectionDuration;
+      }, 0);
+      return courseSum + moduleDuration;
+    }, 0);
+    
+    // Insert or update course with totalDuration
     console.log('📝 Inserting course...');
     const courseResult = await client.query(
-      `INSERT INTO courses ("courseId", acronym, title, description, thumbnail, "totalVideos", "createdAt", "updatedAt")
-       VALUES ($1, $2, $3, $4, $5, $6, NOW(), NOW())
+      `INSERT INTO courses ("courseId", acronym, title, description, thumbnail, "totalVideos", "totalDuration", "createdAt", "updatedAt")
+       VALUES ($1, $2, $3, $4, $5, $6, $7, NOW(), NOW())
        ON CONFLICT ("courseId") 
        DO UPDATE SET 
          acronym = EXCLUDED.acronym,
@@ -65,30 +76,46 @@ async function seedDatabase() {
          description = EXCLUDED.description,
          thumbnail = EXCLUDED.thumbnail,
          "totalVideos" = EXCLUDED."totalVideos",
+         "totalDuration" = EXCLUDED."totalDuration",
          "updatedAt" = NOW()
        RETURNING id`,
-      [course.id, course.acronym, course.title, course.description, course.thumbnail, course.totalVideos]
+      [course.id, course.acronym, course.title, course.description, course.thumbnail, course.totalVideos, courseTotalDuration]
     );
     
-    console.log(`✅ Course inserted/updated (ID: ${courseResult.rows[0].id})\n`);
+    console.log(`✅ Course inserted/updated (ID: ${courseResult.rows[0].id})`);
+    console.log(`   - Total duration: ${Math.floor(courseTotalDuration / 3600)}h ${Math.floor((courseTotalDuration % 3600) / 60)}min\n`);
 
     // 2. Insert modules
     console.log('📝 Inserting modules...');
     let totalModules = 0;
 
+    // Calculate module durations first
+    const moduleDurations = new Map();
     for (const module of course.modules) {
+      const moduleTotalDuration = module.sections.reduce((moduleSum, section) => {
+        const sectionDuration = section.lessons.reduce((sectionSum, lesson) => {
+          return sectionSum + (lesson.duration || 0);
+        }, 0);
+        return moduleSum + sectionDuration;
+      }, 0);
+      moduleDurations.set(module.id, moduleTotalDuration);
+    }
+    
+    for (const module of course.modules) {
+      const moduleTotalDuration = moduleDurations.get(module.id);
       await client.query(
-        `INSERT INTO modules ("moduleId", "courseId", title, "order", "createdAt", "updatedAt")
-         VALUES ($1, $2, $3, $4, NOW(), NOW())
+        `INSERT INTO modules ("moduleId", "courseId", title, "order", "totalDuration", "createdAt", "updatedAt")
+         VALUES ($1, $2, $3, $4, $5, NOW(), NOW())
          ON CONFLICT ("moduleId")
          DO UPDATE SET
            title = EXCLUDED.title,
            "order" = EXCLUDED."order",
+           "totalDuration" = EXCLUDED."totalDuration",
            "updatedAt" = NOW()`,
-        [module.id, course.id, module.title, module.order]
+        [module.id, course.id, module.title, module.order, moduleTotalDuration]
       );
       totalModules++;
-      console.log(`   ✓ Module ${module.order}: ${module.title}`);
+      console.log(`   ✓ Module ${module.order}: ${module.title} (${Math.floor(moduleTotalDuration / 60)}min)`);
     }
 
     console.log(`\n✅ Inserted/updated ${totalModules} modules\n`);
@@ -132,20 +159,30 @@ async function seedDatabase() {
     let lessonsWithYouTube = 0;
 
     for (const module of course.modules) {
+      let moduleTotalDuration = 0;
+      
       for (const section of module.sections) {
-        // Insert section
+        // Calculate section total duration
+        const sectionTotalDuration = section.lessons.reduce((sum, lesson) => {
+          return sum + (lesson.duration || 0);
+        }, 0);
+        
+        moduleTotalDuration += sectionTotalDuration;
+        
+        // Insert section with totalDuration
         await client.query(
-          `INSERT INTO sections ("sectionId", "moduleId", "courseId", title, "order", "createdAt", "updatedAt")
-           VALUES ($1, $2, $3, $4, $5, NOW(), NOW())
+          `INSERT INTO sections ("sectionId", "moduleId", "courseId", title, "order", "totalDuration", "createdAt", "updatedAt")
+           VALUES ($1, $2, $3, $4, $5, $6, NOW(), NOW())
            ON CONFLICT ("sectionId")
            DO UPDATE SET
              title = EXCLUDED.title,
              "order" = EXCLUDED."order",
+             "totalDuration" = EXCLUDED."totalDuration",
              "updatedAt" = NOW()`,
-          [section.id, module.id, course.id, section.title, section.order]
+          [section.id, module.id, course.id, section.title, section.order, sectionTotalDuration]
         );
         totalSections++;
-        console.log(`   ✓ Section ${section.order}: ${section.title}`);
+        console.log(`   ✓ Section ${section.order}: ${section.title} (${Math.floor(sectionTotalDuration / 60)}min)`);
 
         // Insert lessons for this section with next/prev
         for (const lesson of section.lessons) {
