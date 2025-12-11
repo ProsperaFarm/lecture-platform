@@ -48,19 +48,30 @@ export function Layout({ children }: LayoutProps) {
     return (
       <div className="sticky top-0 z-20 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-14 max-w-5xl items-center justify-between px-4">
-          {/* Toggle button for desktop sidebar */}
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            className="hidden lg:flex"
-            onClick={() => setIsDesktopSidebarOpen(!isDesktopSidebarOpen)}
-          >
-            {isDesktopSidebarOpen ? (
-              <ChevronLeft className="w-5 h-5" />
-            ) : (
-              <ChevronRight className="w-5 h-5" />
-            )}
-          </Button>
+          {/* Left side: Toggle + Platform Name */}
+          <div className="flex items-center gap-3">
+            {/* Toggle button for desktop sidebar */}
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="hidden lg:flex"
+              onClick={() => setIsDesktopSidebarOpen(!isDesktopSidebarOpen)}
+            >
+              {isDesktopSidebarOpen ? (
+                <ChevronLeft className="w-5 h-5" />
+              ) : (
+                <ChevronRight className="w-5 h-5" />
+              )}
+            </Button>
+            
+            {/* Platform Name */}
+            <div className="hidden sm:flex items-center gap-2">
+              <div className="w-7 h-7 bg-primary rounded flex items-center justify-center text-primary-foreground font-bold text-xs">
+                P
+              </div>
+              <span className="font-bold">Prospera Academy</span>
+            </div>
+          </div>
           
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { BookOpen, Clock, PlayCircle, Loader2 } from "lucide-react";
+import { BookOpen, Clock, PlayCircle, Loader2, ArrowLeft } from "lucide-react";
 import { Link, useRoute, useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { useMemo, useEffect } from "react";
@@ -130,6 +130,16 @@ export default function Home() {
   return (
     <SimpleLayout>
       <div className="space-y-8 animate-in fade-in duration-500">
+        {/* Back Button */}
+        <div className="container max-w-5xl">
+          <Link href="/">
+            <Button variant="ghost" size="sm" className="gap-2">
+              <ArrowLeft className="w-4 h-4" />
+              Voltar para Cursos
+            </Button>
+          </Link>
+        </div>
+        
         {/* Hero Section */}
         <div className="relative rounded-xl overflow-hidden bg-card border shadow-sm">
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/20 z-10" />

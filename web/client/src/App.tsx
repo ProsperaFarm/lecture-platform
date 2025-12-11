@@ -4,7 +4,7 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import CourseSelection from "./pages/CourseSelection";
+import Courses from "./pages/Courses";
 import Home from "./pages/Home";
 import Lesson from "./pages/Lesson";
 import Login from "./pages/Login";
@@ -19,7 +19,7 @@ function Router() {
       <Route path={"/auth/google/callback"} component={GoogleCallback} />
       
       {/* Protected routes (authentication checked inside components) */}
-      <Route path={"/"} component={CourseSelection} />
+      <Route path={"/"} component={Courses} />
       <Route path={"/course/:id"} component={Home} />
       <Route path={"/course/:courseId/lesson/:lessonId"} component={Lesson} />
 

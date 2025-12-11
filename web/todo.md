@@ -412,3 +412,10 @@
 - [x] Adicionar opção "Sair" no dropdown
 - [x] Implementar logout ao clicar em "Sair"
 - [x] Testar funcionalidade de logout
+
+## 🏠 Platform Name and Navigation Improvements
+- [x] Adicionar "Prospera Academy" na TopBar (ambos layouts)
+- [x] Criar página de lista de todos os cursos (/)
+- [x] Adicionar botão "Voltar para cursos" na página de curso único
+- [x] Verificar e corrigir problemas de navegação/links travados
+- [x] Testar navegação entre todas as páginas
