@@ -424,3 +424,9 @@
 - [x] Verificar se endpoint courses.getAll existe
 - [x] Criar ou corrigir query para listar todos os cursos
 - [x] Testar que a página de cursos mostra os cursos disponíveis
+
+## 🐛 Fix Module and Section Names on Course Detail Page
+- [x] Verificar como módulos e seções estão sendo exibidos
+- [x] Corrigir nomes dos módulos para mostrar títulos corretos
+- [x] Corrigir nomes das seções para mostrar títulos corretos
+- [x] Testar exibição na página de detalhes do curso

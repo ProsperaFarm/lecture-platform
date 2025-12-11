@@ -4,7 +4,7 @@ import { drizzle as drizzleNode } from "drizzle-orm/node-postgres";
 import { neon } from "@neondatabase/serverless";
 import pkg from 'pg';
 const { Pool } = pkg;
-import { InsertUser, users, courses, lessons, Course, Lesson } from "../drizzle/schema";
+import { InsertUser, users, courses, lessons, modules, sections, Course, Lesson } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzleNeon> | ReturnType<typeof drizzleNode> | null = null;
@@ -134,6 +134,42 @@ export async function getCourseById(courseId: string): Promise<Course | undefine
 
   const result = await db.select().from(courses).where(eq(courses.courseId, courseId)).limit(1);
   return result.length > 0 ? result[0] : undefined;
+}
+
+/**
+ * Get all lessons for a course with module and section names (for display)
+ */
+export async function getLessonsWithDetails(courseId: string) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get lessons: database not available");
+    return [];
+  }
+
+  const result = await db
+    .select({
+      id: lessons.id,
+      lessonId: lessons.lessonId,
+      sectionId: lessons.sectionId,
+      moduleId: lessons.moduleId,
+      courseId: lessons.courseId,
+      title: lessons.title,
+      youtubeUrl: lessons.youtubeUrl,
+      order: lessons.order,
+      nextLessonId: lessons.nextLessonId,
+      prevLessonId: lessons.prevLessonId,
+      createdAt: lessons.createdAt,
+      updatedAt: lessons.updatedAt,
+      moduleName: modules.title,
+      sectionName: sections.title,
+    })
+    .from(lessons)
+    .leftJoin(modules, eq(lessons.moduleId, modules.moduleId))
+    .leftJoin(sections, eq(lessons.sectionId, sections.sectionId))
+    .where(eq(lessons.courseId, courseId))
+    .orderBy(lessons.order);
+
+  return result;
 }
 
 /**

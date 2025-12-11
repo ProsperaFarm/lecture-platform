@@ -28,10 +28,8 @@ export default function Home() {
     { courseId: courseId || "" },
     { enabled: !!courseId }
   );
-
-  // Fetch lessons for the course
-  const { data: lessonsData, isLoading: lessonsLoading } = trpc.lessons.getByCourse.useQuery(
-    { courseId: courseId || "" },
+  // Fetch lessons for this course with module and section names
+  const { data: lessonsData = [], isLoading: lessonsLoading } = trpc.lessons.getWithDetails.useQuery({ courseId: id });Id || "" },
     { enabled: !!courseId }
   );
 

@@ -5,7 +5,8 @@ import { publicProcedure, router } from "./_core/trpc";
 import { 
   getAllCourses, 
   getCourseById, 
-  getLessonsByCourse, 
+  getLessonsByCourse,
+  getLessonsWithDetails, 
   getLessonById, 
   getNextLesson,
   getPreviousLesson,
@@ -107,6 +108,11 @@ export const appRouter = router({
       .input(z.object({ courseId: z.string() }))
       .query(async ({ input }) => {
         return await getLessonsByCourse(input.courseId);
+      }),
+    getWithDetails: publicProcedure
+      .input(z.object({ courseId: z.string() }))
+      .query(async ({ input }) => {
+        return await getLessonsWithDetails(input.courseId);
       }),
     getById: publicProcedure
       .input(z.object({ lessonId: z.string() }))
