@@ -447,3 +447,8 @@
 - [x] Atualizar seeding para incluir duração
 - [x] Exibir duração total por módulo/seção/curso na interface
 - [ ] Testar busca de duração via YouTube API
+
+## 🗄️ Local Database Setup
+- [x] Criar script SQL para inicializar banco de dados local
+- [x] Documentar processo de setup do banco local
+- [ ] Testar criação de tabelas localmente
