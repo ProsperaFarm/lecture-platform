@@ -54,20 +54,18 @@ export default function Courses() {
             {courses.map((course) => (
               <Card key={course.courseId} className="group hover:shadow-lg transition-all duration-300 overflow-hidden">
                 {/* Course Image */}
-                {course.thumbnail && (
-                  <div className="relative h-48 overflow-hidden bg-muted">
-                    <img
-                      src={course.thumbnail}
-                      alt={course.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <div className="absolute top-3 right-3">
-                      <Badge variant="secondary" className="bg-background/90 backdrop-blur">
-                        {course.acronym}
-                      </Badge>
-                    </div>
+                <div className="relative h-48 overflow-hidden bg-muted">
+                  <img
+                    src={course.thumbnail || "/images/default-course-thumb.png"}
+                    alt={course.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute top-3 right-3">
+                    <Badge variant="secondary" className="bg-background/90 backdrop-blur">
+                      {course.acronym}
+                    </Badge>
                   </div>
-                )}
+                </div>
 
                 <CardHeader>
                   <CardTitle className="line-clamp-2">{course.title}</CardTitle>
