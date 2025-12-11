@@ -54,10 +54,10 @@ export default function Courses() {
             {courses.map((course) => (
               <Card key={course.courseId} className="group hover:shadow-lg transition-all duration-300 overflow-hidden">
                 {/* Course Image */}
-                {course.imageUrl && (
+                {course.thumbnail && (
                   <div className="relative h-48 overflow-hidden bg-muted">
                     <img
-                      src={course.imageUrl}
+                      src={course.thumbnail}
                       alt={course.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
