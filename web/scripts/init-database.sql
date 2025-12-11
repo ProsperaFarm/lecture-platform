@@ -12,6 +12,20 @@
 -- DROP TABLE IF EXISTS sections CASCADE;
 -- DROP TABLE IF EXISTS modules CASCADE;
 -- DROP TABLE IF EXISTS courses CASCADE;
+-- DROP TABLE IF EXISTS users CASCADE;
+
+-- Users table (authentication and user management)
+CREATE TABLE IF NOT EXISTS users (
+  id SERIAL PRIMARY KEY,
+  "openId" VARCHAR(64) NOT NULL UNIQUE,
+  name TEXT,
+  email VARCHAR(320),
+  "loginMethod" VARCHAR(64),
+  role VARCHAR(16) DEFAULT 'user' NOT NULL,
+  "createdAt" TIMESTAMP NOT NULL DEFAULT NOW(),
+  "updatedAt" TIMESTAMP NOT NULL DEFAULT NOW(),
+  "lastSignedIn" TIMESTAMP NOT NULL DEFAULT NOW()
+);
 
 -- Courses table
 CREATE TABLE IF NOT EXISTS courses (

@@ -460,3 +460,7 @@
 - [x] Atualizar seeding para calcular e armazenar totalDuration
 - [x] Atualizar queries para usar totalDuration pré-calculado
 - [x] Remover cálculos de duração em tempo real no frontend
+
+## 🐛 Add Missing Users Table to init-database.sql
+- [x] Adicionar tabela users ao init-database.sql
+- [ ] Testar criação completa do banco local
