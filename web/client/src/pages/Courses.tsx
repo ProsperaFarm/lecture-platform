@@ -21,7 +21,7 @@ export default function Courses() {
   }, [user, isLoadingAuth, setLocation]);
 
   // Fetch all courses
-  const { data: courses, isLoading: coursesLoading } = trpc.courses.getAll.useQuery();
+  const { data: courses, isLoading: coursesLoading } = trpc.courses.list.useQuery();
 
   // Loading state
   if (coursesLoading || isLoadingAuth) {

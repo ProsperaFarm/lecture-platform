@@ -419,3 +419,8 @@
 - [x] Adicionar botão "Voltar para cursos" na página de curso único
 - [x] Verificar e corrigir problemas de navegação/links travados
 - [x] Testar navegação entre todas as páginas
+
+## 🐛 Fix Courses List Page Not Showing Courses
+- [x] Verificar se endpoint courses.getAll existe
+- [x] Criar ou corrigir query para listar todos os cursos
+- [x] Testar que a página de cursos mostra os cursos disponíveis
