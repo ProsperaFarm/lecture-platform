@@ -430,3 +430,8 @@
 - [x] Corrigir nomes dos módulos para mostrar títulos corretos
 - [x] Corrigir nomes das seções para mostrar títulos corretos
 - [x] Testar exibição na página de detalhes do curso
+
+## 🚨 CRITICAL: Fix Infinite Navigation Loop in Lesson Page
+- [x] Identificar causa do loop infinito de navegação
+- [x] Remover ou corrigir useEffect que causa navegação repetida
+- [x] Testar que página de lesson não trava mais
