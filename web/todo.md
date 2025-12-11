@@ -373,3 +373,68 @@
 - [x] Navegação está usando `lesson.id` (UUID) em vez de `lesson.lessonId`
 - [x] Corrigir Lesson.tsx para passar `lessonId` em vez de `id`
 - [x] Testar navegação com IDs corretos
+
+## 👤 Show User Name in Top Navigation Bar
+- [x] Verificar estrutura atual do Layout.tsx
+- [x] Adicionar useAuth() para obter dados do usuário
+- [x] Exibir nome do usuário na barra superior
+- [x] Testar exibição do nome
+
+## 📂 Collapsible Sidebar with Improved Scrolling
+- [x] Adicionar botão de toggle para fechar/abrir sidebar
+- [x] Implementar estado de sidebar (aberta/fechada)
+- [x] Melhorar ScrollArea para acessar todas as 236 aulas
+- [x] Ajustar layout quando sidebar está fechada
+- [x] Adicionar transição suave ao abrir/fechar
+- [x] Testar rolagem vertical com muitas aulas
+
+## 🐛 Fix Invalid URL Error in useAuth
+- [x] Investigar erro "Invalid URL" no getLoginUrl
+- [x] Verificar variáveis de ambiente necessárias
+- [x] Corrigir const.ts ou useAuth hook
+- [x] Testar que TopBar funciona sem erro
+
+## 🔧 Remove Manus OAuth Dependency from useAuth
+- [x] Simplificar useAuth para não chamar getLoginUrl() por padrão
+- [x] useAuth deve funcionar sem variáveis de ambiente do Manus
+- [x] Manter apenas Google OAuth (já configurado)
+- [x] Testar que TopBar funciona normalmente
+
+## 🐛 Fix Layout Error and Add TopBar to Course Selection
+- [x] Corrigir erro no Layout quando curso não é encontrado
+- [x] Layout deve funcionar sem quebrar quando currentCourse é null
+- [x] Adicionar TopBar na página de seleção de cursos (Home.tsx)
+- [x] Testar ambas as páginas (seleção de cursos e lesson)
+
+## 👤 Improve TopBar User Menu
+- [x] Remover "Bem-vindo" do TopBar (mostrar apenas nome)
+- [x] Adicionar DropdownMenu ao clicar no nome do usuário
+- [x] Adicionar opção "Sair" no dropdown
+- [x] Implementar logout ao clicar em "Sair"
+- [x] Testar funcionalidade de logout
+
+## 🏠 Platform Name and Navigation Improvements
+- [x] Adicionar "Prospera Academy" na TopBar (ambos layouts)
+- [x] Criar página de lista de todos os cursos (/)
+- [x] Adicionar botão "Voltar para cursos" na página de curso único
+- [x] Verificar e corrigir problemas de navegação/links travados
+- [x] Testar navegação entre todas as páginas
+
+## 🐛 Fix Courses List Page Not Showing Courses
+- [x] Verificar se endpoint courses.getAll existe
+- [x] Criar ou corrigir query para listar todos os cursos
+- [x] Testar que a página de cursos mostra os cursos disponíveis
+
+## 🐛 Fix Module and Section Names on Course Detail Page
+- [x] Verificar como módulos e seções estão sendo exibidos
+- [x] Corrigir nomes dos módulos para mostrar títulos corretos
+- [x] Corrigir nomes das seções para mostrar títulos corretos
+- [x] Testar exibição na página de detalhes do curso
+
+## 🚨 CRITICAL: Fix Infinite auth.me Query Loop
+- [x] Identificar causa do loop infinito de navegação
+- [x] Remover ou corrigir useEffect que causa navegação repetida
+- [x] Atualizar Layout.tsx para usar tRPC em vez de courses-data.json
+- [x] Corrigir useAuth hook para evitar re-fetches infinitos
+- [x] Adicionar configurações de cache/staleTime nas queries tRPC
+- [x] Testar que auth.me não é chamado infinitamente

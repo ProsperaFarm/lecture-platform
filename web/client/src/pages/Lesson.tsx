@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { useLocation, useRoute, Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { PlyrVideoPlayer } from "@/components/PlyrVideoPlayer";
@@ -16,15 +16,15 @@ export default function LessonPage() {
   const courseId = params?.courseId;
   const lessonId = params?.lessonId;
   
-  // Navigation handler
-  const handleNavigate = (newLessonId: string) => {
+  // Navigation handler - wrapped in useCallback to prevent infinite loops
+  const handleNavigate = useCallback((newLessonId: string) => {
     console.log('[Navigation] Navigating to:', { courseId, newLessonId, path: `/course/${courseId}/lesson/${newLessonId}` });
     if (courseId) {
       setLocation(`/course/${courseId}/lesson/${newLessonId}`);
     } else {
       console.error('[Navigation] courseId is missing!');
     }
-  };
+  }, [courseId, setLocation]);
 
   // Check authentication
   const { data: user, isLoading: isLoadingUser } = trpc.auth.me.useQuery();

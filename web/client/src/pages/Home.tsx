@@ -1,9 +1,9 @@
-import { Layout } from "@/components/Layout";
+import { SimpleLayout } from "@/components/SimpleLayout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { BookOpen, Clock, PlayCircle, Loader2 } from "lucide-react";
+import { BookOpen, Clock, PlayCircle, Loader2, ArrowLeft } from "lucide-react";
 import { Link, useRoute, useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { useMemo, useEffect } from "react";
@@ -28,10 +28,8 @@ export default function Home() {
     { courseId: courseId || "" },
     { enabled: !!courseId }
   );
-
-  // Fetch lessons for the course
-  const { data: lessonsData, isLoading: lessonsLoading } = trpc.lessons.getByCourse.useQuery(
-    { courseId: courseId || "" },
+  // Fetch lessons for this course with module and section names
+  const { data: lessonsData = [], isLoading: lessonsLoading } = trpc.lessons.getWithDetails.useQuery({ courseId: id });Id || "" },
     { enabled: !!courseId }
   );
 
@@ -97,25 +95,25 @@ export default function Home() {
   // Loading state
   if (courseLoading || lessonsLoading) {
     return (
-      <Layout>
+      <SimpleLayout>
         <div className="flex items-center justify-center min-h-[60vh]">
           <Loader2 className="w-8 h-8 animate-spin text-primary" />
         </div>
-      </Layout>
+      </SimpleLayout>
     );
   }
 
   // Course not found
   if (!course) {
     return (
-      <Layout>
+      <SimpleLayout>
         <div className="p-8 text-center">
           <p className="text-muted-foreground mb-4">Curso não encontrado.</p>
           <Link href="/">
-            <Button variant="outline">Voltar</Button>
+            <Button>Voltar para Home</Button>
           </Link>
         </div>
-      </Layout>
+      </SimpleLayout>
     );
   }
 
@@ -128,8 +126,18 @@ export default function Home() {
   const firstLesson = courseStructure.modules[0]?.sections[0]?.lessons[0];
 
   return (
-    <Layout>
+    <SimpleLayout>
       <div className="space-y-8 animate-in fade-in duration-500">
+        {/* Back Button */}
+        <div className="container max-w-5xl">
+          <Link href="/">
+            <Button variant="ghost" size="sm" className="gap-2">
+              <ArrowLeft className="w-4 h-4" />
+              Voltar para Cursos
+            </Button>
+          </Link>
+        </div>
+        
         {/* Hero Section */}
         <div className="relative rounded-xl overflow-hidden bg-card border shadow-sm">
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/20 z-10" />
@@ -268,6 +276,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </Layout>
+    </SimpleLayout>
   );
 }
