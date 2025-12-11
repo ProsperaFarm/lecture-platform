@@ -431,7 +431,8 @@
 - [x] Corrigir nomes das seções para mostrar títulos corretos
 - [x] Testar exibição na página de detalhes do curso
 
-## 🚨 CRITICAL: Fix Infinite Navigation Loop in Lesson Page
+## 🚨 CRITICAL: Fix Infinite Fetches in Lesson Page
 - [x] Identificar causa do loop infinito de navegação
 - [x] Remover ou corrigir useEffect que causa navegação repetida
+- [x] Atualizar Layout.tsx para usar tRPC em vez de courses-data.json
 - [x] Testar que página de lesson não trava mais
