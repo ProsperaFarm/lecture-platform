@@ -405,3 +405,10 @@
 - [x] Layout deve funcionar sem quebrar quando currentCourse é null
 - [x] Adicionar TopBar na página de seleção de cursos (Home.tsx)
 - [x] Testar ambas as páginas (seleção de cursos e lesson)
+
+## 👤 Improve TopBar User Menu
+- [x] Remover "Bem-vindo" do TopBar (mostrar apenas nome)
+- [x] Adicionar DropdownMenu ao clicar no nome do usuário
+- [x] Adicionar opção "Sair" no dropdown
+- [x] Implementar logout ao clicar em "Sair"
+- [x] Testar funcionalidade de logout

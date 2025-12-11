@@ -2,7 +2,13 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { BookOpen, ChevronLeft, ChevronRight, Menu, PlayCircle, User } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { BookOpen, ChevronLeft, ChevronRight, Menu, PlayCircle, User, LogOut } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation, useRoute } from "wouter";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -32,7 +38,12 @@ export function Layout({ children }: LayoutProps) {
   }
 
   const TopBar = () => {
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
+    
+    const handleLogout = async () => {
+      await logout();
+      window.location.href = "/login";
+    };
     
     return (
       <div className="sticky top-0 z-20 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -51,10 +62,20 @@ export function Layout({ children }: LayoutProps) {
             )}
           </Button>
           
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <User className="w-4 h-4" />
-            <span className="font-medium text-foreground">{user?.name || 'Usuário'}</span>
-          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="flex items-center gap-2">
+                <User className="w-4 h-4" />
+                <span className="font-medium">{user?.name || 'Usuário'}</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
+                <LogOut className="w-4 h-4 mr-2" />
+                Sair
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     );
