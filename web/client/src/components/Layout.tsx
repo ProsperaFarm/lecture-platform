@@ -322,24 +322,29 @@ export function Layout({ children }: LayoutProps) {
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="pb-2">
-                  <div className="space-y-1 pt-2">
-                {module.sections.map((section) => (
-                  <div key={section.id} className="space-y-1">
-                    <div className="px-2 py-1.5 text-sm font-medium text-sidebar-foreground/80 flex items-center justify-between gap-2">
-                      <div className="flex items-center gap-2">
-                        <BookOpen className="w-3 h-3" />
-                        <span>{section.title}</span>
-                        <span className="text-xs font-medium text-primary">
-                          {section.completedCount}/{section.totalCount}
-                        </span>
-                      </div>
-                      {section.totalDuration > 0 && (
-                        <span className="text-xs text-muted-foreground/60">
-                          {formatDuration(section.totalDuration)}
-                        </span>
-                      )}
-                    </div>
-                    <div className="pl-4 space-y-0.5 border-l border-sidebar-border ml-3">
+                  <Accordion type="multiple" defaultValue={module.sections.map(s => s.id)} className="space-y-1 pt-2">
+                    {module.sections.map((section) => (
+                      <AccordionItem key={section.id} value={section.id} className="border-none">
+                        <AccordionTrigger className="hover:no-underline py-2 px-2">
+                          <div className="flex items-center justify-between w-full pr-2">
+                            <div className="flex items-center gap-2">
+                              <BookOpen className="w-3 h-3" />
+                              <span className="text-sm font-medium">{section.title}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="text-xs font-medium text-primary">
+                                {section.completedCount}/{section.totalCount}
+                              </span>
+                              {section.totalDuration > 0 && (
+                                <span className="text-xs text-muted-foreground/60">
+                                  | {formatDuration(section.totalDuration)}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-1">
+                          <div className="pl-4 space-y-0.5 border-l border-sidebar-border ml-3">
                       {section.lessons.map((lesson) => {
                         const isActive = location === `/course/${course.courseId}/lesson/${lesson.lessonId}`;
                         const isCompleted = progressMap.get(lesson.lessonId) || false;
@@ -383,10 +388,11 @@ export function Layout({ children }: LayoutProps) {
                           </div>
                         );
                       })}
-                    </div>
-                  </div>
-                ))}
-                  </div>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
                 </AccordionContent>
               </AccordionItem>
             ))}

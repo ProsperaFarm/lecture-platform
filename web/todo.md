@@ -490,3 +490,24 @@
 - [x] Corrigir parâmetros enviados pelo handleToggleCompletion
 - [x] Adicionar campo 'completed' com toggle do estado atual
 - [ ] Testar que checkbox marca/desmarca corretamente
+
+## 🎨 UI/UX Improvements - Course Progress Display (Dec 10, 2024)
+
+### Sidebar Improvements
+- [x] Transformar seções em accordions retráteis (nested dentro dos módulos)
+- [x] Mostrar duração de cada aula ao lado do título
+- [x] Manter checkbox nas aulas para marcação manual
+
+### Listagem de Cursos (CourseSelection.tsx)
+- [x] Migrar de JSON estático para tRPC (banco de dados)
+- [x] Adicionar percentual de conclusão no card do curso
+- [x] Adicionar duração total do curso no card
+- [x] Barra de progresso visual no card
+- [x] Botão muda para "Continuar Curso" se há progresso
+
+### Página de Detalhe do Curso (Home.tsx)
+- [x] Card "Progresso Total": mostrar tempo assistido / tempo total (ex: "5h30m / 37h41m")
+- [x] Card "Módulos": mostrar quantidade de seções + total de aulas + duração total
+- [x] Transformar módulos em accordions com "X/Y | HHhMMm"
+- [x] Transformar seções em accordions (nested) com mesmo formato
+- [x] Mostrar duração de cada aula + checkbox para marcação manual

@@ -3,14 +3,38 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { BookOpen, Clock, PlayCircle, Loader2, ArrowLeft } from "lucide-react";
 import { Link, useRoute, useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { useMemo, useEffect } from "react";
+import { cn } from "@/lib/utils";
+
+// Helper function to format duration in seconds to readable format
+function formatDuration(seconds: number | null | undefined): string {
+  if (!seconds || seconds === 0) return "";
+  
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  
+  if (hours > 0) {
+    return `${hours}h${minutes > 0 ? minutes.toString().padStart(2, '0') + 'm' : ''}`;
+  } else if (minutes > 0) {
+    return `${minutes}m`;
+  } else {
+    return `${seconds}s`;
+  }
+}
 
 export default function Home() {
   const [, params] = useRoute("/course/:id");
-  const [, setLocation] = useLocation();
+  const [location, setLocation] = useLocation();
   const courseId = params?.id;
 
   // Check authentication
@@ -28,47 +52,120 @@ export default function Home() {
     { courseId: courseId || "" },
     { enabled: !!courseId }
   );
+  
   // Fetch lessons for this course with module and section names
-  const { data: lessonsData = [], isLoading: lessonsLoading } = trpc.lessons.getWithDetails.useQuery({ courseId: courseId || "" }, { enabled: !!courseId && !!courseId });
+  const { data: lessonsData = [], isLoading: lessonsLoading } = trpc.lessons.getWithDetails.useQuery(
+    { courseId: courseId || "" },
+    { enabled: !!courseId }
+  );
 
-  // Group lessons by module and section
+  // Fetch user progress for this course
+  const { data: userProgressData = [] } = trpc.progress.getByCourse.useQuery(
+    { courseId: courseId || "" },
+    { enabled: !!courseId }
+  );
+
+  // Get tRPC utils for query invalidation
+  const utils = trpc.useUtils();
+
+  // Mutation to toggle lesson completion
+  const toggleCompletionMutation = trpc.progress.toggleCompletion.useMutation({
+    onSuccess: () => {
+      utils.progress.getByCourse.invalidate({ courseId: courseId || "" });
+    },
+  });
+
+  const handleToggleCompletion = (lessonId: string) => {
+    if (courseId) {
+      const currentStatus = progressMap.get(lessonId) || false;
+      toggleCompletionMutation.mutate({ 
+        courseId, 
+        lessonId, 
+        completed: !currentStatus 
+      });
+    }
+  };
+
+  // Create a map of lessonId -> completed status for quick lookup
+  const progressMap = useMemo(() => {
+    const map = new Map<string, boolean>();
+    userProgressData.forEach(progress => {
+      map.set(progress.lessonId, progress.completed || false);
+    });
+    return map;
+  }, [userProgressData]);
+
+  // Group lessons by module and section with progress
   const courseStructure = useMemo(() => {
-    if (!lessonsData) return { modules: [], totalSections: 0 };
+    if (!lessonsData || lessonsData.length === 0) {
+      return { modules: [], totalSections: 0, totalLessons: 0, completedLessons: 0, watchedDuration: 0, totalDuration: 0 };
+    }
 
     const modulesMap = new Map<string, {
       id: string;
       title: string;
       order: number;
+      totalDuration: number;
+      completedCount: number;
+      totalCount: number;
       sections: Map<string, {
         id: string;
         title: string;
         order: number;
+        totalDuration: number;
+        completedCount: number;
+        totalCount: number;
         lessons: typeof lessonsData;
       }>;
     }>();
 
+    let totalCompletedLessons = 0;
+    let totalWatchedDuration = 0;
+    let totalCourseDuration = 0;
+
     lessonsData.forEach(lesson => {
+      const isCompleted = progressMap.get(lesson.lessonId) || false;
+      const lessonDuration = lesson.duration || 0;
+
+      if (isCompleted) {
+        totalCompletedLessons++;
+        totalWatchedDuration += lessonDuration;
+      }
+      totalCourseDuration += lessonDuration;
+
       if (!modulesMap.has(lesson.moduleId)) {
         modulesMap.set(lesson.moduleId, {
           id: lesson.moduleId,
           title: lesson.moduleName || "Módulo sem nome",
           order: parseInt(lesson.moduleId.split('-')[1]) || 0,
+          totalDuration: 0,
+          completedCount: 0,
+          totalCount: 0,
           sections: new Map(),
         });
       }
 
       const module = modulesMap.get(lesson.moduleId)!;
+      module.totalDuration += lessonDuration;
+      module.totalCount++;
+      if (isCompleted) module.completedCount++;
       
       if (!module.sections.has(lesson.sectionId)) {
         module.sections.set(lesson.sectionId, {
           id: lesson.sectionId,
           title: lesson.sectionName || "Seção sem nome",
           order: parseInt(lesson.sectionId.split('-')[2]) || 0,
+          totalDuration: 0,
+          completedCount: 0,
+          totalCount: 0,
           lessons: [],
         });
       }
 
       const section = module.sections.get(lesson.sectionId)!;
+      section.totalDuration += lessonDuration;
+      section.totalCount++;
+      if (isCompleted) section.completedCount++;
       section.lessons.push(lesson);
     });
 
@@ -87,11 +184,18 @@ export default function Home() {
 
     const totalSections = modules.reduce((acc, m) => acc + m.sections.length, 0);
 
-    return { modules, totalSections };
-  }, [lessonsData]);
+    return {
+      modules,
+      totalSections,
+      totalLessons: lessonsData.length,
+      completedLessons: totalCompletedLessons,
+      watchedDuration: totalWatchedDuration,
+      totalDuration: totalCourseDuration,
+    };
+  }, [lessonsData, progressMap]);
 
   // Loading state
-  if (courseLoading || lessonsLoading) {
+  if (courseLoading || lessonsLoading || isLoadingAuth) {
     return (
       <SimpleLayout>
         <div className="flex items-center justify-center min-h-[60vh]">
@@ -115,10 +219,9 @@ export default function Home() {
     );
   }
 
-  const totalModules = courseStructure.modules.length;
-  const totalSections = courseStructure.totalSections;
-  const totalLessons = course.totalVideos || 0;
-  const progress = 0; // TODO: Calculate from user progress
+  const progressPercentage = courseStructure.totalLessons > 0 
+    ? Math.round((courseStructure.completedLessons / courseStructure.totalLessons) * 100) 
+    : 0;
 
   // Get first lesson for "Start Course" button
   const firstLesson = courseStructure.modules[0]?.sections[0]?.lessons[0];
@@ -160,7 +263,7 @@ export default function Home() {
                 <Link href={`/course/${course.courseId}/lesson/${firstLesson.lessonId}`}>
                   <Button size="lg" className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground border-none">
                     <PlayCircle className="w-5 h-5" />
-                    Começar Curso
+                    {progressPercentage > 0 ? 'Continuar Curso' : 'Começar Curso'}
                   </Button>
                 </Link>
               </div>
@@ -176,10 +279,13 @@ export default function Home() {
               <Clock className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{progress}%</div>
-              <Progress value={progress} className="mt-2 h-2" />
+              <div className="text-2xl font-bold">{progressPercentage}%</div>
+              <Progress value={progressPercentage} className="mt-2 h-2" />
               <p className="text-xs text-muted-foreground mt-2">
-                0 de {totalLessons} aulas assistidas
+                {courseStructure.completedLessons} de {courseStructure.totalLessons} aulas assistidas
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">
+                {formatDuration(courseStructure.watchedDuration)} / {formatDuration(courseStructure.totalDuration)}
               </p>
             </CardContent>
           </Card>
@@ -189,9 +295,12 @@ export default function Home() {
               <BookOpen className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{totalModules}</div>
+              <div className="text-2xl font-bold">{courseStructure.modules.length}</div>
               <p className="text-xs text-muted-foreground mt-1">
-                {totalSections} seções de conteúdo
+                {courseStructure.totalSections} seções • {courseStructure.totalLessons} aulas
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">
+                {formatDuration(courseStructure.totalDuration)} de conteúdo
               </p>
             </CardContent>
           </Card>
@@ -201,7 +310,7 @@ export default function Home() {
               <PlayCircle className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{totalLessons}</div>
+              <div className="text-2xl font-bold">{courseStructure.totalLessons}</div>
               <p className="text-xs text-muted-foreground mt-1">
                 Vídeo-aulas e gravações ao vivo
               </p>
@@ -209,69 +318,101 @@ export default function Home() {
           </Card>
         </div>
 
-        {/* Modules List */}
+        {/* Modules List with Accordions */}
         <div className="space-y-6">
           <h2 className="text-2xl font-bold font-display">Conteúdo do Curso</h2>
-          <div className="grid gap-4">
+          <Accordion type="multiple" defaultValue={courseStructure.modules.map(m => m.id)} className="space-y-4">
             {courseStructure.modules.map((module) => (
-              <Card key={module.id} className="overflow-hidden hover:shadow-md transition-shadow duration-200">
-                <CardHeader className="bg-muted/30 border-b pb-4">
-                  <div className="flex items-center justify-between">
-                    <div className="space-y-1">
-                      <CardTitle className="text-lg font-semibold text-primary">
+              <AccordionItem key={module.id} value={module.id} className="border rounded-lg">
+                <AccordionTrigger className="hover:no-underline px-6 py-4">
+                  <div className="flex items-center justify-between w-full pr-4">
+                    <div className="text-left">
+                      <h3 className="text-lg font-semibold text-primary">
                         {module.title}
-                      </CardTitle>
-                      <CardDescription>
-                        {module.sections.length} seções
-                      </CardDescription>
+                      </h3>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        {module.sections.length} seções • {module.totalCount} aulas
+                      </p>
                     </div>
-                    <Badge variant="outline" className="bg-background">
-                      Módulo {module.order}
-                    </Badge>
+                    <div className="flex items-center gap-3">
+                      <span className="text-sm font-medium text-primary">
+                        {module.completedCount}/{module.totalCount}
+                      </span>
+                      {module.totalDuration > 0 && (
+                        <span className="text-sm text-muted-foreground">
+                          | {formatDuration(module.totalDuration)}
+                        </span>
+                      )}
+                    </div>
                   </div>
-                </CardHeader>
-                <CardContent className="p-0">
-                  <div className="divide-y">
+                </AccordionTrigger>
+                <AccordionContent className="px-6 pb-4">
+                  <Accordion type="multiple" defaultValue={module.sections.map(s => s.id)} className="space-y-2">
                     {module.sections.map((section) => (
-                      <div key={section.id} className="p-4 hover:bg-muted/20 transition-colors">
-                        <div className="flex items-center justify-between mb-2">
-                          <h4 className="font-medium text-sm text-foreground/80">
-                            {section.title}
-                          </h4>
-                          <span className="text-xs text-muted-foreground">
-                            {section.lessons.length} aulas
-                          </span>
-                        </div>
-                        <div className="grid gap-2">
-                          {section.lessons.map((lesson) => (
-                            <Link key={lesson.lessonId} href={`/course/${course.courseId}/lesson/${lesson.lessonId}`}>
-                              <div className="group flex items-center gap-3 text-sm p-2 rounded-md hover:bg-accent/50 cursor-pointer transition-colors">
-                                <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                                  <PlayCircle className="w-3 h-3" />
-                                </div>
-                                <span className="text-muted-foreground group-hover:text-foreground transition-colors line-clamp-1">
-                                  {lesson.title}
+                      <AccordionItem key={section.id} value={section.id} className="border-none">
+                        <AccordionTrigger className="hover:no-underline py-3 px-4 hover:bg-muted/50 rounded-md">
+                          <div className="flex items-center justify-between w-full pr-4">
+                            <div className="flex items-center gap-2">
+                              <BookOpen className="w-4 h-4" />
+                              <span className="font-medium">{section.title}</span>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <span className="text-sm font-medium text-primary">
+                                {section.completedCount}/{section.totalCount}
+                              </span>
+                              {section.totalDuration > 0 && (
+                                <span className="text-sm text-muted-foreground">
+                                  | {formatDuration(section.totalDuration)}
                                 </span>
-                                {lesson.youtubeUrl ? (
-                                  <Badge variant="secondary" className="ml-auto text-[10px] h-5">
-                                    Assistir
-                                  </Badge>
-                                ) : (
-                                  <Badge variant="outline" className="ml-auto text-[10px] h-5 text-muted-foreground border-dashed">
-                                    Pendente
-                                  </Badge>
-                                )}
-                              </div>
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
+                              )}
+                            </div>
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="px-4 pb-2">
+                          <div className="space-y-1 mt-2">
+                            {section.lessons.map((lesson) => {
+                              const isActive = location === `/course/${course.courseId}/lesson/${lesson.lessonId}`;
+                              const isCompleted = progressMap.get(lesson.lessonId) || false;
+                              return (
+                                <div key={lesson.lessonId} className="flex items-center gap-2 group">
+                                  <Checkbox
+                                    checked={isCompleted}
+                                    onCheckedChange={() => handleToggleCompletion(lesson.lessonId)}
+                                    className="shrink-0"
+                                  />
+                                  <Link href={`/course/${course.courseId}/lesson/${lesson.lessonId}`} className="flex-1">
+                                    <div className={cn(
+                                      "flex items-center justify-between gap-2 p-3 rounded-md cursor-pointer transition-colors",
+                                      isActive 
+                                        ? "bg-primary/10 text-primary font-medium" 
+                                        : "hover:bg-muted/50 text-muted-foreground",
+                                      isCompleted && "opacity-70"
+                                    )}>
+                                      <span className={cn(
+                                        "text-sm flex-1",
+                                        isCompleted && "line-through"
+                                      )}>
+                                        {lesson.title}
+                                      </span>
+                                      {lesson.duration && (
+                                        <span className="text-xs text-muted-foreground shrink-0">
+                                          {formatDuration(lesson.duration)}
+                                        </span>
+                                      )}
+                                    </div>
+                                  </Link>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
                     ))}
-                  </div>
-                </CardContent>
-              </Card>
+                  </Accordion>
+                </AccordionContent>
+              </AccordionItem>
             ))}
-          </div>
+          </Accordion>
         </div>
       </div>
     </SimpleLayout>
