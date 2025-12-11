@@ -2,6 +2,12 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
 import {
   DropdownMenu,
@@ -9,7 +15,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { BookOpen, ChevronLeft, ChevronRight, Menu, PlayCircle, User, LogOut, Loader2 } from "lucide-react";
+import { BookOpen, ChevronLeft, ChevronRight, Menu, User, LogOut, Loader2 } from "lucide-react";
 import { useState, useMemo } from "react";
 import { Link, useLocation, useRoute } from "wouter";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -73,17 +79,18 @@ export function Layout({ children }: LayoutProps) {
     return map;
   }, [userProgressData]);
 
+  // Get tRPC utils for query invalidation
+  const utils = trpc.useUtils();
+
   // Mutation to toggle lesson completion
   const toggleCompletionMutation = trpc.progress.toggleCompletion.useMutation({
     onSuccess: () => {
       // Invalidate queries to refetch progress
-      trpc.useContext().progress.getByCourse.invalidate({ courseId: courseId || "" });
+      utils.progress.getByCourse.invalidate({ courseId: courseId || "" });
     },
   });
 
-  const handleToggleCompletion = (e: React.MouseEvent, lessonId: string) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const handleToggleCompletion = (lessonId: string) => {
     if (courseId) {
       toggleCompletionMutation.mutate({ courseId, lessonId });
     }
@@ -287,25 +294,29 @@ export function Layout({ children }: LayoutProps) {
       </div>
       
       <ScrollArea className="flex-1 h-[calc(100vh-180px)]">
-        <div className="p-4 space-y-6 pb-8">
-          {courseStructure.modules.map((module) => (
-            <div key={module.id} className="space-y-2">
-              <div className="flex items-center justify-between px-2">
-                <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                  {module.title}
-                </h3>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-medium text-primary">
-                    {module.completedCount}/{module.totalCount}
-                  </span>
-                  {module.totalDuration > 0 && (
-                    <span className="text-xs text-muted-foreground/60">
-                      {formatDuration(module.totalDuration)}
-                    </span>
-                  )}
-                </div>
-              </div>
-              <div className="space-y-1">
+        <div className="p-4 pb-8">
+          <Accordion type="multiple" defaultValue={courseStructure.modules.map(m => m.id)} className="space-y-2">
+            {courseStructure.modules.map((module) => (
+              <AccordionItem key={module.id} value={module.id} className="border rounded-lg px-2">
+                <AccordionTrigger className="hover:no-underline py-3">
+                  <div className="flex items-center justify-between w-full pr-2">
+                    <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider text-left">
+                      {module.title}
+                    </h3>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-medium text-primary">
+                        {module.completedCount}/{module.totalCount}
+                      </span>
+                      {module.totalDuration > 0 && (
+                        <span className="text-xs text-muted-foreground/60">
+                          | {formatDuration(module.totalDuration)}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="pb-2">
+                  <div className="space-y-1 pt-2">
                 {module.sections.map((section) => (
                   <div key={section.id} className="space-y-1">
                     <div className="px-2 py-1.5 text-sm font-medium text-sidebar-foreground/80 flex items-center justify-between gap-2">
@@ -330,7 +341,7 @@ export function Layout({ children }: LayoutProps) {
                           <div key={lesson.lessonId} className="flex items-start gap-1.5">
                             <Checkbox
                               checked={isCompleted}
-                              onCheckedChange={(checked) => handleToggleCompletion(new MouseEvent('click') as any, lesson.lessonId)}
+                              onCheckedChange={() => handleToggleCompletion(lesson.lessonId)}
                               className="mt-2.5 shrink-0"
                             />
                             <Link href={`/course/${course.courseId}/lesson/${lesson.lessonId}`} className="flex-1">
@@ -347,11 +358,6 @@ export function Layout({ children }: LayoutProps) {
                                 onClick={() => setIsMobileSidebarOpen(false)}
                               >
                                 <div className="flex items-start gap-2 w-full">
-                                  <PlayCircle className={cn(
-                                    "w-3 h-3 mt-0.5 shrink-0",
-                                    isActive ? "fill-current" : "opacity-50",
-                                    isCompleted && "text-green-500"
-                                  )} />
                                   <div className="flex-1 min-w-0">
                                     <div className="flex items-start justify-between gap-2">
                                       <span className={cn(
@@ -374,9 +380,11 @@ export function Layout({ children }: LayoutProps) {
                     </div>
                   </div>
                 ))}
-              </div>
-            </div>
-          ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
       </ScrollArea>
     </div>
