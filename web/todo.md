@@ -476,3 +476,11 @@
 - [x] Exibir contagem de aulas completas nos módulos: "X/Y aulas"
 - [x] Calcular e exibir % de conclusão do curso completo
 - [ ] Testar marcação automática e manual
+
+## 🐛 Sidebar UI Improvements (Dec 10, 2024)
+- [x] Corrigir checkbox que não responde ao clique (usar onCheckedChange corretamente)
+- [x] Corrigir atualização automática sem refresh (trpc.useUtils() para invalidação)
+- [x] Remover ícone PlayCircle das aulas (redundante com checkbox)
+- [x] Converter módulos para Accordion colapsável (shadcn/ui)
+- [x] Exibir progresso no header do módulo: "X/Y | HHhMMm"
+- [x] Todos os módulos abertos por padrão para melhor UX
