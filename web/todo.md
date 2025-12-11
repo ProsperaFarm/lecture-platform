@@ -431,8 +431,10 @@
 - [x] Corrigir nomes das seções para mostrar títulos corretos
 - [x] Testar exibição na página de detalhes do curso
 
-## 🚨 CRITICAL: Fix Infinite Fetches in Lesson Page
+## 🚨 CRITICAL: Fix Infinite auth.me Query Loop
 - [x] Identificar causa do loop infinito de navegação
 - [x] Remover ou corrigir useEffect que causa navegação repetida
 - [x] Atualizar Layout.tsx para usar tRPC em vez de courses-data.json
-- [x] Testar que página de lesson não trava mais
+- [x] Corrigir useAuth hook para evitar re-fetches infinitos
+- [x] Adicionar configurações de cache/staleTime nas queries tRPC
+- [x] Testar que auth.me não é chamado infinitamente
