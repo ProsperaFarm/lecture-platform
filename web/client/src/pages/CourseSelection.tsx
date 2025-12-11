@@ -1,15 +1,28 @@
-import { Layout } from "@/components/Layout";
+import { SimpleLayout } from "@/components/SimpleLayout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookOpen, PlayCircle, TrendingUp } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { BookOpen, PlayCircle, TrendingUp, Clock, Loader2 } from "lucide-react";
 import { Link, useLocation } from "wouter";
-import coursesDataRaw from "../lib/courses-data.json";
-import { CoursesData } from "../lib/types";
 import { trpc } from "@/lib/trpc";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
-const coursesData = coursesDataRaw as CoursesData;
+// Helper function to format duration in seconds to readable format
+function formatDuration(seconds: number | null | undefined): string {
+  if (!seconds || seconds === 0) return "0m";
+  
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  
+  if (hours > 0) {
+    return `${hours}h${minutes > 0 ? minutes.toString().padStart(2, '0') + 'm' : ''}`;
+  } else if (minutes > 0) {
+    return `${minutes}m`;
+  } else {
+    return `${seconds}s`;
+  }
+}
 
 export default function CourseSelection() {
   const [, setLocation] = useLocation();
@@ -22,9 +35,48 @@ export default function CourseSelection() {
     }
   }, [user, isLoadingAuth, setLocation]);
 
+  // Fetch courses from database
+  const { data: courses = [], isLoading: coursesLoading } = trpc.courses.list.useQuery();
+
+  // Fetch user progress for all courses
+  const { data: allProgress = [] } = trpc.progress.getAll.useQuery(undefined, {
+    enabled: !!user,
+  });
+
+  // Calculate progress percentage for each course
+  const coursesWithProgress = useMemo(() => {
+    return courses.map(course => {
+      const courseProgress = allProgress.filter(p => p.courseId === course.courseId);
+      const completedCount = courseProgress.filter(p => p.completed).length;
+      const totalLessons = course.totalVideos || 0;
+      const progressPercentage = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
+
+      // Calculate watched duration
+      const watchedDuration = courseProgress.reduce((acc, p) => {
+        if (p.completed && p.lessonDuration) {
+          return acc + p.lessonDuration;
+        }
+        return acc;
+      }, 0);
+
+      return {
+        ...course,
+        progressPercentage,
+        completedCount,
+        watchedDuration,
+      };
+    });
+  }, [courses, allProgress]);
+
   // Show loading while checking auth
-  if (isLoadingAuth) {
-    return null;
+  if (isLoadingAuth || coursesLoading) {
+    return (
+      <SimpleLayout>
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        </div>
+      </SimpleLayout>
+    );
   }
 
   return (
@@ -39,9 +91,11 @@ export default function CourseSelection() {
             <span className="font-display font-bold text-xl text-foreground">Prospera Academy</span>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-muted-foreground hidden md:inline-block">Bem-vindo, Aluno</span>
+            <span className="text-sm text-muted-foreground hidden md:inline-block">
+              Bem-vindo, {user?.name || 'Aluno'}
+            </span>
             <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-secondary-foreground text-sm font-medium">
-              A
+              {user?.name?.[0]?.toUpperCase() || 'A'}
             </div>
           </div>
         </div>
@@ -61,8 +115,8 @@ export default function CourseSelection() {
 
         {/* Courses Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {coursesData.courses.map((course) => (
-            <Card key={course.id} className="flex flex-col overflow-hidden hover:shadow-lg transition-all duration-300 border-border/50 group">
+          {coursesWithProgress.map((course) => (
+            <Card key={course.courseId} className="flex flex-col overflow-hidden hover:shadow-lg transition-all duration-300 border-border/50 group">
               <div className="relative aspect-video overflow-hidden bg-muted">
                 <img 
                   src={course.thumbnail || "/images/course-thumb.png"} 
@@ -73,6 +127,15 @@ export default function CourseSelection() {
                 <Badge className="absolute top-3 right-3 bg-white/90 text-primary hover:bg-white">
                   {course.acronym}
                 </Badge>
+                {course.progressPercentage > 0 && (
+                  <div className="absolute bottom-3 left-3 right-3">
+                    <div className="flex items-center justify-between text-xs text-white mb-1">
+                      <span className="font-medium">{course.progressPercentage}% concluído</span>
+                      <span>{course.completedCount}/{course.totalVideos} aulas</span>
+                    </div>
+                    <Progress value={course.progressPercentage} className="h-1.5 bg-white/20" />
+                  </div>
+                )}
               </div>
               
               <CardHeader>
@@ -85,22 +148,28 @@ export default function CourseSelection() {
               </CardHeader>
               
               <CardContent className="flex-1">
-                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                <div className="flex items-center gap-4 text-sm text-muted-foreground flex-wrap">
                   <div className="flex items-center gap-1">
                     <PlayCircle className="w-4 h-4" />
                     <span>{course.totalVideos} aulas</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <BookOpen className="w-4 h-4" />
-                    <span>{course.modules.length} módulos</span>
+                    <span>{course.totalModules || 0} módulos</span>
                   </div>
+                  {course.totalDuration && course.totalDuration > 0 && (
+                    <div className="flex items-center gap-1">
+                      <Clock className="w-4 h-4" />
+                      <span>{formatDuration(course.totalDuration)}</span>
+                    </div>
+                  )}
                 </div>
               </CardContent>
               
               <CardFooter className="pt-0">
-                <Link href={`/course/${course.id}`} className="w-full">
+                <Link href={`/course/${course.courseId}`} className="w-full">
                   <Button className="w-full gap-2 group-hover:bg-primary/90">
-                    Acessar Curso
+                    {course.progressPercentage > 0 ? 'Continuar Curso' : 'Acessar Curso'}
                     <TrendingUp className="w-4 h-4" />
                   </Button>
                 </Link>

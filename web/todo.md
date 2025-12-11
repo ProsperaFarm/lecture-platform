@@ -476,3 +476,57 @@
 - [x] Exibir contagem de aulas completas nos módulos: "X/Y aulas"
 - [x] Calcular e exibir % de conclusão do curso completo
 - [ ] Testar marcação automática e manual
+
+## 🐛 Sidebar UI Improvements (Dec 10, 2024)
+- [x] Corrigir checkbox que não responde ao clique (usar onCheckedChange corretamente)
+- [x] Corrigir atualização automática sem refresh (trpc.useUtils() para invalidação)
+- [x] Remover ícone PlayCircle das aulas (redundante com checkbox)
+- [x] Converter módulos para Accordion colapsável (shadcn/ui)
+- [x] Exibir progresso no header do módulo: "X/Y | HHhMMm"
+- [x] Todos os módulos abertos por padrão para melhor UX
+
+## 🐛 Fix Checkbox Toggle Error (Dec 10, 2024)
+- [x] Investigar endpoint progress.toggleCompletion no backend
+- [x] Corrigir parâmetros enviados pelo handleToggleCompletion
+- [x] Adicionar campo 'completed' com toggle do estado atual
+- [ ] Testar que checkbox marca/desmarca corretamente
+
+## 🎨 UI/UX Improvements - Course Progress Display (Dec 10, 2024)
+
+### Sidebar Improvements
+- [x] Transformar seções em accordions retráteis (nested dentro dos módulos)
+- [x] Mostrar duração de cada aula ao lado do título
+- [x] Manter checkbox nas aulas para marcação manual
+
+### Listagem de Cursos (CourseSelection.tsx)
+- [x] Migrar de JSON estático para tRPC (banco de dados)
+- [x] Adicionar percentual de conclusão no card do curso
+- [x] Adicionar duração total do curso no card
+- [x] Barra de progresso visual no card
+- [x] Botão muda para "Continuar Curso" se há progresso
+
+### Página de Detalhe do Curso (Home.tsx)
+- [x] Card "Progresso Total": mostrar tempo assistido / tempo total (ex: "5h30m / 37h41m")
+- [x] Card "Módulos": mostrar quantidade de seções + total de aulas + duração total
+- [x] Transformar módulos em accordions com "X/Y | HHhMMm"
+- [x] Transformar seções em accordions (nested) com mesmo formato
+- [x] Mostrar duração de cada aula + checkbox para marcação manual
+
+## 🎯 Course Listing Page (/) Updates (Dec 10, 2024)
+- [x] Add completion percentage display on course cards
+- [x] Add visual progress bar overlay on course thumbnails
+- [x] Display total course duration with clock icon
+- [x] Show completed/total lessons count
+- [x] Change button text to "Continuar Curso" when progress exists
+- [x] Fetch user progress data via tRPC
+
+## 🐛 Fix Progress Display on Course Listing (Dec 10, 2024)
+- [x] Investigate why progress percentage is not showing
+- [x] Debug tRPC progress.getAll query
+- [x] Identified root cause: DATABASE_URL points to TiDB (MySQL) but code expects PostgreSQL
+- [ ] Setup local PostgreSQL in sandbox with Docker
+- [ ] Run database migrations (db:push)
+- [ ] Seed database with course and lesson data
+- [ ] Add test user progress data
+- [ ] Test database connection and verify progress data loads
+- [ ] Remove debug console.log statements
