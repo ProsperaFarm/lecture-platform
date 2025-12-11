@@ -11,7 +11,11 @@ import {
   getNextLesson,
   getPreviousLesson,
   upsertUser, 
-  getUserByOpenId 
+  getUserByOpenId,
+  getUserProgressByCourse,
+  getUserProgressByLesson,
+  upsertUserProgress,
+  toggleLessonCompletion
 } from "./db";
 import { z } from "zod";
 import { completeGoogleOAuth, getGoogleAuthUrl } from "./google-oauth";
@@ -99,6 +103,59 @@ export const appRouter = router({
       .input(z.object({ courseId: z.string() }))
       .query(async ({ input }) => {
         return await getCourseById(input.courseId);
+      }),
+  }),
+
+  // User Progress router
+  progress: router({ 
+    getByCourse: publicProcedure
+      .input(z.object({ courseId: z.string() }))
+      .query(async ({ input, ctx }) => {
+        if (!ctx.user) {
+          return [];
+        }
+        return await getUserProgressByCourse(ctx.user.id, input.courseId);
+      }),
+    getByLesson: publicProcedure
+      .input(z.object({ lessonId: z.string() }))
+      .query(async ({ input, ctx }) => {
+        if (!ctx.user) {
+          return null;
+        }
+        return await getUserProgressByLesson(ctx.user.id, input.lessonId);
+      }),
+    upsert: publicProcedure
+      .input(z.object({
+        lessonId: z.string(),
+        courseId: z.string(),
+        completed: z.boolean().optional(),
+        lastWatchedPosition: z.number().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (!ctx.user) {
+          throw new Error("User not authenticated");
+        }
+        await upsertUserProgress({
+          userId: ctx.user.id,
+          lessonId: input.lessonId,
+          courseId: input.courseId,
+          completed: input.completed,
+          lastWatchedPosition: input.lastWatchedPosition,
+        });
+        return { success: true };
+      }),
+    toggleCompletion: publicProcedure
+      .input(z.object({
+        lessonId: z.string(),
+        courseId: z.string(),
+        completed: z.boolean(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (!ctx.user) {
+          throw new Error("User not authenticated");
+        }
+        await toggleLessonCompletion(ctx.user.id, input.lessonId, input.courseId, input.completed);
+        return { success: true };
       }),
   }),
 

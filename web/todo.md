@@ -464,3 +464,14 @@
 ## 🐛 Add Missing Users Table to init-database.sql
 - [x] Adicionar tabela users ao init-database.sql
 - [ ] Testar criação completa do banco local
+
+## ✅ User Progress Tracking System
+- [x] Criar endpoints tRPC para marcar/desmarcar aula como completa
+- [x] Criar endpoint para buscar progresso do usuário por curso
+- [x] Adicionar detecção automática de conclusão no player (90% ou últimos 30s)
+- [ ] Adicionar checkbox na sidebar para marcação manual
+- [ ] Adicionar indicadores visuais (check verde para completo, cinza para pendente)
+- [ ] Calcular e exibir % de conclusão por seção
+- [ ] Calcular e exibir % de conclusão por módulo
+- [ ] Calcular e exibir % de conclusão do curso completo
+- [ ] Testar marcação automática e manual
