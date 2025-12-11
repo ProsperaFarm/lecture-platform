@@ -29,9 +29,7 @@ export default function Home() {
     { enabled: !!courseId }
   );
   // Fetch lessons for this course with module and section names
-  const { data: lessonsData = [], isLoading: lessonsLoading } = trpc.lessons.getWithDetails.useQuery({ courseId: id });Id || "" },
-    { enabled: !!courseId }
-  );
+  const { data: lessonsData = [], isLoading: lessonsLoading } = trpc.lessons.getWithDetails.useQuery({ courseId: courseId || "" }, { enabled: !!courseId && !!courseId });
 
   // Group lessons by module and section
   const courseStructure = useMemo(() => {
