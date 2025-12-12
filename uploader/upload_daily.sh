@@ -88,13 +88,14 @@ echo -e "   Vídeos: ${GREEN}$VIDEOS_DIR${NC}"
 echo -e "   Limite: ${GREEN}$MAX_UPLOADS vídeos${NC}"
 echo ""
 
-# Pergunta confirmação
-read -p "Deseja continuar? (s/N) " -n 1 -r
-echo
-if [[ ! $REPLY =~ ^[SsYy]$ ]]; then
-    echo -e "${YELLOW}⚠️  Upload cancelado${NC}"
-    exit 0
-fi
+# # Pergunta confirmação
+# read -p "Deseja continuar? (s/N) " -n 1 -r
+# echo
+# if [[ ! $REPLY =~ ^[SsYy]$ ]]; then
+#     echo -e "${YELLOW}⚠️  Upload cancelado${NC}"
+#     exit 0
+# fi
+# 
 
 # Executa upload
 echo ""

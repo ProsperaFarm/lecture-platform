@@ -109,7 +109,8 @@
                 "order": 7,
                 "title": "Gravação ao vivo - Sistemas de produção leiteira",
                 "fileName": "gravação de aula online ao vivo - Sistemas de produção leiteira.mp4",
-                "type": "live"
+                "type": "live",
+                "youtubeUrl": "https://www.youtube.com/watch?v=s_stMis-2j8"
               }
             ]
           },
@@ -123,63 +124,72 @@
                 "order": 1,
                 "title": "Premissas para bons indicadores",
                 "fileName": "Videoaula 01Premissas para bons indicadores.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=b_EqxEVCpQ4"
               },
               {
                 "id": "lesson-01-03-02",
                 "order": 2,
                 "title": "Fatores que influenciam na eficiência reprodutiva",
                 "fileName": "Videoaula 02Fatores que influenciam na eficiência reprodutiva.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=hLKSsq-OCr8"
               },
               {
                 "id": "lesson-01-03-03",
                 "order": 3,
                 "title": "Período de espera voluntário",
                 "fileName": "Videoaula 03Período de espera voluntário.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=O661qaD3UR4"
               },
               {
                 "id": "lesson-01-03-04",
                 "order": 4,
                 "title": "Período de serviço",
                 "fileName": "Videoaula 04Período de serviço.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=h-hz2yABay4"
               },
               {
                 "id": "lesson-01-03-05",
                 "order": 5,
                 "title": "Taxa de serviço",
                 "fileName": "Videoaula 05Taxa de serviço.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=uq8QWBsExDI"
               },
               {
                 "id": "lesson-01-03-06",
                 "order": 6,
                 "title": "Taxa de concepção - Parte I",
                 "fileName": "Videoaula 06Taxa de concepção - Parte 1.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=d-vPPo_vFE0"
               },
               {
                 "id": "lesson-01-03-07",
                 "order": 7,
                 "title": "Taxa de concepção - Parte II",
                 "fileName": "Videoaula 07 Taxa de concepção - Parte II.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=ShozsvmryFI"
               },
               {
                 "id": "lesson-01-03-08",
                 "order": 8,
                 "title": "Perda de prenhez",
                 "fileName": "Videoaula 08Perda de prenhez.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=tG86h6n9I-4"
               },
               {
                 "id": "lesson-01-03-09",
                 "order": 9,
                 "title": "Percentual de vacas em lactação",
                 "fileName": "Videoaula 09Percentual de vacas em lactação.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=kpbFBOtJtPU"
               },
               {
                 "id": "lesson-01-03-10",
