@@ -20,6 +20,7 @@ import { useState, useMemo } from "react";
 import { Link, useLocation, useRoute } from "wouter";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
+import { CircularProgress } from "./CircularProgress";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -246,9 +247,12 @@ export function Layout({ children }: LayoutProps) {
                   <span className="text-muted-foreground">|</span>
                   <span className="font-medium text-sm truncate max-w-[200px]">{course.title}</span>
                   <span className="text-muted-foreground">-</span>
-                  <span className="text-sm text-muted-foreground">Seu progresso</span>
-                  <span className="font-semibold text-primary">{courseStructure.progressPercentage}%</span>
-                  <span className="text-xs text-muted-foreground">({courseStructure.completedLessons}/{courseStructure.totalLessons})</span>
+                  <CircularProgress
+                    value={courseStructure.progressPercentage}
+                    size={32}
+                    strokeWidth={3}
+                    tooltip={`${courseStructure.progressPercentage}% concluído (${courseStructure.completedLessons} de ${courseStructure.totalLessons})`}
+                  />
                 </>
               )}
             </div>
