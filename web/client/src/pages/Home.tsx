@@ -10,11 +10,21 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { BookOpen, Clock, PlayCircle, Loader2, ArrowLeft } from "lucide-react";
+import { BookOpen, Clock, PlayCircle, Loader2, ArrowLeft, ChevronDown, ChevronUp, RotateCcw, AlertTriangle } from "lucide-react";
 import { Link, useRoute, useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
-import { useMemo, useEffect } from "react";
+import { useMemo, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 // Helper function to format duration in seconds to readable format
 function formatDuration(seconds: number | null | undefined): string {
@@ -74,11 +84,26 @@ export default function Home() {
   // Get tRPC utils for query invalidation
   const utils = trpc.useUtils();
 
+  // State for accordion expansion
+  const [expandedModules, setExpandedModules] = useState<string[]>([]);
+
+  // State for reset confirmation dialog
+  const [showResetDialog, setShowResetDialog] = useState(false);
+
   // Mutation to toggle lesson completion
   const toggleCompletionMutation = trpc.progress.toggleCompletion.useMutation({
     onSuccess: () => {
       utils.progress.getByCourse.invalidate({ courseId: courseId || "" });
       utils.progress.getStats.invalidate({ courseId: courseId || "" });
+    },
+  });
+
+  // Mutation to reset course progress
+  const resetProgressMutation = trpc.progress.reset.useMutation({
+    onSuccess: () => {
+      utils.progress.getByCourse.invalidate({ courseId: courseId || "" });
+      utils.progress.getStats.invalidate({ courseId: courseId || "" });
+      setShowResetDialog(false);
     },
   });
 
@@ -90,6 +115,22 @@ export default function Home() {
         lessonId, 
         completed: !currentStatus 
       });
+    }
+  };
+
+  // Functions to expand/collapse all modules
+  const expandAllModules = () => {
+    setExpandedModules(courseStructure.modules.map(m => m.id));
+  };
+
+  const collapseAllModules = () => {
+    setExpandedModules([]);
+  };
+
+  // Handle reset progress
+  const handleResetProgress = () => {
+    if (courseId) {
+      resetProgressMutation.mutate({ courseId });
     }
   };
 
@@ -195,6 +236,13 @@ export default function Home() {
       totalDuration: totalCourseDuration,
     };
   }, [lessonsData, progressMap, courseProgressStats]);
+
+  // Update expanded modules when course structure changes
+  useEffect(() => {
+    if (courseStructure.modules.length > 0 && expandedModules.length === 0) {
+      setExpandedModules(courseStructure.modules.map(m => m.id));
+    }
+  }, [courseStructure.modules.length]);
 
   // Loading state
   if (courseLoading || lessonsLoading || isLoadingAuth) {
@@ -323,8 +371,44 @@ export default function Home() {
 
             {/* Modules List with Accordions */}
             <div className="space-y-6">
-              <h2 className="text-2xl font-bold font-display">Conteúdo do Curso</h2>
-              <Accordion type="multiple" defaultValue={courseStructure.modules.map(m => m.id)} className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold font-display">Conteúdo do Curso</h2>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={expandAllModules}
+                    className="gap-2"
+                  >
+                    <ChevronDown className="w-4 h-4" />
+                    Expandir Todos
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={collapseAllModules}
+                    className="gap-2"
+                  >
+                    <ChevronUp className="w-4 h-4" />
+                    Recolher Todos
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setShowResetDialog(true)}
+                    className="gap-2 text-destructive hover:text-destructive"
+                  >
+                    <RotateCcw className="w-4 h-4" />
+                    Resetar Progresso
+                  </Button>
+                </div>
+              </div>
+              <Accordion 
+                type="multiple" 
+                value={expandedModules}
+                onValueChange={setExpandedModules}
+                className="space-y-4"
+              >
                 {courseStructure.modules.map((module) => (
                   <AccordionItem key={module.id} value={module.id} className="border rounded-lg">
                     <AccordionTrigger className="hover:no-underline px-6 py-4">
@@ -420,6 +504,32 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* Reset Progress Confirmation Dialog */}
+      <AlertDialog open={showResetDialog} onOpenChange={setShowResetDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <AlertTriangle className="w-5 h-5 text-destructive" />
+              Resetar Progresso do Curso
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Tem certeza que deseja resetar todo o progresso deste curso? 
+              Esta ação irá apagar todas as lições marcadas como concluídas e não pode ser desfeita.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleResetProgress}
+              disabled={resetProgressMutation.isPending}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {resetProgressMutation.isPending ? "Resetando..." : "Sim, Resetar"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </SimpleLayout>
   );
 }

@@ -18,7 +18,8 @@ import {
   getUserProgressByLesson,
   upsertUserProgress,
   toggleLessonCompletion,
-  getCourseProgressStats
+  getCourseProgressStats,
+  resetCourseProgress
 } from "./db";
 import { z } from "zod";
 import { completeGoogleOAuth, getGoogleAuthUrl } from "./google-oauth";
@@ -209,6 +210,15 @@ export const appRouter = router({
           })
         );
         return statsMap;
+      }),
+    reset: publicProcedure
+      .input(z.object({ courseId: z.string() }))
+      .mutation(async ({ input, ctx }) => {
+        if (!ctx.user) {
+          throw new Error("User not authenticated");
+        }
+        await resetCourseProgress(ctx.user.id, input.courseId);
+        return { success: true };
       }),
   }),
 

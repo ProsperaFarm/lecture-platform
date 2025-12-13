@@ -1,4 +1,5 @@
 import { eq, and } from "drizzle-orm";
+import { sql } from "drizzle-orm";
 import { drizzle as drizzleNeon } from "drizzle-orm/neon-http";
 import { drizzle as drizzleNode } from "drizzle-orm/node-postgres";
 import { neon } from "@neondatabase/serverless";
@@ -438,4 +439,22 @@ export async function toggleLessonCompletion(userId: number, lessonId: string, c
     courseId,
     completed,
   });
+}
+
+/**
+ * Reset all progress for a course (delete all user progress records for a course)
+ */
+export async function resetCourseProgress(userId: number, courseId: string): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot reset course progress: database not available");
+    throw new Error("Database not available");
+  }
+
+  await db
+    .delete(userProgress)
+    .where(and(
+      eq(userProgress.userId, userId),
+      eq(userProgress.courseId, courseId)
+    ));
 }
