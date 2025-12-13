@@ -224,10 +224,12 @@ export function Layout({ children }: LayoutProps) {
           <div className="flex items-center gap-2">
             {/* Platform Name + Course Progress */}
             <div className="hidden sm:flex items-center gap-2">
-              <div className="w-7 h-7 bg-primary rounded flex items-center justify-center text-primary-foreground font-bold text-xs">
-                P
-              </div>
-              <span className="font-bold">Prospera Academy</span>
+              <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                <div className="w-7 h-7 bg-primary rounded flex items-center justify-center text-primary-foreground font-bold text-xs">
+                  P
+                </div>
+                <span className="font-bold">Prospera Academy</span>
+              </Link>
               {course && (
                 <>
                   <span className="text-muted-foreground mx-1">|</span>
@@ -280,12 +282,6 @@ export function Layout({ children }: LayoutProps) {
               </p>
             )}
           </div>
-        </Link>
-        <Link href="/">
-          <Button variant="outline" size="sm" className="w-full mt-4 text-xs h-7">
-            <ChevronRight className="w-3 h-3 rotate-180 mr-1" />
-            Trocar de Curso
-          </Button>
         </Link>
       </div>
       

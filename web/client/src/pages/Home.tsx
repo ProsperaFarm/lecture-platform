@@ -376,30 +376,28 @@ export default function Home() {
                 <div className="flex items-center gap-2">
                   <Button
                     variant="outline"
-                    size="sm"
+                    size="icon"
                     onClick={expandAllModules}
-                    className="gap-2"
+                    title="Expandir Todos"
                   >
                     <ChevronDown className="w-4 h-4" />
-                    Expandir Todos
                   </Button>
                   <Button
                     variant="outline"
-                    size="sm"
+                    size="icon"
                     onClick={collapseAllModules}
-                    className="gap-2"
+                    title="Recolher Todos"
                   >
                     <ChevronUp className="w-4 h-4" />
-                    Recolher Todos
                   </Button>
                   <Button
                     variant="outline"
-                    size="sm"
+                    size="icon"
                     onClick={() => setShowResetDialog(true)}
-                    className="gap-2 text-destructive hover:text-destructive"
+                    className="text-destructive hover:text-destructive"
+                    title="Resetar Progresso"
                   >
                     <RotateCcw className="w-4 h-4" />
-                    Resetar Progresso
                   </Button>
                 </div>
               </div>

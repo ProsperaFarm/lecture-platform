@@ -95,12 +95,12 @@ export default function CourseSelection() {
       {/* Header */}
       <header className="border-b bg-card">
         <div className="container py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <div className="w-8 h-8 rounded bg-primary flex items-center justify-center text-primary-foreground font-bold font-display">
               P
             </div>
             <span className="font-display font-bold text-xl text-foreground">Prospera Academy</span>
-          </div>
+          </Link>
           <div className="flex items-center gap-4">
             <span className="text-sm text-muted-foreground hidden md:inline-block">
               Bem-vindo, {user?.name || 'Aluno'}
