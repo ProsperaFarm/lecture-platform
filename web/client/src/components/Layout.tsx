@@ -244,9 +244,9 @@ export function Layout({ children }: LayoutProps) {
               <span className="font-bold">Prospera Academy</span>
               {course && (
                 <>
-                  <span className="text-muted-foreground">|</span>
+                  <span className="text-muted-foreground mx-1">|</span>
                   <span className="font-medium text-sm truncate max-w-[200px]">{course.title}</span>
-                  <span className="text-muted-foreground">-</span>
+                  <span className="text-muted-foreground mx-3">-</span>
                   <CircularProgress
                     value={courseStructure.progressPercentage}
                     size={32}
