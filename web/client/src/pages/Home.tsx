@@ -65,6 +65,12 @@ export default function Home() {
     { enabled: !!courseId }
   );
 
+  // Fetch course progress stats from server
+  const { data: courseProgressStats } = trpc.progress.getStats.useQuery(
+    { courseId: courseId || "" },
+    { enabled: !!courseId }
+  );
+
   // Get tRPC utils for query invalidation
   const utils = trpc.useUtils();
 
@@ -72,6 +78,7 @@ export default function Home() {
   const toggleCompletionMutation = trpc.progress.toggleCompletion.useMutation({
     onSuccess: () => {
       utils.progress.getByCourse.invalidate({ courseId: courseId || "" });
+      utils.progress.getStats.invalidate({ courseId: courseId || "" });
     },
   });
 
@@ -119,19 +126,14 @@ export default function Home() {
       }>;
     }>();
 
-    let totalCompletedLessons = 0;
-    let totalWatchedDuration = 0;
-    let totalCourseDuration = 0;
+    // Use stats from server if available, otherwise calculate from lessons
+    const totalCompletedLessons = courseProgressStats?.completedLessons ?? 0;
+    const totalWatchedDuration = courseProgressStats?.watchedDuration ?? 0;
+    const totalCourseDuration = courseProgressStats?.totalDuration ?? 0;
 
     lessonsData.forEach(lesson => {
       const isCompleted = progressMap.get(lesson.lessonId) || false;
       const lessonDuration = lesson.duration || 0;
-
-      if (isCompleted) {
-        totalCompletedLessons++;
-        totalWatchedDuration += lessonDuration;
-      }
-      totalCourseDuration += lessonDuration;
 
       if (!modulesMap.has(lesson.moduleId)) {
         modulesMap.set(lesson.moduleId, {
@@ -187,12 +189,12 @@ export default function Home() {
     return {
       modules,
       totalSections,
-      totalLessons: lessonsData.length,
+      totalLessons: course?.totalVideos ?? lessonsData.length,
       completedLessons: totalCompletedLessons,
       watchedDuration: totalWatchedDuration,
       totalDuration: totalCourseDuration,
     };
-  }, [lessonsData, progressMap]);
+  }, [lessonsData, progressMap, courseProgressStats]);
 
   // Loading state
   if (courseLoading || lessonsLoading || isLoadingAuth) {
@@ -219,9 +221,8 @@ export default function Home() {
     );
   }
 
-  const progressPercentage = courseStructure.totalLessons > 0 
-    ? Math.round((courseStructure.completedLessons / courseStructure.totalLessons) * 100) 
-    : 0;
+  // Use progress percentage from server stats
+  const progressPercentage = courseProgressStats?.progressPercentage ?? 0;
 
   // Get first lesson for "Start Course" button
   const firstLesson = courseStructure.modules[0]?.sections[0]?.lessons[0];
@@ -287,7 +288,7 @@ export default function Home() {
                 {courseStructure.completedLessons} de {courseStructure.totalLessons} aulas assistidas
               </p>
               <p className="text-xs text-muted-foreground mt-1">
-                {formatDuration(courseStructure.watchedDuration)} / {formatDuration(courseStructure.totalDuration)}
+                {formatDuration(courseStructure.watchedDuration)} / {formatDuration(course?.totalDuration || courseStructure.totalDuration)}
               </p>
             </CardContent>
           </Card>
@@ -302,7 +303,7 @@ export default function Home() {
                 {courseStructure.totalSections} seções • {courseStructure.totalLessons} aulas
               </p>
               <p className="text-xs text-muted-foreground mt-1">
-                {formatDuration(courseStructure.totalDuration)} de conteúdo
+                {formatDuration(course?.totalDuration || courseStructure.totalDuration)} de conteúdo
               </p>
             </CardContent>
           </Card>
