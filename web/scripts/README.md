@@ -15,7 +15,8 @@ Script para **sincronizar** o banco de dados com o arquivo `course-metadata.json
 
 ✅ **Use `npm run db:sync` quando:**
 - O script do YouTube uploader adicionar novas URLs ao JSON
-- Você atualizar manualmente o JSON com novos vídeos
+- O script `fetch_durations.py` adicionar durações ao JSON
+- Você atualizar manualmente o JSON com novos vídeos ou durações
 - Quiser sincronizar mudanças no título, descrição ou metadados
 
 ### Uso
@@ -30,10 +31,24 @@ node scripts/sync-from-json.mjs /caminho/para/seu/course-metadata.json
 
 ### O que o script faz
 
-1. **Lê o arquivo JSON** atualizado pelo uploader
-2. **Detecta mudanças** comparando com o banco atual
-3. **Atualiza apenas o necessário** (upsert inteligente)
-4. **Reporta novos vídeos** adicionados desde a última sincronização
+1. **Lê o arquivo JSON** atualizado pelo uploader ou `fetch_durations.py`
+2. **Sincroniza o curso** (upsert na tabela `courses`)
+3. **Sincroniza lessons** - Detecta mudanças comparando com o banco atual (URLs e durações)
+4. **Sincroniza modules e sections** - Garante que existam no banco
+5. **Calcula durações agregadas**:
+   - **Sections**: Soma das durações de todas as lessons na seção
+   - **Modules**: Soma das durações de todas as sections no módulo
+   - **Course**: Soma das durações de todos os modules no curso
+6. **Reporta novos vídeos e durações** adicionados desde a última sincronização
+
+### Durações Agregadas
+
+Quando uma lesson recebe ou atualiza sua duração, o script automaticamente recalcula:
+- ✅ Duração da **section** (soma de todas as lessons)
+- ✅ Duração do **module** (soma de todas as sections)
+- ✅ Duração total do **course** (soma de todos os modules)
+
+Isso garante que as durações estejam sempre atualizadas em todos os níveis da hierarquia.
 
 ### Saída esperada
 
@@ -54,24 +69,37 @@ node scripts/sync-from-json.mjs /caminho/para/seu/course-metadata.json
 📝 Syncing lessons...
    ✨ New YouTube URL: Boas-vindas e orientações...
    ✨ New YouTube URL: Conheça a equipe e o contrato de convivência...
+   ⏱️  New duration: Boas-vindas e orientações... (12m34s)
+   ⏱️  New duration: Conheça a equipe e o contrato de convivência... (8m15s)
+
+📝 Syncing modules and sections...
+
+⏱️  Calculating aggregated durations...
+✅ Aggregated durations calculated:
+   - Sections: 25 updated
+   - Modules: 7 updated
+   - Course total duration: 45h23m
 
 ✅ Database synced successfully!
    - Total lessons processed: 236
    - New lessons added: 0
    - Existing lessons updated: 236
    - New YouTube URLs added: 2
+   - New durations added: 2
 
 🎉 2 new video(s) are now available to watch!
+⏱️  2 video duration(s) have been updated!
 
 🎉 Sync completed successfully!
 ```
 
 ### Workflow recomendado
 
-1. **Upload de vídeos**: Execute o script do YouTube uploader
+1. **Upload de vídeos**: Execute o script do YouTube uploader (`youtube_uploader.py`)
 2. **JSON atualizado**: O uploader adiciona URLs ao `course-metadata.json`
-3. **Sincronize o banco**: `npm run db:sync`
-4. **Vídeos disponíveis**: Usuários podem assistir imediatamente
+3. **Buscar durações** (opcional): Execute `fetch_durations.py` para adicionar durações
+4. **Sincronize o banco**: `npm run db:sync`
+5. **Vídeos disponíveis**: Usuários podem assistir imediatamente com durações exibidas
 
 ### Automação (opcional)
 

@@ -23,7 +23,8 @@
                 "title": "Boas-vindas e orientações",
                 "fileName": "Videoaula 01 Boas-vindas e orientações.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=EeJz6PDhlb0"
+                "youtubeUrl": "https://www.youtube.com/watch?v=EeJz6PDhlb0",
+                "duration": 308
               },
               {
                 "id": "lesson-01-01-02",
@@ -31,7 +32,8 @@
                 "title": "Conheça a equipe e o contrato de convivência Rehagro",
                 "fileName": "Videoaula 02 Conheça a equipe e o contrato de convivência Rehagr.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=z-EC0JZgcRc"
+                "youtubeUrl": "https://www.youtube.com/watch?v=z-EC0JZgcRc",
+                "duration": 362
               },
               {
                 "id": "lesson-01-01-03",
@@ -39,7 +41,8 @@
                 "title": "Como usar a plataforma de estudos",
                 "fileName": "Gravações de aula ao vivo - como usar a plataforma de estudos.mp4",
                 "type": "live",
-                "youtubeUrl": "https://www.youtube.com/watch?v=JFZYSFENsVQ"
+                "youtubeUrl": "https://www.youtube.com/watch?v=JFZYSFENsVQ",
+                "duration": 3085
               },
               {
                 "id": "lesson-01-01-04",
@@ -47,7 +50,8 @@
                 "title": "Gravação ao vivo - Boas-vindas e orientações",
                 "fileName": "Gravação de aula on-line ao vivo - Boas-vindas e orientações - 2.mp4",
                 "type": "live",
-                "youtubeUrl": "https://www.youtube.com/watch?v=T4w_xb6AMRo"
+                "youtubeUrl": "https://www.youtube.com/watch?v=T4w_xb6AMRo",
+                "duration": 3947
               }
             ]
           },
@@ -62,7 +66,8 @@
                 "title": "Introdução - Planejamento da propriedade",
                 "fileName": "Videoaula 01 Introdução - Planejamento da propriedade.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=e0csl1aaZhk"
+                "youtubeUrl": "https://www.youtube.com/watch?v=e0csl1aaZhk",
+                "duration": 660
               },
               {
                 "id": "lesson-01-02-02",
@@ -70,7 +75,8 @@
                 "title": "Desempenho e eficiência",
                 "fileName": "Videoaula 02 Desempenho e eficiência.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=yaEjrhbqA4o"
+                "youtubeUrl": "https://www.youtube.com/watch?v=yaEjrhbqA4o",
+                "duration": 682
               },
               {
                 "id": "lesson-01-02-03",
@@ -78,7 +84,8 @@
                 "title": "Definindo o sistema de produção - Parte I",
                 "fileName": "Videoaula 03 Definindo o sistema de produção - Parte I.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=t1rZmRSUfxE"
+                "youtubeUrl": "https://www.youtube.com/watch?v=t1rZmRSUfxE",
+                "duration": 1006
               },
               {
                 "id": "lesson-01-02-04",
@@ -86,7 +93,8 @@
                 "title": "Definindo o sistema de produção - Parte II",
                 "fileName": "Videoaula 04 Definindo o sistema de produção - Parte II.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=OEHOo3akGPM"
+                "youtubeUrl": "https://www.youtube.com/watch?v=OEHOo3akGPM",
+                "duration": 760
               },
               {
                 "id": "lesson-01-02-05",
@@ -94,7 +102,8 @@
                 "title": "Confinamento e Pastejo",
                 "fileName": "Videoaula 05 Confinamento e Pastejo.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=BPp_3I81vig"
+                "youtubeUrl": "https://www.youtube.com/watch?v=BPp_3I81vig",
+                "duration": 941
               },
               {
                 "id": "lesson-01-02-06",
@@ -102,7 +111,8 @@
                 "title": "Gerenciamento do sistema de produção",
                 "fileName": "Videoaula 06Gerenciamento do sistema de produção.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=UmOqpuHGnxo"
+                "youtubeUrl": "https://www.youtube.com/watch?v=UmOqpuHGnxo",
+                "duration": 357
               },
               {
                 "id": "lesson-01-02-07",
@@ -110,7 +120,8 @@
                 "title": "Gravação ao vivo - Sistemas de produção leiteira",
                 "fileName": "gravação de aula online ao vivo - Sistemas de produção leiteira.mp4",
                 "type": "live",
-                "youtubeUrl": "https://www.youtube.com/watch?v=s_stMis-2j8"
+                "youtubeUrl": "https://www.youtube.com/watch?v=s_stMis-2j8",
+                "duration": 5778
               }
             ]
           },
@@ -125,7 +136,8 @@
                 "title": "Premissas para bons indicadores",
                 "fileName": "Videoaula 01Premissas para bons indicadores.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=b_EqxEVCpQ4"
+                "youtubeUrl": "https://www.youtube.com/watch?v=b_EqxEVCpQ4",
+                "duration": 786
               },
               {
                 "id": "lesson-01-03-02",
@@ -133,7 +145,8 @@
                 "title": "Fatores que influenciam na eficiência reprodutiva",
                 "fileName": "Videoaula 02Fatores que influenciam na eficiência reprodutiva.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=hLKSsq-OCr8"
+                "youtubeUrl": "https://www.youtube.com/watch?v=hLKSsq-OCr8",
+                "duration": 759
               },
               {
                 "id": "lesson-01-03-03",
@@ -141,7 +154,8 @@
                 "title": "Período de espera voluntário",
                 "fileName": "Videoaula 03Período de espera voluntário.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=O661qaD3UR4"
+                "youtubeUrl": "https://www.youtube.com/watch?v=O661qaD3UR4",
+                "duration": 896
               },
               {
                 "id": "lesson-01-03-04",
@@ -149,7 +163,8 @@
                 "title": "Período de serviço",
                 "fileName": "Videoaula 04Período de serviço.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=h-hz2yABay4"
+                "youtubeUrl": "https://www.youtube.com/watch?v=h-hz2yABay4",
+                "duration": 686
               },
               {
                 "id": "lesson-01-03-05",
@@ -157,7 +172,8 @@
                 "title": "Taxa de serviço",
                 "fileName": "Videoaula 05Taxa de serviço.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=uq8QWBsExDI"
+                "youtubeUrl": "https://www.youtube.com/watch?v=uq8QWBsExDI",
+                "duration": 894
               },
               {
                 "id": "lesson-01-03-06",
@@ -165,7 +181,8 @@
                 "title": "Taxa de concepção - Parte I",
                 "fileName": "Videoaula 06Taxa de concepção - Parte 1.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=d-vPPo_vFE0"
+                "youtubeUrl": "https://www.youtube.com/watch?v=d-vPPo_vFE0",
+                "duration": 561
               },
               {
                 "id": "lesson-01-03-07",
@@ -173,7 +190,8 @@
                 "title": "Taxa de concepção - Parte II",
                 "fileName": "Videoaula 07 Taxa de concepção - Parte II.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=ShozsvmryFI"
+                "youtubeUrl": "https://www.youtube.com/watch?v=ShozsvmryFI",
+                "duration": 412
               },
               {
                 "id": "lesson-01-03-08",
@@ -181,7 +199,8 @@
                 "title": "Perda de prenhez",
                 "fileName": "Videoaula 08Perda de prenhez.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=tG86h6n9I-4"
+                "youtubeUrl": "https://www.youtube.com/watch?v=tG86h6n9I-4",
+                "duration": 666
               },
               {
                 "id": "lesson-01-03-09",
@@ -189,7 +208,8 @@
                 "title": "Percentual de vacas em lactação",
                 "fileName": "Videoaula 09Percentual de vacas em lactação.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=kpbFBOtJtPU"
+                "youtubeUrl": "https://www.youtube.com/watch?v=kpbFBOtJtPU",
+                "duration": 673
               },
               {
                 "id": "lesson-01-03-10",

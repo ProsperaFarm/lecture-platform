@@ -52,6 +52,7 @@ class DurationFetcher:
                 creds = Credentials.from_authorized_user_file(TOKEN_FILE, SCOPES)
             except Exception as e:
                 print(f"⚠️  Token existente inválido: {e}")
+                print(f"💡 Se você mudou de credenciais, delete o arquivo {TOKEN_FILE} e tente novamente")
         
         # Se não há credenciais válidas, faz login
         if not creds or not creds.valid:
@@ -128,7 +129,14 @@ class DurationFetcher:
             
             return None
         except Exception as e:
-            print(f"⚠️  Erro ao buscar duração do vídeo {video_id}: {e}")
+            error_str = str(e)
+            if 'insufficientPermissions' in error_str or 'insufficient authentication scopes' in error_str:
+                print(f"❌ Erro de permissão ao buscar duração do vídeo {video_id}")
+                print(f"💡 O token atual não tem as permissões necessárias.")
+                print(f"   Solução: Delete o arquivo '{TOKEN_FILE}' e execute o script novamente")
+                print(f"   para re-autenticar com as credenciais corretas.\n")
+            else:
+                print(f"⚠️  Erro ao buscar duração do vídeo {video_id}: {e}")
             return None
     
     def _format_duration(self, seconds: int) -> str:
