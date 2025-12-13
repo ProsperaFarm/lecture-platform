@@ -84,18 +84,16 @@ async function seedDatabase() {
         for (const lesson of section.lessons) {
           await client.query(
             `INSERT INTO lessons (
-              "lessonId", "courseId", "moduleId", "moduleName", 
-              "sectionId", "sectionName", title, "youtubeUrl", 
+              "lessonId", "courseId", "moduleId", 
+              "sectionId", title, "youtubeUrl", 
               type, "order", "createdAt", "updatedAt"
             )
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, NOW(), NOW())
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW(), NOW())
             ON CONFLICT ("lessonId")
             DO UPDATE SET
               "courseId" = EXCLUDED."courseId",
               "moduleId" = EXCLUDED."moduleId",
-              "moduleName" = EXCLUDED."moduleName",
               "sectionId" = EXCLUDED."sectionId",
-              "sectionName" = EXCLUDED."sectionName",
               title = EXCLUDED.title,
               "youtubeUrl" = EXCLUDED."youtubeUrl",
               type = EXCLUDED.type,
@@ -105,9 +103,7 @@ async function seedDatabase() {
               lesson.id,
               course.id,
               module.id,
-              module.title,
               section.id,
-              section.title,
               lesson.title,
               lesson.youtubeUrl || null,
               lesson.type || 'video',
@@ -122,6 +118,94 @@ async function seedDatabase() {
         }
       }
     }
+
+    // 3. Sync modules and sections (ensure they exist)
+    console.log('\n📝 Syncing modules and sections...');
+    
+    for (const module of course.modules) {
+      // Upsert module
+      await client.query(
+        `INSERT INTO modules ("moduleId", "courseId", title, "order", "createdAt", "updatedAt")
+         VALUES ($1, $2, $3, $4, NOW(), NOW())
+         ON CONFLICT ("moduleId")
+         DO UPDATE SET
+           "courseId" = EXCLUDED."courseId",
+           title = EXCLUDED.title,
+           "order" = EXCLUDED."order",
+           "updatedAt" = NOW()`,
+        [module.id, course.id, module.title, module.order]
+      );
+
+      for (const section of module.sections) {
+        // Upsert section
+        await client.query(
+          `INSERT INTO sections ("sectionId", "moduleId", "courseId", title, "order", "createdAt", "updatedAt")
+           VALUES ($1, $2, $3, $4, $5, NOW(), NOW())
+           ON CONFLICT ("sectionId")
+           DO UPDATE SET
+             "moduleId" = EXCLUDED."moduleId",
+             "courseId" = EXCLUDED."courseId",
+             title = EXCLUDED.title,
+             "order" = EXCLUDED."order",
+             "updatedAt" = NOW()`,
+          [section.id, module.id, course.id, section.title, section.order]
+        );
+      }
+    }
+
+    // 4. Calculate and update aggregated durations
+    console.log('⏱️  Calculating aggregated durations...');
+
+    // Calculate section durations (sum of all lesson durations in each section)
+    const sectionDurations = await client.query(
+      `UPDATE sections s
+       SET "totalDuration" = COALESCE((
+         SELECT SUM(COALESCE(duration, 0))
+         FROM lessons l
+         WHERE l."sectionId" = s."sectionId"
+       ), 0),
+       "updatedAt" = NOW()
+       WHERE s."courseId" = $1
+       RETURNING s."sectionId", s."totalDuration"`,
+      [course.id]
+    );
+
+    // Calculate module durations (sum of all section durations in each module)
+    const moduleDurations = await client.query(
+      `UPDATE modules m
+       SET "totalDuration" = COALESCE((
+         SELECT SUM(COALESCE("totalDuration", 0))
+         FROM sections s
+         WHERE s."moduleId" = m."moduleId"
+       ), 0),
+       "updatedAt" = NOW()
+       WHERE m."courseId" = $1
+       RETURNING m."moduleId", m."totalDuration"`,
+      [course.id]
+    );
+
+    // Calculate course duration (sum of all module durations)
+    const courseDurationResult = await client.query(
+      `UPDATE courses c
+       SET "totalDuration" = COALESCE((
+         SELECT SUM(COALESCE("totalDuration", 0))
+         FROM modules m
+         WHERE m."courseId" = c."courseId"
+       ), 0),
+       "updatedAt" = NOW()
+       WHERE c."courseId" = $1
+       RETURNING "totalDuration"`,
+      [course.id]
+    );
+
+    const courseTotalDuration = courseDurationResult.rows[0]?.totalDuration || 0;
+    const hours = Math.floor(courseTotalDuration / 3600);
+    const minutes = Math.floor((courseTotalDuration % 3600) / 60);
+    
+    console.log(`✅ Aggregated durations calculated:`);
+    console.log(`   - Sections: ${sectionDurations.rows.length} updated`);
+    console.log(`   - Modules: ${moduleDurations.rows.length} updated`);
+    console.log(`   - Course total duration: ${hours}h${minutes}m`);
 
     // Commit transaction
     await client.query('COMMIT');

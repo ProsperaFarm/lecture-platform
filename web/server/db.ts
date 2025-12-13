@@ -1,10 +1,12 @@
 import { eq, and } from "drizzle-orm";
+import { sql } from "drizzle-orm";
 import { drizzle as drizzleNeon } from "drizzle-orm/neon-http";
 import { drizzle as drizzleNode } from "drizzle-orm/node-postgres";
 import { neon } from "@neondatabase/serverless";
 import pkg from 'pg';
 const { Pool } = pkg;
 import { InsertUser, users, courses, lessons, modules, sections, userProgress, Course, Lesson, UserProgress, InsertUserProgress } from "../drizzle/schema";
+import { count } from "drizzle-orm";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzleNeon> | ReturnType<typeof drizzleNode> | null = null;
@@ -137,6 +139,37 @@ export async function getCourseById(courseId: string): Promise<Course | undefine
 }
 
 /**
+ * Get course metadata (total modules and sections)
+ */
+export async function getCourseMetadata(courseId: string): Promise<{
+  totalModules: number;
+  totalSections: number;
+}> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get course metadata: database not available");
+    return { totalModules: 0, totalSections: 0 };
+  }
+
+  // Count modules for this course
+  const modulesResult = await db
+    .select({ count: count() })
+    .from(modules)
+    .where(eq(modules.courseId, courseId));
+
+  // Count sections for this course
+  const sectionsResult = await db
+    .select({ count: count() })
+    .from(sections)
+    .where(eq(sections.courseId, courseId));
+
+  return {
+    totalModules: modulesResult[0]?.count || 0,
+    totalSections: sectionsResult[0]?.count || 0,
+  };
+}
+
+/**
  * Get all lessons for a course with module and section names (for display)
  */
 export async function getLessonsWithDetails(courseId: string) {
@@ -256,6 +289,89 @@ export async function getUserProgressByCourse(userId: number, courseId: string):
 }
 
 /**
+ * Calculate course progress statistics
+ * Returns total lessons, completed lessons, progress percentage, and durations
+ */
+export async function getCourseProgressStats(userId: number, courseId: string): Promise<{
+  totalLessons: number;
+  completedLessons: number;
+  progressPercentage: number;
+  watchedDuration: number;
+  totalDuration: number;
+}> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get course progress stats: database not available");
+    return {
+      totalLessons: 0,
+      completedLessons: 0,
+      progressPercentage: 0,
+      watchedDuration: 0,
+      totalDuration: 0,
+    };
+  }
+
+  // Get all lessons for this course
+  const courseLessons = await getLessonsByCourse(courseId);
+  
+  // Get user progress for this course
+  const userProgressData = await getUserProgressByCourse(userId, courseId);
+  
+  // Create a map of lessonId -> completed status
+  const progressMap = new Map<string, boolean>();
+  userProgressData.forEach(progress => {
+    progressMap.set(progress.lessonId, progress.completed || false);
+  });
+
+  // Calculate statistics (same logic as frontend)
+  let completedCount = 0;
+  let watchedDuration = 0;
+  let totalDuration = 0;
+
+  courseLessons.forEach(lesson => {
+    const isCompleted = progressMap.get(lesson.lessonId) || false;
+    const lessonDuration = lesson.duration || 0;
+
+    if (isCompleted) {
+      completedCount++;
+      watchedDuration += lessonDuration;
+    }
+    totalDuration += lessonDuration;
+  });
+
+  const totalLessons = courseLessons.length;
+  const progressPercentage = totalLessons > 0 
+    ? Math.round((completedCount / totalLessons) * 100) 
+    : 0;
+
+  return {
+    totalLessons,
+    completedLessons: completedCount,
+    progressPercentage,
+    watchedDuration,
+    totalDuration,
+  };
+}
+
+/**
+ * Get all user progress for a user (across all courses)
+ */
+export async function getAllUserProgress(userId: number): Promise<UserProgress[]> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get user progress: database not available");
+    return [];
+  }
+
+  const result = await db
+    .select()
+    .from(userProgress)
+    .where(eq(userProgress.userId, userId));
+  
+  return result;
+}
+
+/**
  * Get user progress for a specific lesson
  */
 export async function getUserProgressByLesson(userId: number, lessonId: string): Promise<UserProgress | undefined> {
@@ -323,4 +439,22 @@ export async function toggleLessonCompletion(userId: number, lessonId: string, c
     courseId,
     completed,
   });
+}
+
+/**
+ * Reset all progress for a course (delete all user progress records for a course)
+ */
+export async function resetCourseProgress(userId: number, courseId: string): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot reset course progress: database not available");
+    throw new Error("Database not available");
+  }
+
+  await db
+    .delete(userProgress)
+    .where(and(
+      eq(userProgress.userId, userId),
+      eq(userProgress.courseId, courseId)
+    ));
 }

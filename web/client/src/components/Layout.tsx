@@ -20,6 +20,7 @@ import { useState, useMemo } from "react";
 import { Link, useLocation, useRoute } from "wouter";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
+import { CircularProgress } from "./CircularProgress";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -219,36 +220,27 @@ export function Layout({ children }: LayoutProps) {
     return (
       <div className="sticky top-0 z-20 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-14 max-w-5xl items-center justify-between px-4">
-          {/* Left side: Toggle + Platform Name */}
-          <div className="flex items-center gap-3">
-            {/* Toggle button for desktop sidebar */}
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="hidden lg:flex"
-              onClick={() => setIsDesktopSidebarOpen(!isDesktopSidebarOpen)}
-            >
-              {isDesktopSidebarOpen ? (
-                <ChevronLeft className="w-5 h-5" />
-              ) : (
-                <ChevronRight className="w-5 h-5" />
-              )}
-            </Button>
-            
+          {/* Left side: Platform Name */}
+          <div className="flex items-center gap-2">
             {/* Platform Name + Course Progress */}
             <div className="hidden sm:flex items-center gap-2">
-              <div className="w-7 h-7 bg-primary rounded flex items-center justify-center text-primary-foreground font-bold text-xs">
-                P
-              </div>
-              <span className="font-bold">Prospera Academy</span>
+              <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                <div className="w-7 h-7 bg-primary rounded flex items-center justify-center text-primary-foreground font-bold text-xs">
+                  P
+                </div>
+                <span className="font-bold">Prospera Academy</span>
+              </Link>
               {course && (
                 <>
-                  <span className="text-muted-foreground">|</span>
-                  <span className="font-medium text-sm truncate max-w-[200px]">{course.title}</span>
-                  <span className="text-muted-foreground">-</span>
-                  <span className="text-sm text-muted-foreground">Seu progresso</span>
-                  <span className="font-semibold text-primary">{courseStructure.progressPercentage}%</span>
-                  <span className="text-xs text-muted-foreground">({courseStructure.completedLessons}/{courseStructure.totalLessons})</span>
+                  <span className="text-muted-foreground mx-1">|</span>
+                  <span className="font-medium text-sm truncate max-w-[550px]">{course.title}</span>
+                  <span className="text-muted-foreground mx-3">-</span>
+                  <CircularProgress
+                    value={courseStructure.progressPercentage || 0}
+                    size={32}
+                    strokeWidth={3}
+                    tooltip={`${courseStructure.progressPercentage || 0}% concluído (${courseStructure.completedLessons} de ${courseStructure.totalLessons})`}
+                  />
                 </>
               )}
             </div>
@@ -290,12 +282,6 @@ export function Layout({ children }: LayoutProps) {
               </p>
             )}
           </div>
-        </Link>
-        <Link href="/">
-          <Button variant="outline" size="sm" className="w-full mt-4 text-xs h-7">
-            <ChevronRight className="w-3 h-3 rotate-180 mr-1" />
-            Trocar de Curso
-          </Button>
         </Link>
       </div>
       
@@ -417,6 +403,22 @@ export function Layout({ children }: LayoutProps) {
         )}>
           <SidebarContent />
         </div>
+        {/* Toggle button positioned at the sidebar edge */}
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          className={cn(
+            "absolute top-4 z-40 h-8 w-8 rounded-r-md rounded-l-none border border-l-0 bg-background shadow-sm hover:bg-accent transition-all duration-300",
+            isDesktopSidebarOpen ? "left-80" : "left-0"
+          )}
+          onClick={() => setIsDesktopSidebarOpen(!isDesktopSidebarOpen)}
+        >
+          {isDesktopSidebarOpen ? (
+            <ChevronLeft className="w-4 h-4" />
+          ) : (
+            <ChevronRight className="w-4 h-4" />
+          )}
+        </Button>
       </aside>
 
       {/* Mobile Sidebar */}

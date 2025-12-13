@@ -7,6 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { Link } from "wouter";
 
 interface SimpleLayoutProps {
   children: React.ReactNode;
@@ -26,12 +27,12 @@ export function SimpleLayout({ children }: SimpleLayoutProps) {
       <div className="sticky top-0 z-20 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-14 max-w-7xl items-center justify-between px-4">
           {/* Platform Name */}
-          <div className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <div className="w-8 h-8 bg-primary rounded flex items-center justify-center text-primary-foreground font-bold text-sm">
               P
             </div>
             <span className="font-bold text-lg">Prospera Academy</span>
-          </div>
+          </Link>
           
           {/* User Menu */}
           <DropdownMenu>

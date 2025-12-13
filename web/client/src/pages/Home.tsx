@@ -10,11 +10,21 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { BookOpen, Clock, PlayCircle, Loader2, ArrowLeft } from "lucide-react";
+import { BookOpen, Clock, PlayCircle, Loader2, ArrowLeft, ChevronDown, ChevronUp, RotateCcw, AlertTriangle } from "lucide-react";
 import { Link, useRoute, useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
-import { useMemo, useEffect } from "react";
+import { useMemo, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 // Helper function to format duration in seconds to readable format
 function formatDuration(seconds: number | null | undefined): string {
@@ -65,13 +75,35 @@ export default function Home() {
     { enabled: !!courseId }
   );
 
+  // Fetch course progress stats from server
+  const { data: courseProgressStats } = trpc.progress.getStats.useQuery(
+    { courseId: courseId || "" },
+    { enabled: !!courseId }
+  );
+
   // Get tRPC utils for query invalidation
   const utils = trpc.useUtils();
+
+  // State for accordion expansion
+  const [expandedModules, setExpandedModules] = useState<string[]>([]);
+
+  // State for reset confirmation dialog
+  const [showResetDialog, setShowResetDialog] = useState(false);
 
   // Mutation to toggle lesson completion
   const toggleCompletionMutation = trpc.progress.toggleCompletion.useMutation({
     onSuccess: () => {
       utils.progress.getByCourse.invalidate({ courseId: courseId || "" });
+      utils.progress.getStats.invalidate({ courseId: courseId || "" });
+    },
+  });
+
+  // Mutation to reset course progress
+  const resetProgressMutation = trpc.progress.reset.useMutation({
+    onSuccess: () => {
+      utils.progress.getByCourse.invalidate({ courseId: courseId || "" });
+      utils.progress.getStats.invalidate({ courseId: courseId || "" });
+      setShowResetDialog(false);
     },
   });
 
@@ -83,6 +115,22 @@ export default function Home() {
         lessonId, 
         completed: !currentStatus 
       });
+    }
+  };
+
+  // Functions to expand/collapse all modules
+  const expandAllModules = () => {
+    setExpandedModules(courseStructure.modules.map(m => m.id));
+  };
+
+  const collapseAllModules = () => {
+    setExpandedModules([]);
+  };
+
+  // Handle reset progress
+  const handleResetProgress = () => {
+    if (courseId) {
+      resetProgressMutation.mutate({ courseId });
     }
   };
 
@@ -119,19 +167,14 @@ export default function Home() {
       }>;
     }>();
 
-    let totalCompletedLessons = 0;
-    let totalWatchedDuration = 0;
-    let totalCourseDuration = 0;
+    // Use stats from server if available, otherwise calculate from lessons
+    const totalCompletedLessons = courseProgressStats?.completedLessons ?? 0;
+    const totalWatchedDuration = courseProgressStats?.watchedDuration ?? 0;
+    const totalCourseDuration = courseProgressStats?.totalDuration ?? 0;
 
     lessonsData.forEach(lesson => {
       const isCompleted = progressMap.get(lesson.lessonId) || false;
       const lessonDuration = lesson.duration || 0;
-
-      if (isCompleted) {
-        totalCompletedLessons++;
-        totalWatchedDuration += lessonDuration;
-      }
-      totalCourseDuration += lessonDuration;
 
       if (!modulesMap.has(lesson.moduleId)) {
         modulesMap.set(lesson.moduleId, {
@@ -187,12 +230,19 @@ export default function Home() {
     return {
       modules,
       totalSections,
-      totalLessons: lessonsData.length,
+      totalLessons: course?.totalVideos ?? lessonsData.length,
       completedLessons: totalCompletedLessons,
       watchedDuration: totalWatchedDuration,
       totalDuration: totalCourseDuration,
     };
-  }, [lessonsData, progressMap]);
+  }, [lessonsData, progressMap, courseProgressStats]);
+
+  // Update expanded modules when course structure changes
+  useEffect(() => {
+    if (courseStructure.modules.length > 0 && expandedModules.length === 0) {
+      setExpandedModules(courseStructure.modules.map(m => m.id));
+    }
+  }, [courseStructure.modules.length]);
 
   // Loading state
   if (courseLoading || lessonsLoading || isLoadingAuth) {
@@ -219,59 +269,60 @@ export default function Home() {
     );
   }
 
-  const progressPercentage = courseStructure.totalLessons > 0 
-    ? Math.round((courseStructure.completedLessons / courseStructure.totalLessons) * 100) 
-    : 0;
+  // Use progress percentage from server stats
+  const progressPercentage = courseProgressStats?.progressPercentage ?? 0;
 
   // Get first lesson for "Start Course" button
   const firstLesson = courseStructure.modules[0]?.sections[0]?.lessons[0];
 
   return (
     <SimpleLayout>
-      <div className="space-y-8 animate-in fade-in duration-500">
-        {/* Back Button */}
-        <div className="container max-w-5xl">
-          <Link href="/">
-            <Button variant="ghost" size="sm" className="gap-2">
-              <ArrowLeft className="w-4 h-4" />
-              Voltar para Cursos
-            </Button>
-          </Link>
-        </div>
-        
-        {/* Hero Section */}
-        <div className="relative rounded-xl overflow-hidden bg-card border shadow-sm">
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/20 z-10" />
-          <img 
-            src={course.thumbnail || "/images/hero-bg.png"} 
-            alt="Farm Landscape" 
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          <div className="relative z-20 p-8 md:p-12 text-white space-y-4 max-w-2xl">
-            <Badge variant="secondary" className="bg-primary/20 text-primary-foreground hover:bg-primary/30 border-none backdrop-blur-sm">
-              {course.acronym}
-            </Badge>
-            <h1 className="text-3xl md:text-4xl font-bold font-display tracking-tight">
-              {course.title}
-            </h1>
-            <p className="text-lg text-white/80 leading-relaxed">
-              {course.description}
-            </p>
+      <div className="min-h-screen bg-muted/30 py-8 px-4">
+        <div className="mx-auto max-w-6xl">
+          <div className="bg-background border rounded-lg shadow-sm space-y-8 p-8 animate-in fade-in duration-500">
+            {/* Back Button */}
+            <div>
+              <Link href="/">
+                <Button variant="ghost" size="sm" className="gap-2">
+                  <ArrowLeft className="w-4 h-4" />
+                  Voltar para Cursos
+                </Button>
+              </Link>
+            </div>
             
-            {firstLesson && (
-              <div className="flex flex-wrap gap-4 pt-4">
-                <Link href={`/course/${course.courseId}/lesson/${firstLesson.lessonId}`}>
-                  <Button size="lg" className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground border-none">
-                    <PlayCircle className="w-5 h-5" />
-                    {progressPercentage > 0 ? 'Continuar Curso' : 'Começar Curso'}
-                  </Button>
-                </Link>
+            {/* Hero Section */}
+            <div className="relative rounded-xl overflow-hidden bg-card border shadow-sm">
+              <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/20 z-10" />
+              <img 
+                src={course.thumbnail || "/images/hero-bg.png"} 
+                alt="Farm Landscape" 
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="relative z-20 p-8 md:p-12 text-white space-y-4 max-w-2xl">
+                <Badge variant="secondary" className="bg-primary/20 text-primary-foreground hover:bg-primary/30 border-none backdrop-blur-sm">
+                  {course.acronym}
+                </Badge>
+                <h1 className="text-3xl md:text-4xl font-bold font-display tracking-tight">
+                  {course.title}
+                </h1>
+                <p className="text-lg text-white/80 leading-relaxed">
+                  {course.description}
+                </p>
+                
+                {firstLesson && (
+                  <div className="flex flex-wrap gap-4 pt-4">
+                    <Link href={`/course/${course.courseId}/lesson/${firstLesson.lessonId}`}>
+                      <Button size="lg" className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground border-none">
+                        <PlayCircle className="w-5 h-5" />
+                        {progressPercentage > 0 ? 'Continuar Curso' : 'Começar Curso'}
+                      </Button>
+                    </Link>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        </div>
+            </div>
 
-        {/* Stats Grid */}
+            {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -285,7 +336,7 @@ export default function Home() {
                 {courseStructure.completedLessons} de {courseStructure.totalLessons} aulas assistidas
               </p>
               <p className="text-xs text-muted-foreground mt-1">
-                {formatDuration(courseStructure.watchedDuration)} / {formatDuration(courseStructure.totalDuration)}
+                {formatDuration(courseStructure.watchedDuration)} / {formatDuration(course?.totalDuration || courseStructure.totalDuration)}
               </p>
             </CardContent>
           </Card>
@@ -300,7 +351,7 @@ export default function Home() {
                 {courseStructure.totalSections} seções • {courseStructure.totalLessons} aulas
               </p>
               <p className="text-xs text-muted-foreground mt-1">
-                {formatDuration(courseStructure.totalDuration)} de conteúdo
+                {formatDuration(course?.totalDuration || courseStructure.totalDuration)} de conteúdo
               </p>
             </CardContent>
           </Card>
@@ -318,103 +369,165 @@ export default function Home() {
           </Card>
         </div>
 
-        {/* Modules List with Accordions */}
-        <div className="space-y-6">
-          <h2 className="text-2xl font-bold font-display">Conteúdo do Curso</h2>
-          <Accordion type="multiple" defaultValue={courseStructure.modules.map(m => m.id)} className="space-y-4">
-            {courseStructure.modules.map((module) => (
-              <AccordionItem key={module.id} value={module.id} className="border rounded-lg">
-                <AccordionTrigger className="hover:no-underline px-6 py-4">
-                  <div className="flex items-center justify-between w-full pr-4">
-                    <div className="text-left">
-                      <h3 className="text-lg font-semibold text-primary">
-                        {module.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground mt-1">
-                        {module.sections.length} seções • {module.totalCount} aulas
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <span className="text-sm font-medium text-primary">
-                        {module.completedCount}/{module.totalCount}
-                      </span>
-                      {module.totalDuration > 0 && (
-                        <span className="text-sm text-muted-foreground">
-                          | {formatDuration(module.totalDuration)}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="px-6 pb-4">
-                  <Accordion type="multiple" defaultValue={module.sections.map(s => s.id)} className="space-y-2">
-                    {module.sections.map((section) => (
-                      <AccordionItem key={section.id} value={section.id} className="border-none">
-                        <AccordionTrigger className="hover:no-underline py-3 px-4 hover:bg-muted/50 rounded-md">
-                          <div className="flex items-center justify-between w-full pr-4">
-                            <div className="flex items-center gap-2">
-                              <BookOpen className="w-4 h-4" />
-                              <span className="font-medium">{section.title}</span>
-                            </div>
-                            <div className="flex items-center gap-3">
-                              <span className="text-sm font-medium text-primary">
-                                {section.completedCount}/{section.totalCount}
-                              </span>
-                              {section.totalDuration > 0 && (
-                                <span className="text-sm text-muted-foreground">
-                                  | {formatDuration(section.totalDuration)}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        </AccordionTrigger>
-                        <AccordionContent className="px-4 pb-2">
-                          <div className="space-y-1 mt-2">
-                            {section.lessons.map((lesson) => {
-                              const isActive = location === `/course/${course.courseId}/lesson/${lesson.lessonId}`;
-                              const isCompleted = progressMap.get(lesson.lessonId) || false;
-                              return (
-                                <div key={lesson.lessonId} className="flex items-center gap-2 group">
-                                  <Checkbox
-                                    checked={isCompleted}
-                                    onCheckedChange={() => handleToggleCompletion(lesson.lessonId)}
-                                    className="shrink-0"
-                                  />
-                                  <Link href={`/course/${course.courseId}/lesson/${lesson.lessonId}`} className="flex-1">
-                                    <div className={cn(
-                                      "flex items-center justify-between gap-2 p-3 rounded-md cursor-pointer transition-colors",
-                                      isActive 
-                                        ? "bg-primary/10 text-primary font-medium" 
-                                        : "hover:bg-muted/50 text-muted-foreground",
-                                      isCompleted && "opacity-70"
-                                    )}>
-                                      <span className={cn(
-                                        "text-sm flex-1",
-                                        isCompleted && "line-through"
-                                      )}>
-                                        {lesson.title}
-                                      </span>
-                                      {lesson.duration && (
-                                        <span className="text-xs text-muted-foreground shrink-0">
-                                          {formatDuration(lesson.duration)}
-                                        </span>
-                                      )}
-                                    </div>
-                                  </Link>
+            {/* Modules List with Accordions */}
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold font-display">Conteúdo do Curso</h2>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={expandAllModules}
+                    title="Expandir Todos"
+                  >
+                    <ChevronDown className="w-4 h-4" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={collapseAllModules}
+                    title="Recolher Todos"
+                  >
+                    <ChevronUp className="w-4 h-4" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => setShowResetDialog(true)}
+                    className="text-destructive hover:text-destructive"
+                    title="Resetar Progresso"
+                  >
+                    <RotateCcw className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+              <Accordion 
+                type="multiple" 
+                value={expandedModules}
+                onValueChange={setExpandedModules}
+                className="space-y-4"
+              >
+                {courseStructure.modules.map((module) => (
+                  <AccordionItem key={module.id} value={module.id} className="border rounded-lg">
+                    <AccordionTrigger className="hover:no-underline px-6 py-4">
+                      <div className="flex items-center justify-between w-full pr-4">
+                        <div className="text-left">
+                          <h3 className="text-lg font-semibold text-primary">
+                            {module.title}
+                          </h3>
+                          <p className="text-sm text-muted-foreground mt-1">
+                            {module.sections.length} seções • {module.totalCount} aulas
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className="text-sm font-medium text-primary">
+                            {module.completedCount}/{module.totalCount}
+                          </span>
+                          {module.totalDuration > 0 && (
+                            <span className="text-sm text-muted-foreground">
+                              | {formatDuration(module.totalDuration)}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="px-6 pb-4">
+                      <Accordion type="multiple" defaultValue={module.sections.map(s => s.id)} className="space-y-2">
+                        {module.sections.map((section) => (
+                          <AccordionItem key={section.id} value={section.id} className="border-none">
+                            <AccordionTrigger className="hover:no-underline py-3 px-4 hover:bg-muted/50 rounded-md">
+                              <div className="flex items-center justify-between w-full pr-4">
+                                <div className="flex items-center gap-2">
+                                  <BookOpen className="w-4 h-4" />
+                                  <span className="font-medium">{section.title}</span>
                                 </div>
-                              );
-                            })}
-                          </div>
-                        </AccordionContent>
-                      </AccordionItem>
-                    ))}
-                  </Accordion>
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+                                <div className="flex items-center gap-3">
+                                  <span className="text-sm font-medium text-primary">
+                                    {section.completedCount}/{section.totalCount}
+                                  </span>
+                                  {section.totalDuration > 0 && (
+                                    <span className="text-sm text-muted-foreground">
+                                      | {formatDuration(section.totalDuration)}
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            </AccordionTrigger>
+                            <AccordionContent className="px-4 pb-2">
+                              <div className="space-y-1 mt-2">
+                                {section.lessons.map((lesson) => {
+                                  const isActive = location === `/course/${course.courseId}/lesson/${lesson.lessonId}`;
+                                  const isCompleted = progressMap.get(lesson.lessonId) || false;
+                                  return (
+                                    <div key={lesson.lessonId} className="flex items-center gap-2 group">
+                                      <Checkbox
+                                        checked={isCompleted}
+                                        onCheckedChange={() => handleToggleCompletion(lesson.lessonId)}
+                                        className="shrink-0"
+                                      />
+                                      <Link href={`/course/${course.courseId}/lesson/${lesson.lessonId}`} className="flex-1">
+                                        <div className={cn(
+                                          "flex items-center justify-between gap-2 p-3 rounded-md cursor-pointer transition-colors",
+                                          isActive 
+                                            ? "bg-primary/10 text-primary font-medium" 
+                                            : "hover:bg-muted/50 text-muted-foreground",
+                                          isCompleted && "opacity-70"
+                                        )}>
+                                          <span className={cn(
+                                            "text-sm flex-1",
+                                            isCompleted && "line-through"
+                                          )}>
+                                            {lesson.title}
+                                          </span>
+                                          {lesson.duration && (
+                                            <span className="text-xs text-muted-foreground shrink-0">
+                                              {formatDuration(lesson.duration)}
+                                            </span>
+                                          )}
+                                        </div>
+                                      </Link>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </AccordionContent>
+                          </AccordionItem>
+                        ))}
+                      </Accordion>
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+          </div>
         </div>
       </div>
+
+      {/* Reset Progress Confirmation Dialog */}
+      <AlertDialog open={showResetDialog} onOpenChange={setShowResetDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <AlertTriangle className="w-5 h-5 text-destructive" />
+              Resetar Progresso do Curso
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Tem certeza que deseja resetar todo o progresso deste curso? 
+              Esta ação irá apagar todas as lições marcadas como concluídas e não pode ser desfeita.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleResetProgress}
+              disabled={resetProgressMutation.isPending}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {resetProgressMutation.isPending ? "Resetando..." : "Sim, Resetar"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </SimpleLayout>
   );
 }

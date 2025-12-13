@@ -5,6 +5,7 @@ import { publicProcedure, router } from "./_core/trpc";
 import { 
   getAllCourses, 
   getCourseById, 
+  getCourseMetadata,
   getLessonsByCourse,
   getLessonsWithDetails, 
   getLessonById, 
@@ -13,9 +14,12 @@ import {
   upsertUser, 
   getUserByOpenId,
   getUserProgressByCourse,
+  getAllUserProgress,
   getUserProgressByLesson,
   upsertUserProgress,
-  toggleLessonCompletion
+  toggleLessonCompletion,
+  getCourseProgressStats,
+  resetCourseProgress
 } from "./db";
 import { z } from "zod";
 import { completeGoogleOAuth, getGoogleAuthUrl } from "./google-oauth";
@@ -104,10 +108,32 @@ export const appRouter = router({
       .query(async ({ input }) => {
         return await getCourseById(input.courseId);
       }),
+    getMetadata: publicProcedure
+      .input(z.object({ courseId: z.string() }))
+      .query(async ({ input }) => {
+        return await getCourseMetadata(input.courseId);
+      }),
+    getMetadataForMultiple: publicProcedure
+      .input(z.object({ courseIds: z.array(z.string()) }))
+      .query(async ({ input }) => {
+        const metadataMap: Record<string, Awaited<ReturnType<typeof getCourseMetadata>>> = {};
+        await Promise.all(
+          input.courseIds.map(async (courseId) => {
+            metadataMap[courseId] = await getCourseMetadata(courseId);
+          })
+        );
+        return metadataMap;
+      }),
   }),
 
   // User Progress router
   progress: router({ 
+    getAll: publicProcedure.query(async ({ ctx }) => {
+      if (!ctx.user) {
+        return [];
+      }
+      return await getAllUserProgress(ctx.user.id);
+    }),
     getByCourse: publicProcedure
       .input(z.object({ courseId: z.string() }))
       .query(async ({ input, ctx }) => {
@@ -155,6 +181,43 @@ export const appRouter = router({
           throw new Error("User not authenticated");
         }
         await toggleLessonCompletion(ctx.user.id, input.lessonId, input.courseId, input.completed);
+        return { success: true };
+      }),
+    getStats: publicProcedure
+      .input(z.object({ courseId: z.string() }))
+      .query(async ({ input, ctx }) => {
+        if (!ctx.user) {
+          return {
+            totalLessons: 0,
+            completedLessons: 0,
+            progressPercentage: 0,
+            watchedDuration: 0,
+            totalDuration: 0,
+          };
+        }
+        return await getCourseProgressStats(ctx.user.id, input.courseId);
+      }),
+    getStatsForMultiple: publicProcedure
+      .input(z.object({ courseIds: z.array(z.string()) }))
+      .query(async ({ input, ctx }) => {
+        if (!ctx.user) {
+          return {};
+        }
+        const statsMap: Record<string, Awaited<ReturnType<typeof getCourseProgressStats>>> = {};
+        await Promise.all(
+          input.courseIds.map(async (courseId) => {
+            statsMap[courseId] = await getCourseProgressStats(ctx.user!.id, courseId);
+          })
+        );
+        return statsMap;
+      }),
+    reset: publicProcedure
+      .input(z.object({ courseId: z.string() }))
+      .mutation(async ({ input, ctx }) => {
+        if (!ctx.user) {
+          throw new Error("User not authenticated");
+        }
+        await resetCourseProgress(ctx.user.id, input.courseId);
         return { success: true };
       }),
   }),
