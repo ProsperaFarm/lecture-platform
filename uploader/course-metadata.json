@@ -303,42 +303,47 @@
                 "title": "Evolução de rebanho - Parte II",
                 "fileName": "Videoaula 07 Evolução de rebanho - Parte II.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=aBqL0m-OJRo"
+                "youtubeUrl": "https://www.youtube.com/watch?v=TDowpvC5zhA"
               },
               {
                 "id": "lesson-01-05-03",
                 "order": 3,
                 "title": "Evolução de rebanho - Parte III",
                 "fileName": "Videoaula 08 Evolução de rebanho - Parte III.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=t5dYqymBHVs"
               },
               {
                 "id": "lesson-01-05-04",
                 "order": 4,
                 "title": "Evolução de rebanho - Parte IV",
                 "fileName": "Videoaula 09 Evolução de rebanho - Parte IV.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=4pxzlvt_p_s"
               },
               {
                 "id": "lesson-01-05-05",
                 "order": 5,
                 "title": "Evolução de rebanho - Parte V",
                 "fileName": "Videoaula 10 Evolução de rebanho - Parte V.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=Z4ct6l_PpZQ"
               },
               {
                 "id": "lesson-01-05-06",
                 "order": 6,
                 "title": "Evolução de rebanho e planejamento alimentar",
                 "fileName": "Videoaula 11 Evolução de rebanho e planejamento alimentar.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=edvwj6EK3o8"
               },
               {
                 "id": "lesson-01-05-07",
                 "order": 7,
                 "title": "Recordando a evolução de rebanho",
                 "fileName": "Videoaula 12 Recordando a evolução de rebanho.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=rivo6b-1-2M"
               }
             ]
           }
@@ -360,28 +365,32 @@
                 "order": 1,
                 "title": "Indicadores reprodutivos",
                 "fileName": "Videoaula 01Indicadores reprodutivos.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=t8RczIJS1o4"
               },
               {
                 "id": "lesson-02-01-02",
                 "order": 2,
                 "title": "Perdas gestacionais em vacas leiteiras - Parte I",
                 "fileName": "Videoaula 02Perdas gestacionais em vacas leiteiras - Parte I.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=zVwlrpE2YrQ"
               },
               {
                 "id": "lesson-02-01-03",
                 "order": 3,
                 "title": "Perdas gestacionais em vacas leiteiras - Parte II",
                 "fileName": "Videoaula 03Perdas gestacionais em vacas leiteiras - Parte II.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=vJB5XbGrXxM"
               },
               {
                 "id": "lesson-02-01-04",
                 "order": 4,
                 "title": "Perdas gestacionais em vacas leiteiras - Parte III",
                 "fileName": "Videoaula 04Perdas gestacionais em vacas leiteiras - Parte III.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=j6VFaeVbYjg"
               },
               {
                 "id": "lesson-02-01-05",
