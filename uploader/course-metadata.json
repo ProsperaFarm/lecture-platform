@@ -217,7 +217,8 @@
                 "title": "Eficiência reprodutiva e rentabilidade",
                 "fileName": "Videoaula 10Eficiência reprodutiva e rentabilidade.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=VcJMZORX-mQ"
+                "youtubeUrl": "https://www.youtube.com/watch?v=VcJMZORX-mQ",
+                "duration": 541
               },
               {
                 "id": "lesson-01-03-11",
@@ -225,7 +226,8 @@
                 "title": "Exemplos de fazendas eficientes",
                 "fileName": "Videoaula 11Exemplos de fazendas eficientes.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=TLxiNm4eDno"
+                "youtubeUrl": "https://www.youtube.com/watch?v=TLxiNm4eDno",
+                "duration": 386
               },
               {
                 "id": "lesson-01-03-12",
@@ -233,7 +235,8 @@
                 "title": "Gravação ao vivo - Indicadores reprodutivos",
                 "fileName": "Gravação de aula online ao vivo - Indicadores reprodutivos em re.mp4",
                 "type": "live",
-                "youtubeUrl": "https://www.youtube.com/watch?v=_usP6hYEtqg"
+                "youtubeUrl": "https://www.youtube.com/watch?v=_usP6hYEtqg",
+                "duration": 7251
               }
             ]
           },
@@ -248,7 +251,8 @@
                 "title": "Planejando a produção forrageira",
                 "fileName": "Videoaula 01 Planejando a produção forrageira.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=L0_ZtmuBT2A"
+                "youtubeUrl": "https://www.youtube.com/watch?v=L0_ZtmuBT2A",
+                "duration": 994
               },
               {
                 "id": "lesson-01-04-02",
@@ -256,7 +260,8 @@
                 "title": "Particularidades forrageiras - Parte I",
                 "fileName": "Videoaula 02 Particularidades forrageiras - Parte I.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=pP43fTJ1ok0"
+                "youtubeUrl": "https://www.youtube.com/watch?v=pP43fTJ1ok0",
+                "duration": 900
               },
               {
                 "id": "lesson-01-04-03",
@@ -264,7 +269,8 @@
                 "title": "Particularidades forrageiras - Parte II",
                 "fileName": "Videoaula 03 Particularidades forrageiras - Parte II.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=YX4bgpFtF7E"
+                "youtubeUrl": "https://www.youtube.com/watch?v=YX4bgpFtF7E",
+                "duration": 910
               },
               {
                 "id": "lesson-01-04-04",
@@ -272,7 +278,8 @@
                 "title": "Otimizando a silagem de milho",
                 "fileName": "Videoaula 04 Otimizando a silagem de milho.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=xgZV_fdxQYU"
+                "youtubeUrl": "https://www.youtube.com/watch?v=xgZV_fdxQYU",
+                "duration": 966
               },
               {
                 "id": "lesson-01-04-05",
@@ -280,7 +287,8 @@
                 "title": "Otimizando a pastagem e o pastejo",
                 "fileName": "Videoaula 05 Otimizando a pastagem e o pastejo.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=RyzkujYC-Q0"
+                "youtubeUrl": "https://www.youtube.com/watch?v=RyzkujYC-Q0",
+                "duration": 903
               }
             ]
           },
@@ -295,7 +303,8 @@
                 "title": "Evolução de rebanho - Parte I",
                 "fileName": "Videoaula 06 Evolução de rebanho - Parte I.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=XvsqGTsQyk0"
+                "youtubeUrl": "https://www.youtube.com/watch?v=XvsqGTsQyk0",
+                "duration": 815
               },
               {
                 "id": "lesson-01-05-02",
@@ -303,7 +312,8 @@
                 "title": "Evolução de rebanho - Parte II",
                 "fileName": "Videoaula 07 Evolução de rebanho - Parte II.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=TDowpvC5zhA"
+                "youtubeUrl": "https://www.youtube.com/watch?v=TDowpvC5zhA",
+                "duration": 666
               },
               {
                 "id": "lesson-01-05-03",
@@ -311,7 +321,8 @@
                 "title": "Evolução de rebanho - Parte III",
                 "fileName": "Videoaula 08 Evolução de rebanho - Parte III.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=t5dYqymBHVs"
+                "youtubeUrl": "https://www.youtube.com/watch?v=t5dYqymBHVs",
+                "duration": 876
               },
               {
                 "id": "lesson-01-05-04",
@@ -319,7 +330,8 @@
                 "title": "Evolução de rebanho - Parte IV",
                 "fileName": "Videoaula 09 Evolução de rebanho - Parte IV.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=4pxzlvt_p_s"
+                "youtubeUrl": "https://www.youtube.com/watch?v=4pxzlvt_p_s",
+                "duration": 759
               },
               {
                 "id": "lesson-01-05-05",
@@ -327,7 +339,8 @@
                 "title": "Evolução de rebanho - Parte V",
                 "fileName": "Videoaula 10 Evolução de rebanho - Parte V.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=Z4ct6l_PpZQ"
+                "youtubeUrl": "https://www.youtube.com/watch?v=Z4ct6l_PpZQ",
+                "duration": 913
               },
               {
                 "id": "lesson-01-05-06",
@@ -335,7 +348,8 @@
                 "title": "Evolução de rebanho e planejamento alimentar",
                 "fileName": "Videoaula 11 Evolução de rebanho e planejamento alimentar.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=edvwj6EK3o8"
+                "youtubeUrl": "https://www.youtube.com/watch?v=edvwj6EK3o8",
+                "duration": 910
               },
               {
                 "id": "lesson-01-05-07",
@@ -343,7 +357,8 @@
                 "title": "Recordando a evolução de rebanho",
                 "fileName": "Videoaula 12 Recordando a evolução de rebanho.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=rivo6b-1-2M"
+                "youtubeUrl": "https://www.youtube.com/watch?v=rivo6b-1-2M",
+                "duration": 385
               }
             ]
           }
@@ -366,7 +381,8 @@
                 "title": "Indicadores reprodutivos",
                 "fileName": "Videoaula 01Indicadores reprodutivos.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=t8RczIJS1o4"
+                "youtubeUrl": "https://www.youtube.com/watch?v=t8RczIJS1o4",
+                "duration": 902
               },
               {
                 "id": "lesson-02-01-02",
@@ -374,7 +390,8 @@
                 "title": "Perdas gestacionais em vacas leiteiras - Parte I",
                 "fileName": "Videoaula 02Perdas gestacionais em vacas leiteiras - Parte I.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=zVwlrpE2YrQ"
+                "youtubeUrl": "https://www.youtube.com/watch?v=zVwlrpE2YrQ",
+                "duration": 763
               },
               {
                 "id": "lesson-02-01-03",
@@ -382,7 +399,8 @@
                 "title": "Perdas gestacionais em vacas leiteiras - Parte II",
                 "fileName": "Videoaula 03Perdas gestacionais em vacas leiteiras - Parte II.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=vJB5XbGrXxM"
+                "youtubeUrl": "https://www.youtube.com/watch?v=vJB5XbGrXxM",
+                "duration": 940
               },
               {
                 "id": "lesson-02-01-04",
@@ -390,7 +408,8 @@
                 "title": "Perdas gestacionais em vacas leiteiras - Parte III",
                 "fileName": "Videoaula 04Perdas gestacionais em vacas leiteiras - Parte III.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=j6VFaeVbYjg"
+                "youtubeUrl": "https://www.youtube.com/watch?v=j6VFaeVbYjg",
+                "duration": 570
               },
               {
                 "id": "lesson-02-01-05",
