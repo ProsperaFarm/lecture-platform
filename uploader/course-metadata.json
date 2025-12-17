@@ -416,7 +416,8 @@
                 "order": 5,
                 "title": "Impacto das doenças na reprodução de vacas leiteiras",
                 "fileName": "Videoaula 05Impacto das doenças na reprodução de vacas leiteiras.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=vlGyMRo8sMY"
               }
             ]
           },
@@ -430,49 +431,56 @@
                 "order": 1,
                 "title": "Desafios da observação de cio em vacas leiteiras",
                 "fileName": "Videoaula 01Desafios da observação de cio em vacas leiteiras.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=bKvdLkCYCiU"
               },
               {
                 "id": "lesson-02-02-02",
                 "order": 2,
                 "title": "Importância da observação de cio em fazendas",
                 "fileName": "Videoaula 02Importância da observação de cio em fazendas.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=-SDrhCFt_j4"
               },
               {
                 "id": "lesson-02-02-03",
                 "order": 3,
                 "title": "Sinais de cio",
                 "fileName": "Videoaula 03Sinais de cio.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=S1oh-Nj0EMc"
               },
               {
                 "id": "lesson-02-02-04",
                 "order": 4,
                 "title": "Ferramentas para auxiliar na detecção de estro - Parte I",
                 "fileName": "Videoaula 04Ferramentas para auxiliar na detecção de estro de va.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=iqfnov_WLTM"
               },
               {
                 "id": "lesson-02-02-05",
                 "order": 5,
                 "title": "Ferramentas para auxiliar na detecção de estro - Parte II",
                 "fileName": "Videoaula 05Ferramentas para auxiliar na detecção de estro de va.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=Gt7LvLmaqS4"
               },
               {
                 "id": "lesson-02-02-06",
                 "order": 6,
                 "title": "Ferramentas para auxiliar na detecção de estro - Parte III",
                 "fileName": "Videoaula 06Ferramentas para auxiliar na detecção de estro de va.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=Y9k--l_DI80"
               },
               {
                 "id": "lesson-02-02-07",
                 "order": 7,
                 "title": "Ferramentas para auxiliar na detecção de estro - Parte IV",
                 "fileName": "Videoaula 07Ferramentas para auxiliar na detecção de estro de va.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=v3gZwoia8Y8"
               }
             ]
           },
@@ -486,14 +494,16 @@
                 "order": 1,
                 "title": "Saúde uterina das vacas leiteiras - Parte I",
                 "fileName": "Videoaula 06Saúde uterina das vacas leiteiras - Parte I.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=dblYcePUHXA"
               },
               {
                 "id": "lesson-02-03-02",
                 "order": 2,
                 "title": "Saúde uterina das vacas leiteiras - Parte II",
                 "fileName": "Videoaula 07Saúde uterina das vacas leiteiras - Parte II.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=amM8CUzFZyg"
               },
               {
                 "id": "lesson-02-03-03",
