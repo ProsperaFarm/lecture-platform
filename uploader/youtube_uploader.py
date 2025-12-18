@@ -34,8 +34,11 @@ except ImportError:
     sys.exit(1)
 
 
-# Escopos necessários para upload de vídeos
-SCOPES = ['https://www.googleapis.com/auth/youtube.upload']
+# Escopos necessários para upload de vídeos e leitura de informações
+SCOPES = [
+    'https://www.googleapis.com/auth/youtube.upload',
+    'https://www.googleapis.com/auth/youtube.readonly'
+]
 TOKEN_FILE = 'youtube_token.json'
 CREDENTIALS_FILE = 'client_secret.json'
 DEFAULT_METADATA_FILE = 'course-metadata.json'

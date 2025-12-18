@@ -27,7 +27,11 @@ except ImportError:
 
 
 # Configurações
-SCOPES = ['https://www.googleapis.com/auth/youtube.readonly']
+# Usa ambos os scopes para compatibilidade com youtube_uploader.py
+SCOPES = [
+    'https://www.googleapis.com/auth/youtube.upload',
+    'https://www.googleapis.com/auth/youtube.readonly'
+]
 TOKEN_FILE = 'youtube_token.json'
 CREDENTIALS_FILE = 'client_secret.json'
 DEFAULT_METADATA_FILE = 'course-metadata.json'

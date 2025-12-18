@@ -417,7 +417,8 @@
                 "title": "Impacto das doenças na reprodução de vacas leiteiras",
                 "fileName": "Videoaula 05Impacto das doenças na reprodução de vacas leiteiras.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=vlGyMRo8sMY"
+                "youtubeUrl": "https://www.youtube.com/watch?v=vlGyMRo8sMY",
+                "duration": 803
               }
             ]
           },
@@ -432,7 +433,8 @@
                 "title": "Desafios da observação de cio em vacas leiteiras",
                 "fileName": "Videoaula 01Desafios da observação de cio em vacas leiteiras.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=bKvdLkCYCiU"
+                "youtubeUrl": "https://www.youtube.com/watch?v=bKvdLkCYCiU",
+                "duration": 1044
               },
               {
                 "id": "lesson-02-02-02",
@@ -440,7 +442,8 @@
                 "title": "Importância da observação de cio em fazendas",
                 "fileName": "Videoaula 02Importância da observação de cio em fazendas.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=-SDrhCFt_j4"
+                "youtubeUrl": "https://www.youtube.com/watch?v=-SDrhCFt_j4",
+                "duration": 455
               },
               {
                 "id": "lesson-02-02-03",
@@ -448,7 +451,8 @@
                 "title": "Sinais de cio",
                 "fileName": "Videoaula 03Sinais de cio.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=S1oh-Nj0EMc"
+                "youtubeUrl": "https://www.youtube.com/watch?v=S1oh-Nj0EMc",
+                "duration": 527
               },
               {
                 "id": "lesson-02-02-04",
@@ -456,7 +460,8 @@
                 "title": "Ferramentas para auxiliar na detecção de estro - Parte I",
                 "fileName": "Videoaula 04Ferramentas para auxiliar na detecção de estro de va.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=iqfnov_WLTM"
+                "youtubeUrl": "https://www.youtube.com/watch?v=iqfnov_WLTM",
+                "duration": 957
               },
               {
                 "id": "lesson-02-02-05",
@@ -464,7 +469,8 @@
                 "title": "Ferramentas para auxiliar na detecção de estro - Parte II",
                 "fileName": "Videoaula 05Ferramentas para auxiliar na detecção de estro de va.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=Gt7LvLmaqS4"
+                "youtubeUrl": "https://www.youtube.com/watch?v=Gt7LvLmaqS4",
+                "duration": 1102
               },
               {
                 "id": "lesson-02-02-06",
@@ -472,7 +478,8 @@
                 "title": "Ferramentas para auxiliar na detecção de estro - Parte III",
                 "fileName": "Videoaula 06Ferramentas para auxiliar na detecção de estro de va.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=Y9k--l_DI80"
+                "youtubeUrl": "https://www.youtube.com/watch?v=Y9k--l_DI80",
+                "duration": 595
               },
               {
                 "id": "lesson-02-02-07",
@@ -480,7 +487,8 @@
                 "title": "Ferramentas para auxiliar na detecção de estro - Parte IV",
                 "fileName": "Videoaula 07Ferramentas para auxiliar na detecção de estro de va.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=v3gZwoia8Y8"
+                "youtubeUrl": "https://www.youtube.com/watch?v=v3gZwoia8Y8",
+                "duration": 524
               }
             ]
           },
@@ -495,7 +503,8 @@
                 "title": "Saúde uterina das vacas leiteiras - Parte I",
                 "fileName": "Videoaula 06Saúde uterina das vacas leiteiras - Parte I.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=dblYcePUHXA"
+                "youtubeUrl": "https://www.youtube.com/watch?v=dblYcePUHXA",
+                "duration": 806
               },
               {
                 "id": "lesson-02-03-02",
@@ -503,28 +512,35 @@
                 "title": "Saúde uterina das vacas leiteiras - Parte II",
                 "fileName": "Videoaula 07Saúde uterina das vacas leiteiras - Parte II.mp4",
                 "type": "video",
-                "youtubeUrl": "https://www.youtube.com/watch?v=amM8CUzFZyg"
+                "youtubeUrl": "https://www.youtube.com/watch?v=amM8CUzFZyg",
+                "duration": 548
               },
               {
                 "id": "lesson-02-03-03",
                 "order": 3,
                 "title": "Como reduzir o anestro em vacas leiteiras",
                 "fileName": "Videoaula 08Como reduzir o anestro em vacas leiteiras.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=ExCfo04fcUM",
+                "duration": 801
               },
               {
                 "id": "lesson-02-03-04",
                 "order": 4,
                 "title": "Efeitos do estresse térmico na reprodução",
                 "fileName": "Videoaula 09Efeitos do estresse térmico na reprodução de vacas l.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=mjsWl_R3SDM",
+                "duration": 975
               },
               {
                 "id": "lesson-02-03-05",
                 "order": 5,
                 "title": "Seleção genética e fertilidade",
                 "fileName": "Videoaula 10Seleção genética e fertilidade.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=zHOHWl9Ls-c",
+                "duration": 663
               }
             ]
           },
@@ -538,42 +554,54 @@
                 "order": 1,
                 "title": "Rotinas reprodutivas em fazendas leiteiras - Parte I",
                 "fileName": "Videoaula 08Rotinas reprodutivas em fazendas leiteiras - Parte I.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=GkGLrMs5gOM",
+                "duration": 969
               },
               {
                 "id": "lesson-02-04-02",
                 "order": 2,
                 "title": "Rotinas reprodutivas em fazendas leiteiras - Parte II",
                 "fileName": "Videoaula 09Rotinas reprodutivas em fazendas leiteiras - Parte I.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=2gHGQcmbzzI",
+                "duration": 938
               },
               {
                 "id": "lesson-02-04-03",
                 "order": 3,
                 "title": "Rotinas reprodutivas em fazendas leiteiras - Parte III",
                 "fileName": "Videoaula 10Rotinas reprodutivas em fazendas leiteiras - Parte I.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=VggPTHSAhzU",
+                "duration": 839
               },
               {
                 "id": "lesson-02-04-04",
                 "order": 4,
                 "title": "Considerações finais - Estratégias de rotinas reprodutivas",
                 "fileName": "Videoaula 11Considerações finais - Estratégias de rotinas reprod.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=IQK-wJCtFyA",
+                "duration": 384
               },
               {
                 "id": "lesson-02-04-05",
                 "order": 5,
                 "title": "Gravação ao vivo - Busca da eficiência produtiva",
                 "fileName": "Gravação de aula online ao vivo - Busca da eficiência produtiva.mp4",
-                "type": "live"
+                "type": "live",
+                "youtubeUrl": "https://www.youtube.com/watch?v=obuXv2-BEbk",
+                "duration": 5920
               },
               {
                 "id": "lesson-02-04-06",
                 "order": 6,
                 "title": "Gravação ao vivo - Busca da eficiência produtiva (2)",
                 "fileName": "Gravação de aula online ao vivo - Busca da eficiência produtiva copy.mp4",
-                "type": "live"
+                "type": "live",
+                "youtubeUrl": "https://www.youtube.com/watch?v=Xd_eVRUj_RU",
+                "duration": 7679
               }
             ]
           }
@@ -595,7 +623,9 @@
                 "order": 1,
                 "title": "Importância do planejamento e custos da recria",
                 "fileName": "Videoaula 01 Importância do planejamento e custos da recria.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=_oc1tP7AZbQ",
+                "duration": 979
               },
               {
                 "id": "lesson-03-01-02",
