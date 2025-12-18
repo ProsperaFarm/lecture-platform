@@ -116,6 +116,107 @@ python youtube_uploader.py --videos-dir /path/to/videos --max-uploads 0
 tail -f upload.log
 ```
 
+## 🌍 Atualizar Idioma dos Vídeos
+
+O script `update_youtube_language.py` atualiza os metadados de idioma de vídeos já enviados para o YouTube. Use este script se você adicionou o campo `language` ao `course-metadata.json` após os uploads.
+
+### Pré-requisitos
+
+1. **Vídeos já devem estar no YouTube**: O script só funciona para vídeos que já têm `youtubeUrl` no JSON
+2. **Campo language no JSON**: O curso deve ter o campo `language` (ex: "pt-BR", "en", "es")
+3. **Mesmas credenciais OAuth**: Use o mesmo `client_secret.json` do uploader
+4. **Escopo OAuth correto**: O script requer o escopo `youtube.force-ssl` para atualizar metadados
+
+**⚠️ Importante - Re-autenticação necessária:**
+Se você já tem um token (`youtube_token.json`) criado com o script de upload, você precisará deletá-lo e re-autenticar para obter o escopo correto:
+
+```bash
+rm youtube_token.json
+python update_youtube_language.py
+```
+
+Isso abrirá o navegador para você autorizar o novo escopo `youtube.force-ssl`, que é necessário para atualizar metadados de vídeos existentes.
+
+### Uso
+
+#### Básico (arquivo padrão)
+```bash
+cd uploader
+source venv/bin/activate
+python update_youtube_language.py
+```
+
+#### Modo Dry-Run (simula sem fazer alterações)
+```bash
+python update_youtube_language.py --dry-run
+```
+
+#### Com arquivo customizado
+```bash
+python update_youtube_language.py --metadata-file meu-curso.json
+```
+
+### Parâmetros
+
+| Parâmetro | Descrição | Padrão |
+|-----------|-----------|--------|
+| `--metadata-file` | Arquivo JSON com metadados do curso | `course-metadata.json` |
+| `--credentials` | Arquivo de credenciais OAuth 2.0 | `client_secret.json` |
+| `--dry-run` | Simula atualizações sem fazer alterações | `false` |
+
+### O que o Script Faz
+
+1. **Autentica** com YouTube API (usa token salvo ou pede login)
+2. **Carrega** o arquivo de metadados
+3. **Identifica** vídeos com `youtubeUrl` e `language` disponível
+4. **Atualiza** metadados de idioma (`defaultLanguage` e `defaultAudioLanguage`) via YouTube API
+5. **Exibe** progresso e estatísticas
+
+### Exemplo de Saída
+
+```
+======================================================================
+🌍 YouTube Video Language Updater
+======================================================================
+
+✅ Autenticado com sucesso!
+
+📚 Curso: Gestão de Fazendas de Gado de Leite
+📹 Total de vídeos: 236
+
+📋 Vídeos encontrados: 39
+🚀 Iniciando atualização...
+
+[1/39] lesson-01-01-01: Boas-vindas e orientações...
+   Video ID: EeJz6PDhlb0
+   Idioma: pt-BR
+   ✅ Idioma atualizado: pt-BR
+
+======================================================================
+📊 RESUMO
+======================================================================
+✅ Sucessos: 39
+❌ Falhas: 0
+📈 Total processado: 39
+======================================================================
+```
+
+### Limites da API
+
+- **Custo por atualização**: ~50 unidades de quota
+- **Recomendação**: Execute em lotes se tiver muitos vídeos
+- O script aguarda 1 segundo entre cada atualização para evitar rate limiting
+
+### Escopos OAuth
+
+O script usa os seguintes escopos:
+- `https://www.googleapis.com/auth/youtube.force-ssl`: Necessário para atualizar metadados de vídeos existentes
+- `https://www.googleapis.com/auth/youtube.readonly`: Permite ler informações dos vídeos
+
+**Nota:** O escopo `youtube.force-ssl` é diferente do `youtube.upload` usado pelo script de upload. Se você já autenticou com o script de upload, precisará re-autenticar para obter este escopo.
+
+---
+
 ## ⏱️ Buscar Durações dos Vídeos
 
 O script `fetch_durations.py` busca automaticamente as durações dos vídeos já enviados para o YouTube e atualiza o `course-metadata.json` com o campo `duration` (em segundos).
@@ -256,6 +357,7 @@ Para aumentar a cota, solicite no Google Cloud Console.
 uploader/
 ├── youtube_uploader.py          # Script de upload para YouTube
 ├── fetch_durations.py           # Script para buscar durações dos vídeos
+├── update_youtube_language.py  # Script para atualizar idioma dos vídeos
 ├── upload_daily.sh              # Script bash auxiliar
 ├── course-metadata.json         # Metadados (atualizado com URLs e durações)
 ├── client_secret.json           # Credenciais OAuth (você cria)
