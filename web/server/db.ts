@@ -1,4 +1,4 @@
-import { eq, and } from "drizzle-orm";
+import { eq, and, desc, gt } from "drizzle-orm";
 import { sql } from "drizzle-orm";
 import { drizzle as drizzleNeon } from "drizzle-orm/neon-http";
 import { drizzle as drizzleNode } from "drizzle-orm/node-postgres";
@@ -388,6 +388,40 @@ export async function getUserProgressByLesson(userId: number, lessonId: string):
     .limit(1);
   
   return result.length > 0 ? result[0] : undefined;
+}
+
+/**
+ * Get the last watched lesson for a user in a course
+ * Returns the lesson with the most recent watchedAt or updatedAt where lastWatchedPosition > 0
+ */
+export async function getLastWatchedLesson(userId: number, courseId: string): Promise<Lesson | null> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get last watched lesson: database not available");
+    return null;
+  }
+
+  // Find the most recent progress entry for this course where the user has watched something
+  const lastProgress = await db
+    .select()
+    .from(userProgress)
+    .where(
+      and(
+        eq(userProgress.userId, userId),
+        eq(userProgress.courseId, courseId),
+        gt(userProgress.lastWatchedPosition, 0) // Only lessons that were actually started
+      )
+    )
+    .orderBy(desc(userProgress.updatedAt)) // Most recently updated
+    .limit(1);
+
+  if (lastProgress.length === 0) {
+    return null;
+  }
+
+  // Get the lesson details
+  const lesson = await getLessonById(lastProgress[0].lessonId);
+  return lesson || null;
 }
 
 /**

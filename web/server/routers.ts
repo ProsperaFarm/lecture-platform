@@ -19,7 +19,8 @@ import {
   upsertUserProgress,
   toggleLessonCompletion,
   getCourseProgressStats,
-  resetCourseProgress
+  resetCourseProgress,
+  getLastWatchedLesson
 } from "./db";
 import { z } from "zod";
 import { completeGoogleOAuth, getGoogleAuthUrl } from "./google-oauth";
@@ -248,6 +249,14 @@ export const appRouter = router({
       .input(z.object({ lessonId: z.string() }))
       .query(async ({ input }) => {
         return await getPreviousLesson(input.lessonId);
+      }),
+    getLastWatched: publicProcedure
+      .input(z.object({ courseId: z.string() }))
+      .query(async ({ input, ctx }) => {
+        if (!ctx.user) {
+          return null;
+        }
+        return await getLastWatchedLesson(ctx.user.id, input.courseId);
       }),
   }),
 });
