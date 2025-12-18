@@ -67,19 +67,20 @@ async function seedDatabase() {
     // Insert or update course with totalDuration
     console.log('📝 Inserting course...');
     const courseResult = await client.query(
-      `INSERT INTO courses ("courseId", acronym, title, description, thumbnail, "totalVideos", "totalDuration", "createdAt", "updatedAt")
-       VALUES ($1, $2, $3, $4, $5, $6, $7, NOW(), NOW())
+      `INSERT INTO courses ("courseId", acronym, title, description, thumbnail, language, "totalVideos", "totalDuration", "createdAt", "updatedAt")
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW(), NOW())
        ON CONFLICT ("courseId") 
        DO UPDATE SET 
          acronym = EXCLUDED.acronym,
          title = EXCLUDED.title,
          description = EXCLUDED.description,
          thumbnail = EXCLUDED.thumbnail,
+         language = EXCLUDED.language,
          "totalVideos" = EXCLUDED."totalVideos",
          "totalDuration" = EXCLUDED."totalDuration",
          "updatedAt" = NOW()
        RETURNING id`,
-      [course.id, course.acronym, course.title, course.description, course.thumbnail, course.totalVideos, courseTotalDuration]
+      [course.id, course.acronym, course.title, course.description, course.thumbnail, course.language || null, course.totalVideos, courseTotalDuration]
     );
     
     console.log(`✅ Course inserted/updated (ID: ${courseResult.rows[0].id})`);
@@ -190,12 +191,13 @@ async function seedDatabase() {
           const lessonWithNav = allLessons.find(l => l.lessonId === lesson.id);
           
           await client.query(
-            `INSERT INTO lessons ("lessonId", "sectionId", "moduleId", "courseId", title, "youtubeUrl", type, duration, "order", "nextLessonId", "prevLessonId", "createdAt", "updatedAt")
-             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, NOW(), NOW())
+            `INSERT INTO lessons ("lessonId", "sectionId", "moduleId", "courseId", title, "youtubeUrl", type, language, duration, "order", "nextLessonId", "prevLessonId", "createdAt", "updatedAt")
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, NOW(), NOW())
              ON CONFLICT ("lessonId")
              DO UPDATE SET
                title = EXCLUDED.title,
                "youtubeUrl" = EXCLUDED."youtubeUrl",
+               language = EXCLUDED.language,
                type = EXCLUDED.type,
                duration = EXCLUDED.duration,
                "order" = EXCLUDED."order",
@@ -210,6 +212,7 @@ async function seedDatabase() {
               lesson.title, 
               lesson.youtubeUrl || null, 
               lesson.type,
+              lesson.language || course.language || null,
               lesson.duration || null,
               lesson.order,
               lessonWithNav.nextLessonId,
