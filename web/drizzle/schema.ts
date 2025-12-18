@@ -36,6 +36,7 @@ export const courses = pgTable("courses", {
   title: text("title").notNull(),
   description: text("description"),
   thumbnail: text("thumbnail"),
+  language: varchar("language", { length: 10 }), // ISO 639-1 language code (e.g., "pt-BR", "en", "es")
   totalVideos: integer("totalVideos").default(0),
   totalDuration: integer("totalDuration").default(0), // Total duration in seconds (sum of all lessons)
   createdAt: timestamp("createdAt").defaultNow().notNull(),
@@ -102,6 +103,7 @@ export const lessons = pgTable("lessons", {
   title: text("title").notNull(),
   youtubeUrl: text("youtubeUrl"),
   type: varchar("type", { length: 16 }).default("video"), // "video" or "live"
+  language: varchar("language", { length: 10 }), // ISO 639-1 language code (e.g., "pt-BR", "en", "es") - optional, falls back to course language
   duration: integer("duration"), // Duration in seconds (fetched from YouTube API)
   order: integer("order").notNull(), // Sequential order within section
   nextLessonId: varchar("nextLessonId", { length: 128 }), // Direct reference to next lesson

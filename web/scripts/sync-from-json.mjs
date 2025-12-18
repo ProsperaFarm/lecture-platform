@@ -59,17 +59,18 @@ async function syncDatabase() {
     // 1. Upsert course
     console.log('📝 Syncing course...');
     const courseResult = await client.query(
-      `INSERT INTO courses ("courseId", acronym, title, description, "totalVideos", "createdAt", "updatedAt")
-       VALUES ($1, $2, $3, $4, $5, NOW(), NOW())
+      `INSERT INTO courses ("courseId", acronym, title, description, language, "totalVideos", "createdAt", "updatedAt")
+       VALUES ($1, $2, $3, $4, $5, $6, NOW(), NOW())
        ON CONFLICT ("courseId") 
        DO UPDATE SET 
          acronym = EXCLUDED.acronym,
          title = EXCLUDED.title,
          description = EXCLUDED.description,
+         language = EXCLUDED.language,
          "totalVideos" = EXCLUDED."totalVideos",
          "updatedAt" = NOW()
        RETURNING id`,
-      [course.id, course.acronym, course.title, course.description, course.totalVideos]
+      [course.id, course.acronym, course.title, course.description, course.language || null, course.totalVideos]
     );
     
     console.log(`✅ Course synced (ID: ${courseResult.rows[0].id})\n`);
@@ -108,9 +109,9 @@ async function syncDatabase() {
             `INSERT INTO lessons (
               "lessonId", "courseId", "moduleId", 
               "sectionId", title, "youtubeUrl", 
-              type, duration, "order", "createdAt", "updatedAt"
+              type, language, duration, "order", "createdAt", "updatedAt"
             )
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, NOW(), NOW())
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, NOW(), NOW())
             ON CONFLICT ("lessonId")
             DO UPDATE SET
               "courseId" = EXCLUDED."courseId",
@@ -119,6 +120,7 @@ async function syncDatabase() {
               title = EXCLUDED.title,
               "youtubeUrl" = COALESCE(EXCLUDED."youtubeUrl", lessons."youtubeUrl"),
               type = EXCLUDED.type,
+              language = COALESCE(EXCLUDED.language, lessons.language),
               duration = COALESCE(EXCLUDED.duration, lessons.duration),
               "order" = EXCLUDED."order",
               "updatedAt" = NOW()`,
@@ -130,6 +132,7 @@ async function syncDatabase() {
               lesson.title,
               lesson.youtubeUrl || null,
               lesson.type || 'video',
+              lesson.language || course.language || null,
               durationValue,
               lesson.order
             ]

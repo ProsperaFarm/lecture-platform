@@ -186,18 +186,26 @@ class YouTubeUploader:
             title = self._build_title(lesson)
             description = self._build_description(lesson)
             tags = self._build_tags(lesson)
+            language = self._get_language(lesson)
             
             # Limita título a 100 caracteres (limite do YouTube)
             if len(title) > 100:
                 title = title[:97] + "..."
             
+            snippet = {
+                'title': title,
+                'description': description,
+                'tags': tags,
+                'categoryId': '27'  # Education
+            }
+            
+            # Adiciona idioma se disponível
+            if language:
+                snippet['defaultLanguage'] = language
+                snippet['defaultAudioLanguage'] = language
+            
             body = {
-                'snippet': {
-                    'title': title,
-                    'description': description,
-                    'tags': tags,
-                    'categoryId': '27'  # Education
-                },
+                'snippet': snippet,
                 'status': {
                     'privacyStatus': 'unlisted',  # Unlisted como solicitado
                     'selfDeclaredMadeForKids': False
@@ -335,6 +343,22 @@ class YouTubeUploader:
             tags.append('aula ao vivo')
         
         return tags
+    
+    def _get_language(self, lesson: Dict) -> Optional[str]:
+        """
+        Obtém o idioma do vídeo
+        Prioridade: lesson.language > course.language
+        Retorna código ISO 639-1 (ex: 'pt-BR', 'en', 'es')
+        """
+        # Primeiro tenta obter do lesson
+        if lesson.get('language'):
+            return lesson['language']
+        
+        # Se não tiver no lesson, usa o do course
+        if self.metadata and self.metadata.get('course', {}).get('language'):
+            return self.metadata['course']['language']
+        
+        return None
     
     def _format_size(self, size_bytes: int) -> str:
         """Formata tamanho de arquivo"""

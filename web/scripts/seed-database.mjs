@@ -55,17 +55,18 @@ async function seedDatabase() {
     // 1. Insert or update course
     console.log('📝 Inserting course...');
     const courseResult = await client.query(
-      `INSERT INTO courses ("courseId", acronym, title, description, "totalVideos", "createdAt", "updatedAt")
-       VALUES ($1, $2, $3, $4, $5, NOW(), NOW())
+      `INSERT INTO courses ("courseId", acronym, title, description, language, "totalVideos", "createdAt", "updatedAt")
+       VALUES ($1, $2, $3, $4, $5, $6, NOW(), NOW())
        ON CONFLICT ("courseId") 
        DO UPDATE SET 
          acronym = EXCLUDED.acronym,
          title = EXCLUDED.title,
          description = EXCLUDED.description,
+         language = EXCLUDED.language,
          "totalVideos" = EXCLUDED."totalVideos",
          "updatedAt" = NOW()
        RETURNING id`,
-      [course.id, course.acronym, course.title, course.description, course.totalVideos]
+      [course.id, course.acronym, course.title, course.description, course.language || null, course.totalVideos]
     );
     
     console.log(`✅ Course inserted/updated (ID: ${courseResult.rows[0].id})\n`);
@@ -86,9 +87,9 @@ async function seedDatabase() {
             `INSERT INTO lessons (
               "lessonId", "courseId", "moduleId", 
               "sectionId", title, "youtubeUrl", 
-              type, "order", "createdAt", "updatedAt"
+              type, language, "order", "createdAt", "updatedAt"
             )
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW(), NOW())
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, NOW(), NOW())
             ON CONFLICT ("lessonId")
             DO UPDATE SET
               "courseId" = EXCLUDED."courseId",
@@ -97,6 +98,7 @@ async function seedDatabase() {
               title = EXCLUDED.title,
               "youtubeUrl" = EXCLUDED."youtubeUrl",
               type = EXCLUDED.type,
+              language = EXCLUDED.language,
               "order" = EXCLUDED."order",
               "updatedAt" = NOW()`,
             [
@@ -107,6 +109,7 @@ async function seedDatabase() {
               lesson.title,
               lesson.youtubeUrl || null,
               lesson.type || 'video',
+              lesson.language || course.language || null,
               lesson.order
             ]
           );
