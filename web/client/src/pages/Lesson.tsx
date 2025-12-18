@@ -113,6 +113,7 @@ export default function LessonPage() {
               courseId={courseId}
               courseTitle={course.title}
               lessonTitle={lesson.title}
+              language={lesson.language || course.language || null}
               prevLessonId={prevLesson?.lessonId || null}
               prevLessonTitle={prevLesson?.title || null}
               nextLessonId={nextLesson?.lessonId || null}

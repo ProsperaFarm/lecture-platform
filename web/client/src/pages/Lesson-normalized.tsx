@@ -99,8 +99,11 @@ export default function LessonPage() {
           {lesson.youtubeUrl ? (
             <PlyrVideoPlayer 
               youtubeUrl={lesson.youtubeUrl}
+              lessonId={lesson.lessonId}
+              courseId={courseId || ""}
               courseTitle={course.title}
               lessonTitle={lesson.title}
+              language={lesson.language || course.language || null}
             />
           ) : (
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-muted/30 text-center p-8">

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { GraduationCap, Play, BookOpen, ChevronLeft, ChevronRight } from "lucide-react";
 import { trpc } from "@/lib/trpc";
+import { getLanguageName } from "@/lib/language";
 
 interface PlyrVideoPlayerProps {
   youtubeUrl: string;
@@ -10,6 +11,7 @@ interface PlyrVideoPlayerProps {
   courseTitle?: string;
   lessonTitle?: string;
   moduleTitle?: string;
+  language?: string | null;
   prevLessonId?: string | null;
   prevLessonTitle?: string | null;
   nextLessonId?: string | null;
@@ -24,6 +26,7 @@ export function PlyrVideoPlayer({
   courseTitle = "",
   lessonTitle = "",
   moduleTitle = "",
+  language = null,
   prevLessonId = null,
   prevLessonTitle = null,
   nextLessonId = null,
@@ -343,9 +346,16 @@ export function PlyrVideoPlayer({
                   <div className="flex items-center gap-2">
                     <BookOpen className={`text-green-400 flex-shrink-0 ${isFullscreen ? 'w-5 h-5' : 'w-4 h-4'}`} />
                     <div className="flex-1 min-w-0">
-                      <p className={`text-white/60 uppercase tracking-wide ${isFullscreen ? 'text-xs' : 'text-xs'}`}>
-                        Curso
-                      </p>
+                      <div className="flex items-center gap-2">
+                        <p className={`text-white/60 uppercase tracking-wide ${isFullscreen ? 'text-xs' : 'text-xs'}`}>
+                          Curso
+                        </p>
+                        {language && getLanguageName(language) && (
+                          <span className={`text-white/60 ${isFullscreen ? 'text-xs' : 'text-xs'}`}>
+                            • {getLanguageName(language)}
+                          </span>
+                        )}
+                      </div>
                       <p className={`text-white font-semibold truncate ${isFullscreen ? 'text-base' : 'text-sm'}`}>
                         {courseTitle}
                       </p>
