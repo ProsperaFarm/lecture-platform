@@ -633,28 +633,36 @@
                 "order": 2,
                 "title": "Iniciando os cuidados com a bezerra",
                 "fileName": "Videoaula 02 - Iniciando os cuidados com a bezerra.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=lF7MhNmOvcA",
+                "duration": 763
               },
               {
                 "id": "lesson-03-01-03",
                 "order": 3,
                 "title": "Fases do parto e especificação da maternidade",
                 "fileName": "Videoaula 03 - Fases do parto e especificação da maternidade.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=pkdRA6qR7bo",
+                "duration": 826
               },
               {
                 "id": "lesson-03-01-04",
                 "order": 4,
                 "title": "Resfriamento térmico no período seco",
                 "fileName": "Videoaula 04 - Resfriamento térmico no período seco.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=8av7GTKMUgo",
+                "duration": 307
               },
               {
                 "id": "lesson-03-01-05",
                 "order": 5,
                 "title": "Manejo de parto no composto",
                 "fileName": "Vídeo complementar - Manejo de parto no composto.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=MEiJECYcVrQ",
+                "duration": 298
               }
             ]
           },
@@ -668,35 +676,45 @@
                 "order": 1,
                 "title": "Colostragem",
                 "fileName": "Videoaula 05 - Colostragem.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=GsHQH2Vlbi8",
+                "duration": 748
               },
               {
                 "id": "lesson-03-02-02",
                 "order": 2,
                 "title": "Qualidade do colostro",
                 "fileName": "Videoaula 06 - Qualidade do colostro.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=ifi8HtoiYJA",
+                "duration": 807
               },
               {
                 "id": "lesson-03-02-03",
                 "order": 3,
                 "title": "Avaliando a eficiência de colostragem",
                 "fileName": "Videoaula 07 - Avaliando a eficiência de colostragem.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=b2TZzxl2FV8",
+                "duration": 499
               },
               {
                 "id": "lesson-03-02-04",
                 "order": 4,
                 "title": "Como avaliar a qualidade do colostro",
                 "fileName": "Como avaliar a qualidade do colostro.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=NmMoEzxP9eg",
+                "duration": 98
               },
               {
                 "id": "lesson-03-02-05",
                 "order": 5,
                 "title": "Monitorando a eficiência da colostragem",
                 "fileName": "Monitorando a eficiência da colostragem.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=1td-NezHw6Q",
+                "duration": 294
               }
             ]
           },
@@ -710,7 +728,9 @@
                 "order": 1,
                 "title": "Trato gastrointestinal de bovinos jovens",
                 "fileName": "Videoaula 08 - Trato gastrointestinal de bovinos jovens.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=BVUfLTGd1ic",
+                "duration": 892
               },
               {
                 "id": "lesson-03-03-02",
