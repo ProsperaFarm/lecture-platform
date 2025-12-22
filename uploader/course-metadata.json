@@ -737,42 +737,54 @@
                 "order": 2,
                 "title": "Dieta líquida - Alimentos",
                 "fileName": "Videoaula 09 - Dieta líquida - Alimentos.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=c5ZY_4Sotpc",
+                "duration": 1065
               },
               {
                 "id": "lesson-03-03-03",
                 "order": 3,
                 "title": "Dieta líquida - Métodos de fornecimento",
                 "fileName": "Videoaula 10 - Dieta líquida - Métodos de fornecimento.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=RyBBp6Qg260",
+                "duration": 808
               },
               {
                 "id": "lesson-03-03-04",
                 "order": 4,
                 "title": "Dieta sólida",
                 "fileName": "Videoaula 11 - Dieta sólida.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=twxY1uvLeRA",
+                "duration": 878
               },
               {
                 "id": "lesson-03-03-05",
                 "order": 5,
                 "title": "Desmame",
                 "fileName": "Videoaula 12 - Desmame.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=fokoTtVCxms",
+                "duration": 534
               },
               {
                 "id": "lesson-03-03-06",
                 "order": 6,
                 "title": "Transição pós-desmame",
                 "fileName": "Videoaula 13 - Transição pós-desmame.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=DeG_ThY_F9c",
+                "duration": 720
               },
               {
                 "id": "lesson-03-03-07",
                 "order": 7,
                 "title": "Qualidade da dieta fornecida",
                 "fileName": "Videoaula 09Qualidade da dieta fornecida.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=-_diFQlel1k",
+                "duration": 307
               }
             ]
           },
@@ -786,21 +798,27 @@
                 "order": 1,
                 "title": "Instalações e manejos da recria",
                 "fileName": "Videoaula 14 Instalações e manejos da recria.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=fSEkiGiSsRw",
+                "duration": 756
               },
               {
                 "id": "lesson-03-04-02",
                 "order": 2,
                 "title": "Pontos de atenção para nutrição de novilhas",
                 "fileName": "Videoaula 15 - Pontos de atenção para nutrição de novilhas.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=NKLSQE7L01k",
+                "duration": 702
               },
               {
                 "id": "lesson-03-04-03",
                 "order": 3,
                 "title": "Indicadores zootécnicos em bezerras e novilhas",
                 "fileName": "Videoaula 16 - Indicadores zootécnicos em bezerras e novilhas.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=iyx8HYEBkn0",
+                "duration": 1050
               }
             ]
           },
@@ -814,7 +832,9 @@
                 "order": 1,
                 "title": "Fatores relacionados à saúde das bezerras",
                 "fileName": "Videoaula 01Fatores relacionados à saúde das bezerras.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=2VpIe0cq0FE",
+                "duration": 0
               },
               {
                 "id": "lesson-03-05-02",
