@@ -1,7 +1,7 @@
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, router } from "./_core/trpc";
+import { publicProcedure, router, adminProcedure } from "./_core/trpc";
 import { 
   getAllCourses, 
   getCourseById, 
@@ -20,7 +20,12 @@ import {
   toggleLessonCompletion,
   getCourseProgressStats,
   resetCourseProgress,
-  getLastWatchedLesson
+  getLastWatchedLesson,
+  getAllUsers,
+  updateUserAuthorization,
+  createUserInvite,
+  getUserInviteByEmail,
+  hasValidInvite
 } from "./db";
 import { z } from "zod";
 import { completeGoogleOAuth, getGoogleAuthUrl } from "./google-oauth";
@@ -257,6 +262,66 @@ export const appRouter = router({
           return null;
         }
         return await getLastWatchedLesson(ctx.user.id, input.courseId);
+      }),
+  }),
+  admin: router({
+    // Get all users
+    getAllUsers: adminProcedure.query(async () => {
+      return await getAllUsers();
+    }),
+    
+    // Update user authorization (authorize/block)
+    updateUserAuthorization: adminProcedure
+      .input(z.object({
+        userId: z.number(),
+        authorized: z.boolean().optional(),
+        blocked: z.boolean().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        await updateUserAuthorization(input.userId, {
+          authorized: input.authorized,
+          blocked: input.blocked,
+        });
+        return { success: true };
+      }),
+    
+    // Send invite (create invite and authorize user)
+    sendInvite: adminProcedure
+      .input(z.object({
+        email: z.string().email(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (!ctx.user) {
+          throw new Error("User not authenticated");
+        }
+        
+        // Check if user already exists
+        const existingInvite = await getUserInviteByEmail(input.email);
+        if (existingInvite && !existingInvite.used) {
+          throw new Error("An active invite already exists for this email");
+        }
+        
+        // Generate a unique token for the invite
+        const token = globalThis.crypto.randomUUID();
+        
+        // Create invite
+        await createUserInvite({
+          email: input.email,
+          invitedBy: ctx.user.id,
+          token: token,
+          used: false,
+        });
+        
+        // TODO: Send email with invite link
+        // For now, we'll just log it
+        console.log(`[Admin] Invite created for ${input.email} with token: ${token}`);
+        console.log(`[Admin] Invite URL would be: ${ENV.frontendUrl || 'https://your-domain.com'}/auth/invite/${token}`);
+        
+        return {
+          success: true,
+          token: token, // Return token for testing (remove in production)
+          message: "Invite created successfully. Email will be sent shortly.",
+        };
       }),
   }),
 });

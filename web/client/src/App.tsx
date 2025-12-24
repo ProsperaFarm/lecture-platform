@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import Lesson from "./pages/Lesson";
 import Login from "./pages/Login";
 import GoogleCallback from "./pages/GoogleCallback";
+import Admin from "./pages/Admin";
 
 
 function Router() {
@@ -20,6 +21,7 @@ function Router() {
       
       {/* Protected routes (authentication checked inside components) */}
       <Route path={"/"} component={Courses} />
+      <Route path={"/admin"} component={Admin} />
       <Route path={"/course/:id"} component={Home} />
       <Route path={"/course/:courseId/lesson/:lessonId"} component={Lesson} />
 

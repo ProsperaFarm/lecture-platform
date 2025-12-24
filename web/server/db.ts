@@ -5,7 +5,7 @@ import { drizzle as drizzleNode } from "drizzle-orm/node-postgres";
 import { neon } from "@neondatabase/serverless";
 import pkg from 'pg';
 const { Pool } = pkg;
-import { InsertUser, users, courses, lessons, modules, sections, userProgress, Course, Lesson, UserProgress, InsertUserProgress } from "../drizzle/schema";
+import { InsertUser, User, users, courses, lessons, modules, sections, userProgress, Course, Lesson, UserProgress, InsertUserProgress, userInvites, InsertUserInvite, UserInvite } from "../drizzle/schema";
 import { count } from "drizzle-orm";
 import { ENV } from './_core/env';
 
@@ -77,10 +77,32 @@ export async function upsertUser(user: InsertUser): Promise<void> {
     } else if (user.openId === ENV.ownerOpenId) {
       values.role = 'admin';
       updateSet.role = 'admin';
+      // Owner is always authorized
+      values.authorized = true;
+      updateSet.authorized = true;
+    }
+
+    // Handle authorized field
+    if (user.authorized !== undefined) {
+      values.authorized = user.authorized;
+      updateSet.authorized = user.authorized;
+    }
+
+    // Handle blocked field
+    if (user.blocked !== undefined) {
+      values.blocked = user.blocked;
+      updateSet.blocked = user.blocked;
     }
 
     if (!values.lastSignedIn) {
       values.lastSignedIn = new Date();
+    }
+
+    // Check if this is the first time user is signing in (set firstAccess)
+    const existingUser = await db.select().from(users).where(eq(users.openId, user.openId)).limit(1);
+    const isFirstLogin = existingUser.length > 0 && existingUser[0].firstAccess === null && user.lastSignedIn;
+    if (isFirstLogin && user.lastSignedIn) {
+      updateSet.firstAccess = user.lastSignedIn;
     }
 
     if (Object.keys(updateSet).length === 0) {
@@ -491,4 +513,140 @@ export async function resetCourseProgress(userId: number, courseId: string): Pro
       eq(userProgress.userId, userId),
       eq(userProgress.courseId, courseId)
     ));
+}
+
+// ==================== ADMIN FUNCTIONS ====================
+
+/**
+ * Get all users for admin panel
+ */
+export async function getAllUsers(): Promise<User[]> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get all users: database not available");
+    return [];
+  }
+
+  return await db.select().from(users).orderBy(desc(users.createdAt));
+}
+
+/**
+ * Update user authorization status (authorized/blocked)
+ */
+export async function updateUserAuthorization(
+  userId: number,
+  updates: { authorized?: boolean; blocked?: boolean }
+): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  const updateSet: Record<string, unknown> = {
+    updatedAt: new Date(),
+  };
+
+  if (updates.authorized !== undefined) {
+    updateSet.authorized = updates.authorized;
+  }
+
+  if (updates.blocked !== undefined) {
+    updateSet.blocked = updates.blocked;
+  }
+
+  await db.update(users).set(updateSet).where(eq(users.id, userId));
+}
+
+/**
+ * Create a user invite
+ */
+export async function createUserInvite(invite: InsertUserInvite): Promise<UserInvite> {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  const result = await db.insert(userInvites).values(invite).returning();
+  return result[0];
+}
+
+/**
+ * Get user invite by token
+ */
+export async function getUserInviteByToken(token: string): Promise<UserInvite | undefined> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get user invite: database not available");
+    return undefined;
+  }
+
+  const result = await db
+    .select()
+    .from(userInvites)
+    .where(eq(userInvites.token, token))
+    .limit(1);
+
+  return result[0];
+}
+
+/**
+ * Get user invite by email
+ */
+export async function getUserInviteByEmail(email: string): Promise<UserInvite | undefined> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get user invite: database not available");
+    return undefined;
+  }
+
+  const result = await db
+    .select()
+    .from(userInvites)
+    .where(eq(userInvites.email, email))
+    .limit(1);
+
+  return result[0];
+}
+
+/**
+ * Mark invite as used
+ */
+export async function markInviteAsUsed(inviteId: number, usedAt: Date): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  await db
+    .update(userInvites)
+    .set({
+      used: true,
+      usedAt: usedAt,
+      updatedAt: new Date(),
+    })
+    .where(eq(userInvites.id, inviteId));
+}
+
+/**
+ * Check if user email has a valid invite (not used, not expired)
+ */
+export async function hasValidInvite(email: string): Promise<boolean> {
+  const db = await getDb();
+  if (!db) {
+    return false;
+  }
+
+  const result = await db
+    .select()
+    .from(userInvites)
+    .where(
+      and(
+        eq(userInvites.email, email),
+        eq(userInvites.used, false),
+        sql`(${userInvites.expiresAt} IS NULL OR ${userInvites.expiresAt} > NOW())`
+      )
+    )
+    .limit(1);
+
+  return result.length > 0;
 }

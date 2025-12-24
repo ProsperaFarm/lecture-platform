@@ -270,14 +270,30 @@ class SDKServer {
     if (!user) {
       try {
         const userInfo = await this.getUserInfoWithJwt(sessionCookie ?? "");
+        
+        // Check if user has a valid invite
+        let shouldAuthorize = false;
+        if (userInfo.email) {
+          shouldAuthorize = await db.hasValidInvite(userInfo.email);
+        }
+        
         await db.upsertUser({
           openId: userInfo.openId,
           name: userInfo.name || null,
           email: userInfo.email ?? null,
           loginMethod: userInfo.loginMethod ?? userInfo.platform ?? null,
           lastSignedIn: signedInAt,
+          authorized: shouldAuthorize, // Authorize if they have a valid invite
         });
         user = await db.getUserByOpenId(userInfo.openId);
+        
+        // Mark invite as used if user was authorized via invite
+        if (shouldAuthorize && userInfo.email) {
+          const invite = await db.getUserInviteByEmail(userInfo.email);
+          if (invite && !invite.used) {
+            await db.markInviteAsUsed(invite.id, signedInAt);
+          }
+        }
       } catch (error) {
         console.error("[Auth] Failed to sync user from OAuth:", error);
         throw ForbiddenError("Failed to sync user info");
@@ -286,6 +302,16 @@ class SDKServer {
 
     if (!user) {
       throw ForbiddenError("User not found");
+    }
+
+    // Check if user is blocked
+    if (user.blocked) {
+      throw ForbiddenError("Your account has been blocked. Please contact an administrator.");
+    }
+
+    // Check if user is authorized (admins are always authorized)
+    if (!user.authorized && user.role !== 'admin') {
+      throw ForbiddenError("Your account is not authorized to access this platform. Please contact an administrator.");
     }
 
     await db.upsertUser({

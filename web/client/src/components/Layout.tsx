@@ -15,7 +15,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { BookOpen, ChevronLeft, ChevronRight, Menu, User, LogOut, Loader2 } from "lucide-react";
+import { BookOpen, ChevronLeft, ChevronRight, Menu, User, LogOut, Loader2, Shield } from "lucide-react";
 import { useState, useMemo, useEffect, useRef } from "react";
 import { Link, useLocation, useRoute } from "wouter";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -211,10 +211,15 @@ export function Layout({ children }: LayoutProps) {
 
   const TopBar = () => {
     const { user, logout } = useAuth();
+    const [, setLocation] = useLocation();
     
     const handleLogout = async () => {
       await logout();
       window.location.href = "/login";
+    };
+
+    const handleAdminClick = () => {
+      setLocation("/admin");
     };
     
     return (
@@ -254,6 +259,12 @@ export function Layout({ children }: LayoutProps) {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
+              {user?.role === "admin" && (
+                <DropdownMenuItem onClick={handleAdminClick} className="cursor-pointer">
+                  <Shield className="w-4 h-4 mr-2" />
+                  Área administrativa
+                </DropdownMenuItem>
+              )}
               <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
                 <LogOut className="w-4 h-4 mr-2" />
                 Sair

@@ -17,6 +17,9 @@ export const users = pgTable("users", {
   email: varchar("email", { length: 320 }),
   loginMethod: varchar("loginMethod", { length: 64 }),
   role: varchar("role", { length: 16 }).default("user").notNull(), // "user" or "admin"
+  authorized: boolean("authorized").default(false).notNull(), // Whether user is authorized to access the platform
+  blocked: boolean("blocked").default(false).notNull(), // Whether user is blocked from accessing
+  firstAccess: timestamp("firstAccess"), // When user first logged in (null if never logged in)
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
   lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),
@@ -222,3 +225,24 @@ export const videoTranscripts = pgTable("video_transcripts", {
 
 export type VideoTranscript = typeof videoTranscripts.$inferSelect;
 export type InsertVideoTranscript = typeof videoTranscripts.$inferInsert;
+
+/**
+ * User Invites table - manages email invitations for platform access
+ */
+export const userInvites = pgTable("user_invites", {
+  id: serial("id").primaryKey(),
+  email: varchar("email", { length: 320 }).notNull().unique(), // Email to invite
+  invitedBy: integer("invitedBy").notNull(), // ID of admin user who sent the invite
+  token: varchar("token", { length: 64 }).notNull().unique(), // Unique token for the invite
+  used: boolean("used").default(false).notNull(), // Whether the invite has been used
+  usedAt: timestamp("usedAt"), // When the invite was used (when user first logged in)
+  expiresAt: timestamp("expiresAt"), // Optional expiration date
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+}, (table) => ({
+  emailIdx: index("user_invites_email_idx").on(table.email),
+  tokenIdx: index("user_invites_token_idx").on(table.token),
+}));
+
+export type UserInvite = typeof userInvites.$inferSelect;
+export type InsertUserInvite = typeof userInvites.$inferInsert;
