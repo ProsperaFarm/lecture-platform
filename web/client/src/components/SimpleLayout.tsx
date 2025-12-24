@@ -1,4 +1,4 @@
-import { User, LogOut } from "lucide-react";
+import { User, LogOut, Shield } from "lucide-react";
 import { useAuth } from "@/_core/hooks/useAuth";
 import {
   DropdownMenu,
@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 
 interface SimpleLayoutProps {
   children: React.ReactNode;
@@ -15,10 +15,15 @@ interface SimpleLayoutProps {
 
 export function SimpleLayout({ children }: SimpleLayoutProps) {
   const { user, logout } = useAuth();
+  const [, setLocation] = useLocation();
   
   const handleLogout = async () => {
     await logout();
     window.location.href = "/login";
+  };
+
+  const handleAdminClick = () => {
+    setLocation("/admin");
   };
   
   return (
@@ -43,6 +48,12 @@ export function SimpleLayout({ children }: SimpleLayoutProps) {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
+              {user?.role === "admin" && (
+                <DropdownMenuItem onClick={handleAdminClick} className="cursor-pointer">
+                  <Shield className="w-4 h-4 mr-2" />
+                  Área administrativa
+                </DropdownMenuItem>
+              )}
               <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
                 <LogOut className="w-4 h-4 mr-2" />
                 Sair

@@ -81,6 +81,24 @@ export default function Home() {
     { enabled: !!courseId }
   );
 
+  // Fetch last watched lesson for this course (only if user is authenticated)
+  const { data: lastWatchedLesson, isLoading: lastWatchedLoading } = trpc.lessons.getLastWatched.useQuery(
+    { courseId: courseId || "" },
+    { enabled: !!courseId && !!user }
+  );
+  
+  // Debug log
+  useEffect(() => {
+    if (lastWatchedLesson) {
+      console.log('[Home] ✅ Last watched lesson found:', {
+        lessonId: lastWatchedLesson.lessonId,
+        title: lastWatchedLesson.title
+      });
+    } else if (!lastWatchedLoading) {
+      console.log('[Home] ❌ No last watched lesson found (query completed)');
+    }
+  }, [lastWatchedLesson, lastWatchedLoading]);
+
   // Get tRPC utils for query invalidation
   const utils = trpc.useUtils();
 
@@ -242,7 +260,23 @@ export default function Home() {
     if (courseStructure.modules.length > 0 && expandedModules.length === 0) {
       setExpandedModules(courseStructure.modules.map(m => m.id));
     }
-  }, [courseStructure.modules.length]);
+  }, [courseStructure.modules.length, expandedModules.length]);
+
+  // Calculate continue lesson (before returns)
+  const firstLesson = courseStructure.modules[0]?.sections[0]?.lessons[0];
+  const continueLesson = lastWatchedLesson || firstLesson;
+  
+  // Debug: log which lesson will be used
+  useEffect(() => {
+    if (continueLesson) {
+      console.log('[Home] Continue lesson:', {
+        lessonId: continueLesson.lessonId,
+        title: continueLesson.title,
+        isLastWatched: !!lastWatchedLesson,
+        isFirstLesson: !lastWatchedLesson
+      });
+    }
+  }, [continueLesson, lastWatchedLesson]);
 
   // Loading state
   if (courseLoading || lessonsLoading || isLoadingAuth) {
@@ -271,9 +305,6 @@ export default function Home() {
 
   // Use progress percentage from server stats
   const progressPercentage = courseProgressStats?.progressPercentage ?? 0;
-
-  // Get first lesson for "Start Course" button
-  const firstLesson = courseStructure.modules[0]?.sections[0]?.lessons[0];
 
   return (
     <SimpleLayout>
@@ -309,14 +340,20 @@ export default function Home() {
                   {course.description}
                 </p>
                 
-                {firstLesson && (
+                {continueLesson && (
                   <div className="flex flex-wrap gap-4 pt-4">
-                    <Link href={`/course/${course.courseId}/lesson/${firstLesson.lessonId}`}>
+                    <Link href={`/course/${course.courseId}/lesson/${continueLesson.lessonId}`}>
                       <Button size="lg" className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground border-none">
                         <PlayCircle className="w-5 h-5" />
-                        {progressPercentage > 0 ? 'Continuar Curso' : 'Começar Curso'}
+                        {lastWatchedLesson ? 'Continuar Curso' : progressPercentage > 0 ? 'Continuar Curso' : 'Começar Curso'}
                       </Button>
                     </Link>
+                    {/* Debug info - remove in production */}
+                    {process.env.NODE_ENV === 'development' && (
+                      <div className="text-xs text-white/60 mt-2">
+                        {lastWatchedLesson ? `Último vídeo: ${lastWatchedLesson.title}` : 'Usando primeira aula'}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

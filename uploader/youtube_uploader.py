@@ -242,7 +242,7 @@ class YouTubeUploader:
                         last_progress = progress
             
             video_id = response['id']
-            video_url = f"https://www.youtube.com/watch?v={video_id}"
+            video_url = f"https://www.youtube-nocookie.com/watch?v={video_id}"
             
             print(f"✅ Upload concluído!")
             print(f"   URL: {video_url}\n")

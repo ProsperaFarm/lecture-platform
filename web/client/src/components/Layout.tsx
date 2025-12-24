@@ -15,8 +15,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { BookOpen, ChevronLeft, ChevronRight, Menu, User, LogOut, Loader2 } from "lucide-react";
-import { useState, useMemo } from "react";
+import { BookOpen, ChevronLeft, ChevronRight, Menu, User, LogOut, Loader2, Shield } from "lucide-react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { Link, useLocation, useRoute } from "wouter";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
@@ -211,10 +211,15 @@ export function Layout({ children }: LayoutProps) {
 
   const TopBar = () => {
     const { user, logout } = useAuth();
+    const [, setLocation] = useLocation();
     
     const handleLogout = async () => {
       await logout();
       window.location.href = "/login";
+    };
+
+    const handleAdminClick = () => {
+      setLocation("/admin");
     };
     
     return (
@@ -254,6 +259,12 @@ export function Layout({ children }: LayoutProps) {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
+              {user?.role === "admin" && (
+                <DropdownMenuItem onClick={handleAdminClick} className="cursor-pointer">
+                  <Shield className="w-4 h-4 mr-2" />
+                  Área administrativa
+                </DropdownMenuItem>
+              )}
               <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
                 <LogOut className="w-4 h-4 mr-2" />
                 Sair
@@ -264,6 +275,41 @@ export function Layout({ children }: LayoutProps) {
       </div>
     );
   };
+
+  // Ref for current lesson element in sidebar
+  const currentLessonRef = useRef<HTMLDivElement | null>(null);
+  const scrollAreaRef = useRef<HTMLDivElement | null>(null);
+  const currentLessonId = paramsLesson?.lessonId;
+
+  // Scroll to current lesson when it changes
+  useEffect(() => {
+    if (currentLessonId && currentLessonRef.current && scrollAreaRef.current) {
+      // Small delay to ensure DOM is updated and accordions are expanded
+      setTimeout(() => {
+        const lessonElement = currentLessonRef.current;
+        if (lessonElement) {
+          // Find the scroll container (ScrollArea uses data-slot attribute)
+          const scrollContainer = scrollAreaRef.current?.querySelector('[data-slot="scroll-area-viewport"]') as HTMLElement;
+          if (scrollContainer) {
+            const containerRect = scrollContainer.getBoundingClientRect();
+            const elementRect = lessonElement.getBoundingClientRect();
+            const scrollTop = scrollContainer.scrollTop + (elementRect.top - containerRect.top) - (containerRect.height / 2);
+            scrollContainer.scrollTo({
+              top: Math.max(0, scrollTop),
+              behavior: 'smooth',
+            });
+            console.log('[Layout] ✅ Scrolled to current lesson:', currentLessonId);
+          } else {
+            // Fallback to scrollIntoView
+            lessonElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'center',
+            });
+          }
+        }
+      }, 300); // Increased delay to ensure accordions are expanded
+    }
+  }, [currentLessonId, courseStructure.modules]);
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full bg-sidebar border-r border-sidebar-border">
@@ -285,8 +331,9 @@ export function Layout({ children }: LayoutProps) {
         </Link>
       </div>
       
-      <ScrollArea className="flex-1 h-[calc(100vh-180px)]">
-        <div className="p-4 pb-8">
+      <div ref={scrollAreaRef} className="flex-1 h-[calc(100vh-180px)] overflow-hidden">
+        <ScrollArea className="h-full">
+          <div className="p-4 pb-8">
           <Accordion type="multiple" defaultValue={courseStructure.modules.map(m => m.id)} className="space-y-2">
             {courseStructure.modules.map((module) => (
               <AccordionItem key={module.id} value={module.id} className="border rounded-lg px-2">
@@ -335,7 +382,11 @@ export function Layout({ children }: LayoutProps) {
                         const isActive = location === `/course/${course.courseId}/lesson/${lesson.lessonId}`;
                         const isCompleted = progressMap.get(lesson.lessonId) || false;
                         return (
-                          <div key={lesson.lessonId} className="flex items-start gap-1.5">
+                          <div 
+                            key={lesson.lessonId} 
+                            ref={isActive ? currentLessonRef : null}
+                            className="flex items-start gap-1.5"
+                          >
                             <Checkbox
                               checked={isCompleted}
                               onCheckedChange={() => handleToggleCompletion(lesson.lessonId)}
@@ -383,8 +434,9 @@ export function Layout({ children }: LayoutProps) {
               </AccordionItem>
             ))}
           </Accordion>
-        </div>
-      </ScrollArea>
+          </div>
+        </ScrollArea>
+      </div>
     </div>
   );
 

@@ -266,26 +266,54 @@ class SDKServer {
     const signedInAt = new Date();
     let user = await db.getUserByOpenId(sessionUserId);
 
-    // If user not in DB, sync from OAuth server automatically
-    if (!user) {
+    // If user not in DB by openId, check if they exist by email (pending user)
+    if (!user && sessionUserId) {
       try {
         const userInfo = await this.getUserInfoWithJwt(sessionCookie ?? "");
-        await db.upsertUser({
-          openId: userInfo.openId,
-          name: userInfo.name || null,
-          email: userInfo.email ?? null,
-          loginMethod: userInfo.loginMethod ?? userInfo.platform ?? null,
-          lastSignedIn: signedInAt,
-        });
-        user = await db.getUserByOpenId(userInfo.openId);
-      } catch (error) {
+        
+        // Check if user exists by email (could be a pre-registered user)
+        let existingUserByEmail: User | undefined;
+        if (userInfo.email) {
+          existingUserByEmail = await db.getUserByEmail(userInfo.email);
+        }
+        
+        // If user exists by email but with different openId (pending user), update the openId
+        if (existingUserByEmail) {
+          if (existingUserByEmail.openId !== userInfo.openId) {
+            // Update the openId from pending to the real Google openId
+            await db.updateUserOpenId(existingUserByEmail.id, userInfo.openId);
+          }
+          user = await db.getUserByOpenId(userInfo.openId);
+        } else {
+          // User doesn't exist in database at all - reject access
+          throw ForbiddenError("Acesso não autorizado. Entre em contato com um administrador.");
+        }
+      } catch (error: any) {
+        if (error.message?.includes("Acesso não autorizado")) {
+          throw error; // Re-throw authorization errors
+        }
         console.error("[Auth] Failed to sync user from OAuth:", error);
         throw ForbiddenError("Failed to sync user info");
       }
     }
 
+    // If still no user, try to get it again
+    if (!user && sessionUserId) {
+      user = await db.getUserByOpenId(sessionUserId);
+    }
+
     if (!user) {
-      throw ForbiddenError("User not found");
+      throw ForbiddenError("Acesso não autorizado. Entre em contato com um administrador.");
+    }
+
+    // Check if user is blocked
+    if (user.blocked) {
+      throw ForbiddenError("Your account has been blocked. Please contact an administrator.");
+    }
+
+    // Check if user is authorized (admins are always authorized)
+    if (!user.authorized && user.role !== 'admin') {
+      throw ForbiddenError("Your account is not authorized to access this platform. Please contact an administrator.");
     }
 
     await db.upsertUser({

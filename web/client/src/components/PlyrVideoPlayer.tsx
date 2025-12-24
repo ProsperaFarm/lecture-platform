@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { GraduationCap, Play, BookOpen, ChevronLeft, ChevronRight } from "lucide-react";
+import { GraduationCap, Play, BookOpen, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { getLanguageName } from "@/lib/language";
 
@@ -44,9 +44,28 @@ export function PlyrVideoPlayer({
   const initialOverlayTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const hasShownInitialOverlay = useRef(false);
   const hasMarkedComplete = useRef(false); // Track if we've already marked this lesson as complete
+  
+  // State for next video auto-play overlay
+  const [showNextVideoOverlay, setShowNextVideoOverlay] = useState(false);
+  const [countdown, setCountdown] = useState(10);
+  const countdownIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Get tRPC utils for query invalidation
+  const utils = trpc.useUtils();
+  
   // Mutation to update progress
-  const updateProgress = trpc.progress.upsert.useMutation();
+  const updateProgress = trpc.progress.upsert.useMutation({
+    onSuccess: () => {
+      // Invalidate queries to refresh progress display
+      utils.progress.getByCourse.invalidate({ courseId });
+      utils.progress.getByLesson.invalidate({ lessonId });
+      utils.progress.getStats.invalidate({ courseId });
+      console.log(`[Progress] ✅ Progress updated for lesson ${lessonId}`);
+    },
+    onError: (error) => {
+      console.error(`[Progress] ❌ Failed to update progress for lesson ${lessonId}:`, error);
+    },
+  });
 
   // Extract YouTube video ID
   const getYoutubeId = (url: string): string | null => {
@@ -168,6 +187,24 @@ export function PlyrVideoPlayer({
         playerRef.current.on('playing', () => {
           setIsLoading(false);
           
+          // Save initial progress when video starts playing (marks lesson as started)
+          if (playerRef.current && playerRef.current.media) {
+            try {
+              const currentTime = Math.floor(playerRef.current.currentTime || 0);
+              if (!isNaN(currentTime) && currentTime >= 0) {
+                console.log(`[Progress] Video started playing - Saving initial progress: ${currentTime}s for lesson ${lessonId}`);
+                updateProgress.mutate({
+                  lessonId,
+                  courseId,
+                  completed: false,
+                  lastWatchedPosition: currentTime,
+                });
+              }
+            } catch (error) {
+              console.error('[Progress] Error saving initial progress:', error);
+            }
+          }
+          
           // Show overlay for 3 seconds only on FIRST play after loading
           if (!hasShownInitialOverlay.current) {
             hasShownInitialOverlay.current = true;
@@ -229,6 +266,64 @@ export function PlyrVideoPlayer({
             });
           }
         });
+
+        // Listen to video end event
+        playerRef.current.on('ended', () => {
+          console.log(`[Player] 🎬 Video ended for lesson ${lessonId}`);
+          
+          // Always mark as complete when video ends (even if already marked via timeupdate)
+          if (playerRef.current && playerRef.current.media) {
+            try {
+              const finalTime = Math.floor(playerRef.current.duration || 0);
+              console.log(`[Progress] ✅ Video ended - Marking lesson ${lessonId} as complete (duration: ${finalTime}s)`);
+              
+              hasMarkedComplete.current = true;
+              updateProgress.mutate({
+                lessonId,
+                courseId,
+                completed: true,
+                lastWatchedPosition: finalTime,
+              });
+            } catch (error) {
+              console.error('[Progress] Error marking lesson as complete:', error);
+            }
+          }
+
+          // Show next video overlay if there is a next lesson
+          if (nextLessonId && nextLessonTitle && onNavigate) {
+            console.log(`[Player] 📺 Showing next video overlay for: ${nextLessonTitle}`);
+            setShowNextVideoOverlay(true);
+            setCountdown(10);
+            
+            // Clear any existing interval
+            if (countdownIntervalRef.current) {
+              clearInterval(countdownIntervalRef.current);
+            }
+            
+            // Start countdown with proper closure
+            let currentCount = 10;
+            countdownIntervalRef.current = setInterval(() => {
+              currentCount--;
+              console.log(`[Player] ⏱️ Countdown: ${currentCount} seconds`);
+              setCountdown(currentCount);
+              
+              if (currentCount <= 0) {
+                // Clear interval and close overlay
+                if (countdownIntervalRef.current) {
+                  clearInterval(countdownIntervalRef.current);
+                  countdownIntervalRef.current = null;
+                }
+                setShowNextVideoOverlay(false);
+                
+                // Auto-navigate to next lesson
+                console.log(`[Player] 🚀 Auto-navigating to next lesson: ${nextLessonId}`);
+                onNavigate(nextLessonId);
+              }
+            }, 1000);
+          } else {
+            console.log(`[Player] ℹ️ No next lesson available - last video in course`);
+          }
+        });
       }
     };
 
@@ -269,8 +364,29 @@ export function PlyrVideoPlayer({
       if (initialOverlayTimeoutRef.current) {
         clearTimeout(initialOverlayTimeoutRef.current);
       }
+      
+      // Clear countdown interval
+      if (countdownIntervalRef.current) {
+        clearInterval(countdownIntervalRef.current);
+        countdownIntervalRef.current = null;
+      }
     };
-  }, [videoId]);
+  }, [videoId, lessonId, courseId, nextLessonId, nextLessonTitle, onNavigate]);
+  
+  // Reset refs and cleanup countdown when lesson changes
+  useEffect(() => {
+    // Reset completion tracking when lesson changes
+    hasMarkedComplete.current = false;
+    hasShownInitialOverlay.current = false;
+    
+    // Cleanup countdown
+    if (countdownIntervalRef.current) {
+      clearInterval(countdownIntervalRef.current);
+      countdownIntervalRef.current = null;
+    }
+    setShowNextVideoOverlay(false);
+    setCountdown(10);
+  }, [lessonId]);
 
   // Disable right-click
   const handleContextMenu = (e: React.MouseEvent) => {
@@ -451,6 +567,65 @@ export function PlyrVideoPlayer({
             </button>
           )}
         </>
+      )}
+
+      {/* Next Video Auto-Play Overlay */}
+      {showNextVideoOverlay && nextLessonId && nextLessonTitle && (
+        <div className={`absolute inset-0 z-[200] flex items-center justify-center ${isFullscreen ? 'bg-black/90' : 'bg-black/80'}`}>
+          <div className="bg-card border rounded-lg shadow-xl p-8 max-w-md mx-4 text-center space-y-6">
+            <div className="space-y-2">
+              <h3 className="text-2xl font-bold text-foreground">
+                Aula Concluída!
+              </h3>
+              <p className="text-muted-foreground">
+                Próxima aula começará em:
+              </p>
+              <div className="text-6xl font-bold text-primary my-4">
+                {countdown}
+              </div>
+              <div className="space-y-1">
+                <p className="text-sm text-muted-foreground">Próxima aula:</p>
+                <p className="text-lg font-semibold text-foreground">
+                  {nextLessonTitle}
+                </p>
+              </div>
+            </div>
+            
+            <div className="flex flex-col gap-3">
+              <button
+                onClick={() => {
+                  // Navigate immediately
+                  if (countdownIntervalRef.current) {
+                    clearInterval(countdownIntervalRef.current);
+                    countdownIntervalRef.current = null;
+                  }
+                  if (onNavigate && nextLessonId) {
+                    onNavigate(nextLessonId);
+                  }
+                  setShowNextVideoOverlay(false);
+                }}
+                className="px-6 py-3 bg-primary text-primary-foreground rounded-md font-semibold hover:bg-primary/90 transition-colors"
+              >
+                Assistir Agora
+              </button>
+              <button
+                onClick={() => {
+                  // Cancel auto-play
+                  if (countdownIntervalRef.current) {
+                    clearInterval(countdownIntervalRef.current);
+                    countdownIntervalRef.current = null;
+                  }
+                  setShowNextVideoOverlay(false);
+                  setCountdown(10);
+                }}
+                className="px-6 py-2 text-muted-foreground hover:text-foreground transition-colors flex items-center justify-center gap-2"
+              >
+                <X className="w-4 h-4" />
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
