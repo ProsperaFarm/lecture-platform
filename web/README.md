@@ -142,25 +142,38 @@ UPDATE users SET role = 'admin' WHERE id = <user_id>;
 
 #### Fluxo de Autorização
 
-1. **Primeiro Login:**
-   - Usuário faz login via Google OAuth
-   - Sistema verifica se há um convite válido para o email
-   - Se houver convite válido:
-     - Usuário é criado com `authorized = true`
-     - Convite é marcado como usado
-   - Se não houver convite:
-     - Usuário é criado com `authorized = false`
-     - Usuário não pode acessar a plataforma até ser autorizado
+**Importante:** Apenas usuários previamente cadastrados na plataforma podem acessá-la. Usuários não cadastrados receberão a mensagem "Acesso não autorizado".
 
-2. **Verificações no Login:**
+1. **Pré-cadastro de Usuários (via Admin):**
+   - Administrador acessa `/admin` e clica em "Incluir usuário"
+   - Insere nome e email do usuário
+   - Escolhe uma das opções:
+     - **"Enviar convite e adicionar"**: Cadastra o usuário e envia email de convite
+     - **"Apenas adicionar"**: Cadastra o usuário sem enviar email
+   - Usuário é criado no banco com:
+     - `authorized = true` (pode acessar a plataforma)
+     - `role = 'user'`
+     - `openId = 'pending-{email}'` (temporário, será atualizado no primeiro login)
+
+2. **Primeiro Login:**
+   - Usuário faz login via Google OAuth
+   - Sistema verifica se o usuário existe no banco por email
+   - Se usuário existe:
+     - `openId` temporário é atualizado para o real do Google
+     - Usuário pode acessar a plataforma normalmente
+   - Se usuário não existe:
+     - Acesso é negado com mensagem "Acesso não autorizado. Entre em contato com um administrador."
+
+3. **Verificações no Login:**
    - ✅ Usuário está autenticado? (tem sessão válida)
+   - ✅ Usuário existe no banco de dados?
    - ✅ Usuário está bloqueado? (`blocked = true`)
    - ✅ Usuário está autorizado? (`authorized = true` OU `role = 'admin'`)
 
-3. **Acesso Garantido:**
+4. **Acesso Garantido:**
    - Admins (`role = 'admin'`) sempre têm acesso, independente de `authorized`
    - Usuários com `authorized = true` e `blocked = false` têm acesso
-   - Usuários com convite válido são automaticamente autorizados no primeiro login
+   - Apenas usuários pré-cadastrados podem acessar a plataforma
 
 ### Área Administrativa
 
@@ -178,34 +191,175 @@ A área administrativa está disponível em `/admin` e pode ser acessada apenas 
    - **Bloquear:** Marca usuário como `blocked = true` e `authorized = false`
    - **Desbloquear:** Remove bloqueio e autoriza o usuário
 
-3. **Envio de Convites:**
-   - Enviar convite por email para novos usuários
-   - Convite cria registro na tabela `user_invites`
-   - Usuário com email do convite é automaticamente autorizado no primeiro login
+3. **Incluir Novo Usuário:**
+   - Admin acessa `/admin` e clica em "Incluir usuário"
+   - Insere nome e email do usuário
+   - Escolhe entre três ações:
+     - **"Enviar convite e adicionar"**: Cadastra o usuário e envia email de convite (usa template HTML)
+     - **"Apenas adicionar"**: Cadastra o usuário sem enviar email
+     - **"Cancelar"**: Aborta o processo
+   - Usuário é criado com `authorized = true` e pode acessar a plataforma imediatamente
 
-### Convites de Usuário
+### Template de Email de Convite
 
-O sistema de convites permite que administradores pré-autorizem usuários antes que eles façam login:
+O sistema utiliza um template HTML para envio de convites por email:
 
-1. **Criar Convite:**
-   - Admin acessa `/admin`
-   - Clica em "Enviar Convite"
-   - Insere o email do usuário
-   - Sistema cria registro em `user_invites` com token único
+- **Localização:** `web/server/templates/invite-email.html`
+- **Variáveis do template:**
+  - `{{USER_NAME}}`: Nome do usuário
+  - `{{LOGIN_URL}}`: URL de login da plataforma
 
-2. **Uso do Convite:**
-   - Quando usuário com o email do convite faz login pela primeira vez
-   - Sistema verifica se há convite válido (não usado, não expirado)
-   - Se válido: usuário é criado com `authorized = true`
-   - Convite é marcado como usado (`used = true`, `usedAt = now()`)
+O template pode ser personalizado editando o arquivo HTML. O serviço de email está localizado em `web/server/services/email.ts`.
 
-**Nota:** O envio de email de convites ainda não está implementado. Os convites são criados e o token é retornado na resposta da API. Você pode implementar o envio de email integrando com serviços como SendGrid, Resend ou AWS SES.
+### Configuração de Envio de Emails
+
+O sistema suporta dois provedores de email: **SMTP** e **Gmail API**. Escolha o provedor através da variável `EMAIL_PROVIDER`.
+
+#### Opção 1: SMTP Genérico (Recomendado para início)
+
+Configure um servidor SMTP qualquer (Gmail, Outlook, Mailgun, etc.):
+
+```bash
+EMAIL_PROVIDER=smtp
+EMAIL_FROM=noreply@prosperaacademy.com
+EMAIL_SMTP_HOST=smtp.gmail.com
+EMAIL_SMTP_PORT=587
+EMAIL_SMTP_SECURE=false
+EMAIL_SMTP_USER=seu-email@gmail.com
+EMAIL_SMTP_PASSWORD=sua-senha-de-app
+```
+
+**Para Gmail com SMTP:**
+1. Ative "Acesso a apps menos seguros" ou use uma "Senha de app" (https://myaccount.google.com/apppasswords)
+2. Configure `EMAIL_SMTP_HOST=smtp.gmail.com` e `EMAIL_SMTP_PORT=587`
+
+**Para outros provedores SMTP:**
+- **Outlook/Hotmail**: `smtp-mail.outlook.com:587`
+- **Mailgun**: Use as credenciais SMTP do seu domínio
+- **SendGrid**: Use as credenciais SMTP do SendGrid
+- **Amazon SES**: Configure SMTP credentials do SES
+
+#### Opção 2: Gmail API (Recomendado para produção)
+
+A Gmail API oferece maior confiabilidade e não requer senhas de app. Configure OAuth2:
+
+```bash
+EMAIL_PROVIDER=gmail_api
+EMAIL_FROM=noreply@prosperaacademy.com
+EMAIL_GMAIL_USER=seu-email@gmail.com
+EMAIL_GMAIL_CLIENT_ID=seu-client-id
+EMAIL_GMAIL_CLIENT_SECRET=seu-client-secret
+EMAIL_GMAIL_REFRESH_TOKEN=seu-refresh-token
+```
+
+**Configuração da Gmail API:**
+
+1. **Ative a Gmail API no Google Cloud Console:**
+   - Acesse: https://console.cloud.google.com/
+   - Selecione seu projeto (ou crie um novo)
+   - Vá em "APIs & Services" > "Library"
+   - Procure por "Gmail API" e clique em "Enable"
+
+2. **Configure OAuth 2.0 Credentials:**
+   - Vá em "APIs & Services" > "Credentials"
+   - Se você já tem credenciais OAuth 2.0 (usadas para login), pode reutilizar as mesmas
+   - Se não tiver, clique em "Create Credentials" > "OAuth client ID"
+   - Selecione "Web application"
+   - Adicione um "Authorized redirect URI":
+     - `https://developers.google.com/oauthplayground`
+   - Anote o **Client ID** e **Client Secret** gerados
+
+3. **Gere o Refresh Token usando OAuth Playground:**
+
+   **Passo a passo:**
+   
+   a. Acesse: https://developers.google.com/oauthplayground
+   
+   b. No canto superior direito, clique no ícone de engrenagem ⚙️
+   
+   c. Marque a opção "Use your own OAuth credentials"
+   
+   d. Cole seu **Client ID** e **Client Secret** nos campos correspondentes
+   
+   e. No painel esquerdo, encontre "Gmail API v1"
+   
+   f. Expanda e selecione o escopo: `https://www.googleapis.com/auth/gmail.send`
+   
+   g. Clique em "Authorize APIs"
+   
+   h. Faça login com a conta Gmail que você quer usar para enviar emails
+   
+   i. Revise as permissões solicitadas e clique em "Allow"
+   
+   j. Você será redirecionado de volta ao OAuth Playground
+   
+   k. Clique no botão "Exchange authorization code for tokens"
+   
+   l. Você verá tokens gerados. Copie o valor do campo **Refresh token**
+   
+   **Importante:** Guarde este refresh token com segurança! Ele não será exibido novamente no OAuth Playground.
+
+4. **Configure as variáveis de ambiente:**
+   ```bash
+   EMAIL_PROVIDER=gmail_api
+   EMAIL_GMAIL_USER=seu-email@gmail.com
+   EMAIL_GMAIL_REFRESH_TOKEN=1//0xxxxxxxxxxxxx  # Token que você copiou
+   # Se usar o mesmo projeto do OAuth de login, pode omitir estas:
+   EMAIL_GMAIL_CLIENT_ID=seu-client-id.apps.googleusercontent.com
+   EMAIL_GMAIL_CLIENT_SECRET=seu-client-secret
+   ```
+
+4. **Configure as variáveis:**
+   ```bash
+   EMAIL_PROVIDER=gmail_api
+   EMAIL_GMAIL_USER=seu-email@gmail.com
+   EMAIL_GMAIL_CLIENT_ID=seu-client-id.apps.googleusercontent.com
+   EMAIL_GMAIL_CLIENT_SECRET=seu-client-secret
+   EMAIL_GMAIL_REFRESH_TOKEN=seu-refresh-token-aqui
+   ```
+
+**Nota:** Se você já usa `GOOGLE_CLIENT_ID` e `GOOGLE_CLIENT_SECRET` para autenticação de usuários, pode reutilizar os mesmos valores. O sistema tentará usar essas variáveis se `EMAIL_GMAIL_CLIENT_ID` e `EMAIL_GMAIL_CLIENT_SECRET` não estiverem definidas.
+
+#### Opção 3: Desenvolvimento (Logs apenas)
+
+Se nenhuma configuração for fornecida ou se `EMAIL_PROVIDER` não estiver configurado, o sistema apenas registra os emails no console (útil para desenvolvimento).
+
+#### Variáveis de Ambiente Completas
+
+```bash
+# Escolha do provider: 'smtp' ou 'gmail_api' (padrão: 'smtp')
+EMAIL_PROVIDER=smtp
+
+# Email do remetente
+EMAIL_FROM=noreply@prosperaacademy.com
+
+# Configuração SMTP (usado quando EMAIL_PROVIDER=smtp)
+EMAIL_SMTP_HOST=smtp.gmail.com
+EMAIL_SMTP_PORT=587
+EMAIL_SMTP_SECURE=false  # true para porta 465, false para outras
+EMAIL_SMTP_USER=seu-email@exemplo.com
+EMAIL_SMTP_PASSWORD=sua-senha
+
+# Configuração Gmail API (usado quando EMAIL_PROVIDER=gmail_api)
+EMAIL_GMAIL_USER=seu-email@gmail.com
+EMAIL_GMAIL_CLIENT_ID=seu-client-id  # Opcional: reutiliza GOOGLE_CLIENT_ID se não definido
+EMAIL_GMAIL_CLIENT_SECRET=seu-client-secret  # Opcional: reutiliza GOOGLE_CLIENT_SECRET se não definido
+EMAIL_GMAIL_REFRESH_TOKEN=seu-refresh-token
+
+# URL do frontend (usado nos links dos emails)
+FRONTEND_URL=http://localhost:3000
+```
+
+**Nota:** Em produção, use variáveis de ambiente seguras e nunca commite senhas ou tokens no código.
 
 ### Variáveis de Ambiente Relacionadas
 
 ```bash
 # O openId do proprietário/primeiro admin (definido no .env)
 OWNER_OPEN_ID=seu-open-id-aqui
+
+# URL do frontend (usado nos emails de convite)
+FRONTEND_URL=http://localhost:3000
 
 # Outras variáveis necessárias para autenticação
 GOOGLE_CLIENT_ID=seu-google-client-id
@@ -219,10 +373,11 @@ DATABASE_URL=postgresql://...
 
 #### Usuário não consegue acessar após login
 
-1. Verificar se `authorized = true` no banco de dados
-2. Verificar se `blocked = false` no banco de dados
-3. Verificar se há convite válido para o email do usuário
-4. Verificar logs do servidor para mensagens de erro
+1. Verificar se o usuário existe no banco de dados (por email)
+2. Verificar se `authorized = true` no banco de dados
+3. Verificar se `blocked = false` no banco de dados
+4. Se o usuário não existe, ele precisa ser pré-cadastrado por um administrador em `/admin`
+5. Verificar logs do servidor para mensagens de erro
 
 #### Usuário não aparece como admin
 

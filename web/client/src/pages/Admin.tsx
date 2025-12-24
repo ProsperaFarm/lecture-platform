@@ -12,7 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, Mail, Ban, CheckCircle, XCircle, Shield, User } from "lucide-react";
+import { Loader2, Mail, Ban, CheckCircle, XCircle, Shield, User, Crown, UserMinus } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -72,23 +72,39 @@ export default function Admin() {
     },
   });
 
-  const sendInviteMutation = trpc.admin.sendInvite.useMutation({
+  const updateRoleMutation = trpc.admin.updateUserRole.useMutation({
     onSuccess: () => {
       utils.admin.getAllUsers.invalidate();
-      toast.success("Convite enviado com sucesso");
-      setInviteEmail("");
-      setShowInviteDialog(false);
+      toast.success("Role do usuário atualizada com sucesso");
+    },
+    onError: (error: any) => {
+      toast.error(`Erro ao atualizar role: ${error.message}`);
+    },
+  });
+
+  const addUserMutation = trpc.admin.addUser.useMutation({
+    onSuccess: (data) => {
+      utils.admin.getAllUsers.invalidate();
+      if (data.emailError) {
+        toast.warning("Usuário adicionado, mas houve erro ao enviar email");
+      } else {
+        toast.success(data.message);
+      }
+      setNewUserName("");
+      setNewUserEmail("");
+      setShowAddUserDialog(false);
     },
     onError: (error) => {
-      toast.error(`Erro ao enviar convite: ${error.message}`);
+      toast.error(`Erro ao adicionar usuário: ${error.message}`);
     },
   });
 
   const [selectedUser, setSelectedUser] = useState<{ id: number; name: string | null } | null>(null);
-  const [action, setAction] = useState<"authorize" | "block" | null>(null);
+  const [action, setAction] = useState<"authorize" | "block" | "promoteAdmin" | "demoteAdmin" | null>(null);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
-  const [showInviteDialog, setShowInviteDialog] = useState(false);
-  const [inviteEmail, setInviteEmail] = useState("");
+  const [showAddUserDialog, setShowAddUserDialog] = useState(false);
+  const [newUserName, setNewUserName] = useState("");
+  const [newUserEmail, setNewUserEmail] = useState("");
 
   // Redirect if not admin
   if (!authLoading && (!currentUser || currentUser.role !== "admin")) {
@@ -118,6 +134,18 @@ export default function Admin() {
     setShowConfirmDialog(true);
   };
 
+  const handlePromoteAdmin = (user: typeof users[0]) => {
+    setSelectedUser({ id: user.id, name: user.name });
+    setAction("promoteAdmin");
+    setShowConfirmDialog(true);
+  };
+
+  const handleDemoteAdmin = (user: typeof users[0]) => {
+    setSelectedUser({ id: user.id, name: user.name });
+    setAction("demoteAdmin");
+    setShowConfirmDialog(true);
+  };
+
   const confirmAction = () => {
     if (!selectedUser) return;
 
@@ -133,6 +161,16 @@ export default function Admin() {
         blocked: true,
         authorized: false,
       });
+    } else if (action === "promoteAdmin") {
+      updateRoleMutation.mutate({
+        userId: selectedUser.id,
+        role: "admin",
+      });
+    } else if (action === "demoteAdmin") {
+      updateRoleMutation.mutate({
+        userId: selectedUser.id,
+        role: "user",
+      });
     }
 
     setShowConfirmDialog(false);
@@ -140,13 +178,22 @@ export default function Admin() {
     setAction(null);
   };
 
-  const handleSendInvite = () => {
-    if (!inviteEmail || !inviteEmail.includes("@")) {
+  const handleAddUser = (sendInvite: boolean) => {
+    if (!newUserName || newUserName.trim() === "") {
+      toast.error("Por favor, insira o nome do usuário");
+      return;
+    }
+
+    if (!newUserEmail || !newUserEmail.includes("@")) {
       toast.error("Por favor, insira um email válido");
       return;
     }
 
-    sendInviteMutation.mutate({ email: inviteEmail });
+    addUserMutation.mutate({
+      name: newUserName.trim(),
+      email: newUserEmail.trim().toLowerCase(),
+      sendInvite: sendInvite,
+    });
   };
 
   return (
@@ -162,38 +209,76 @@ export default function Admin() {
               Gerencie usuários, autorizações e convites da plataforma
             </p>
           </div>
-          <Dialog open={showInviteDialog} onOpenChange={setShowInviteDialog}>
+          <Dialog open={showAddUserDialog} onOpenChange={setShowAddUserDialog}>
             <DialogTrigger asChild>
               <Button className="gap-2">
-                <Mail className="w-4 h-4" />
-                Enviar Convite
+                <User className="w-4 h-4" />
+                Incluir usuário
               </Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Enviar Convite</DialogTitle>
+                <DialogTitle>Incluir Usuário</DialogTitle>
                 <DialogDescription>
-                  Envie um convite por email para autorizar um novo usuário a acessar a plataforma.
+                  Adicione um novo usuário à plataforma. Você pode optar por enviar um convite por email ou apenas adicionar o usuário.
                 </DialogDescription>
               </DialogHeader>
               <div className="space-y-4 py-4">
+                <div className="space-y-2">
+                  <Label htmlFor="name">Nome</Label>
+                  <Input
+                    id="name"
+                    type="text"
+                    placeholder="Nome completo"
+                    value={newUserName}
+                    onChange={(e) => setNewUserName(e.target.value)}
+                  />
+                </div>
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
                   <Input
                     id="email"
                     type="email"
                     placeholder="usuario@exemplo.com"
-                    value={inviteEmail}
-                    onChange={(e) => setInviteEmail(e.target.value)}
+                    value={newUserEmail}
+                    onChange={(e) => setNewUserEmail(e.target.value)}
                   />
                 </div>
               </div>
-              <DialogFooter>
-                <Button variant="outline" onClick={() => setShowInviteDialog(false)}>
+              <DialogFooter className="flex-col sm:flex-row gap-2">
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setShowAddUserDialog(false);
+                    setNewUserName("");
+                    setNewUserEmail("");
+                  }}
+                  disabled={addUserMutation.isPending}
+                  className="w-full sm:w-auto"
+                >
                   Cancelar
                 </Button>
-                <Button onClick={handleSendInvite} disabled={sendInviteMutation.isPending}>
-                  {sendInviteMutation.isPending ? (
+                <Button
+                  variant="outline"
+                  onClick={() => handleAddUser(false)}
+                  disabled={addUserMutation.isPending}
+                  className="w-full sm:w-auto"
+                >
+                  {addUserMutation.isPending ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Adicionando...
+                    </>
+                  ) : (
+                    "Apenas adicionar"
+                  )}
+                </Button>
+                <Button
+                  onClick={() => handleAddUser(true)}
+                  disabled={addUserMutation.isPending}
+                  className="w-full sm:w-auto"
+                >
+                  {addUserMutation.isPending ? (
                     <>
                       <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                       Enviando...
@@ -201,7 +286,7 @@ export default function Admin() {
                   ) : (
                     <>
                       <Mail className="w-4 h-4 mr-2" />
-                      Enviar Convite
+                      Enviar convite e adicionar
                     </>
                   )}
                 </Button>
@@ -311,6 +396,30 @@ export default function Admin() {
                             Desbloquear
                           </Button>
                         )}
+                        {user.role !== "admin" && user.firstAccess && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handlePromoteAdmin(user)}
+                            disabled={updateRoleMutation.isPending}
+                            className="gap-1 text-primary hover:text-primary"
+                          >
+                            <Crown className="w-3 h-3" />
+                            Tornar Admin
+                          </Button>
+                        )}
+                        {user.role === "admin" && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleDemoteAdmin(user)}
+                            disabled={updateRoleMutation.isPending}
+                            className="gap-1 text-orange-600 hover:text-orange-600"
+                          >
+                            <UserMinus className="w-3 h-3" />
+                            Remover Admin
+                          </Button>
+                        )}
                       </div>
                     </TableCell>
                   </TableRow>
@@ -324,34 +433,73 @@ export default function Admin() {
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle>
-                {action === "authorize" ? "Autorizar Usuário" : "Bloquear Usuário"}
+                {action === "authorize" && "Autorizar Usuário"}
+                {action === "block" && "Bloquear Usuário"}
+                {action === "promoteAdmin" && "Promover a Administrador"}
+                {action === "demoteAdmin" && "Remover Permissões de Administrador"}
               </AlertDialogTitle>
               <AlertDialogDescription>
-                {action === "authorize" ? (
+                {action === "authorize" && (
                   <>
                     Tem certeza que deseja autorizar o usuário <strong>{selectedUser?.name}</strong>?
                     Ele poderá acessar a plataforma.
                   </>
-                ) : (
+                )}
+                {action === "block" && (
                   <>
                     Tem certeza que deseja bloquear o usuário <strong>{selectedUser?.name}</strong>?
                     Ele não poderá mais acessar a plataforma.
+                  </>
+                )}
+                {action === "promoteAdmin" && (
+                  <>
+                    Tem certeza que deseja promover <strong>{selectedUser?.name}</strong> a administrador?
+                    Ele terá acesso completo à área administrativa e poderá gerenciar outros usuários.
+                  </>
+                )}
+                {action === "demoteAdmin" && (
+                  <>
+                    Tem certeza que deseja remover as permissões de administrador de <strong>{selectedUser?.name}</strong>?
+                    Ele perderá o acesso à área administrativa.
                   </>
                 )}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancelar</AlertDialogCancel>
-              <AlertDialogAction onClick={confirmAction} className="gap-2">
-                {action === "authorize" ? (
+              <AlertDialogAction
+                onClick={confirmAction}
+                disabled={updateAuthMutation.isPending || updateRoleMutation.isPending}
+                className={
+                  action === "block" || action === "demoteAdmin"
+                    ? "bg-destructive hover:bg-destructive/90 gap-2"
+                    : "gap-2"
+                }
+              >
+                {(updateAuthMutation.isPending || updateRoleMutation.isPending) ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Processando...
+                  </>
+                ) : action === "authorize" ? (
                   <>
                     <CheckCircle className="w-4 h-4" />
                     Autorizar
                   </>
-                ) : (
+                ) : action === "block" ? (
                   <>
                     <Ban className="w-4 h-4" />
                     Bloquear
+                  </>
+                ) : action === "promoteAdmin" ? (
+                  <>
+                    <Crown className="w-4 h-4" />
+                    Promover
+                  </>
+                ) : (
+                  <>
+                    <UserMinus className="w-4 h-4" />
+                    Remover Admin
                   </>
                 )}
               </AlertDialogAction>

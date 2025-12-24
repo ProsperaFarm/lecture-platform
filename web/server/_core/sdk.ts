@@ -266,42 +266,44 @@ class SDKServer {
     const signedInAt = new Date();
     let user = await db.getUserByOpenId(sessionUserId);
 
-    // If user not in DB, sync from OAuth server automatically
-    if (!user) {
+    // If user not in DB by openId, check if they exist by email (pending user)
+    if (!user && sessionUserId) {
       try {
         const userInfo = await this.getUserInfoWithJwt(sessionCookie ?? "");
         
-        // Check if user has a valid invite
-        let shouldAuthorize = false;
+        // Check if user exists by email (could be a pre-registered user)
+        let existingUserByEmail: User | undefined;
         if (userInfo.email) {
-          shouldAuthorize = await db.hasValidInvite(userInfo.email);
+          existingUserByEmail = await db.getUserByEmail(userInfo.email);
         }
         
-        await db.upsertUser({
-          openId: userInfo.openId,
-          name: userInfo.name || null,
-          email: userInfo.email ?? null,
-          loginMethod: userInfo.loginMethod ?? userInfo.platform ?? null,
-          lastSignedIn: signedInAt,
-          authorized: shouldAuthorize, // Authorize if they have a valid invite
-        });
-        user = await db.getUserByOpenId(userInfo.openId);
-        
-        // Mark invite as used if user was authorized via invite
-        if (shouldAuthorize && userInfo.email) {
-          const invite = await db.getUserInviteByEmail(userInfo.email);
-          if (invite && !invite.used) {
-            await db.markInviteAsUsed(invite.id, signedInAt);
+        // If user exists by email but with different openId (pending user), update the openId
+        if (existingUserByEmail) {
+          if (existingUserByEmail.openId !== userInfo.openId) {
+            // Update the openId from pending to the real Google openId
+            await db.updateUserOpenId(existingUserByEmail.id, userInfo.openId);
           }
+          user = await db.getUserByOpenId(userInfo.openId);
+        } else {
+          // User doesn't exist in database at all - reject access
+          throw ForbiddenError("Acesso não autorizado. Entre em contato com um administrador.");
         }
-      } catch (error) {
+      } catch (error: any) {
+        if (error.message?.includes("Acesso não autorizado")) {
+          throw error; // Re-throw authorization errors
+        }
         console.error("[Auth] Failed to sync user from OAuth:", error);
         throw ForbiddenError("Failed to sync user info");
       }
     }
 
+    // If still no user, try to get it again
+    if (!user && sessionUserId) {
+      user = await db.getUserByOpenId(sessionUserId);
+    }
+
     if (!user) {
-      throw ForbiddenError("User not found");
+      throw ForbiddenError("Acesso não autorizado. Entre em contato com um administrador.");
     }
 
     // Check if user is blocked

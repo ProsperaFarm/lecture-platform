@@ -558,6 +558,39 @@ export async function updateUserAuthorization(
 }
 
 /**
+ * Update user role (only if user has firstAccess set)
+ */
+export async function updateUserRole(
+  userId: number,
+  role: 'user' | 'admin'
+): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot update user role: database not available");
+    throw new Error("Database not available");
+  }
+
+  // Check if user exists
+  const user = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+  
+  if (user.length === 0) {
+    throw new Error("User not found");
+  }
+
+  // Only check firstAccess when promoting to admin
+  if (role === 'admin' && !user[0].firstAccess) {
+    throw new Error("Usuário precisa ter feito o primeiro acesso antes de ser promovido a administrador");
+  }
+
+  await db.update(users).set({
+    role: role,
+    updatedAt: new Date(),
+  }).where(eq(users.id, userId));
+  
+  console.log(`[Database] User ${userId} role updated to: ${role}`);
+}
+
+/**
  * Create a user invite
  */
 export async function createUserInvite(invite: InsertUserInvite): Promise<UserInvite> {
@@ -649,4 +682,97 @@ export async function hasValidInvite(email: string): Promise<boolean> {
     .limit(1);
 
   return result.length > 0;
+}
+
+/**
+ * Create a user by email and name (without openId - will be set when user logs in via OAuth)
+ * This is used for pre-registering users in the admin panel
+ */
+export async function createUserByEmail(
+  email: string,
+  name: string | null
+): Promise<User> {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  // Check if user already exists by email
+  const existingUser = await db
+    .select()
+    .from(users)
+    .where(eq(users.email, email))
+    .limit(1);
+
+  if (existingUser.length > 0) {
+    throw new Error("User with this email already exists");
+  }
+
+  // Generate a temporary openId based on email (will be replaced when user logs in via Google)
+  // We use a prefix to identify pending users
+  const tempOpenId = `pending-${email.toLowerCase().replace(/[^a-z0-9]/g, '-')}`;
+
+  // Insert user with authorized = true (they can access the platform)
+  const result = await db
+    .insert(users)
+    .values({
+      openId: tempOpenId,
+      email: email,
+      name: name,
+      role: 'user',
+      authorized: true,
+      blocked: false,
+      lastSignedIn: new Date(),
+    })
+    .returning();
+
+  return result[0];
+}
+
+/**
+ * Get user by email
+ */
+export async function getUserByEmail(email: string): Promise<User | undefined> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get user by email: database not available");
+    return undefined;
+  }
+
+  const result = await db
+    .select()
+    .from(users)
+    .where(eq(users.email, email))
+    .limit(1);
+
+  return result[0];
+}
+
+/**
+ * Update user's openId (used when pending user logs in for the first time)
+ */
+export async function updateUserOpenId(userId: number, newOpenId: string): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  // Check if new openId is already taken
+  const existingUserWithOpenId = await db
+    .select()
+    .from(users)
+    .where(eq(users.openId, newOpenId))
+    .limit(1);
+
+  if (existingUserWithOpenId.length > 0 && existingUserWithOpenId[0].id !== userId) {
+    throw new Error("OpenId already exists for another user");
+  }
+
+  await db
+    .update(users)
+    .set({
+      openId: newOpenId,
+      updatedAt: new Date(),
+    })
+    .where(eq(users.id, userId));
 }

@@ -23,9 +23,13 @@ import {
   getLastWatchedLesson,
   getAllUsers,
   updateUserAuthorization,
+  updateUserRole,
   createUserInvite,
   getUserInviteByEmail,
-  hasValidInvite
+  hasValidInvite,
+  createUserByEmail,
+  getUserByEmail,
+  updateUserOpenId
 } from "./db";
 import { z } from "zod";
 import { completeGoogleOAuth, getGoogleAuthUrl } from "./google-oauth";
@@ -53,20 +57,32 @@ export const appRouter = router({
         // Exchange code for user info
         const googleUser = await completeGoogleOAuth(input.code);
         
-        // Upsert user in database
-        await upsertUser({
-          openId: googleUser.id,
-          email: googleUser.email,
-          name: googleUser.name,
-          loginMethod: 'google',
-          lastSignedIn: new Date(),
-        });
+        // Check if user exists by email (could be pre-registered)
+        let dbUser = await getUserByEmail(googleUser.email);
         
-        // Get user from database
-        const dbUser = await getUserByOpenId(googleUser.id);
+        if (dbUser) {
+          // User exists - update openId if it was a pending user
+          if (dbUser.openId.startsWith('pending-')) {
+            await updateUserOpenId(dbUser.id, googleUser.id);
+            dbUser = await getUserByOpenId(googleUser.id);
+          } else if (dbUser.openId !== googleUser.id) {
+            // User exists with different openId - this shouldn't happen, but update it
+            await updateUserOpenId(dbUser.id, googleUser.id);
+            dbUser = await getUserByOpenId(googleUser.id);
+          }
+          
+          // Update last signed in
+          await upsertUser({
+            openId: googleUser.id,
+            lastSignedIn: new Date(),
+          });
+        } else {
+          // User doesn't exist - reject access (only pre-registered users can access)
+          throw new Error('Acesso não autorizado. Entre em contato com um administrador.');
+        }
         
         if (!dbUser) {
-          throw new Error('Failed to create user');
+          throw new Error('Acesso não autorizado. Entre em contato com um administrador.');
         }
         
         // Create JWT token using jose
@@ -285,42 +301,81 @@ export const appRouter = router({
         return { success: true };
       }),
     
-    // Send invite (create invite and authorize user)
-    sendInvite: adminProcedure
+    // Update user role (promote to admin / demote to user)
+    updateUserRole: adminProcedure
       .input(z.object({
+        userId: z.number(),
+        role: z.enum(['user', 'admin']),
+      }))
+      .mutation(async ({ input }) => {
+        await updateUserRole(input.userId, input.role);
+        return { success: true };
+      }),
+    
+    // Add user (create user and optionally send invite email)
+    addUser: adminProcedure
+      .input(z.object({
+        name: z.string().min(1),
         email: z.string().email(),
+        sendInvite: z.boolean(),
       }))
       .mutation(async ({ input, ctx }) => {
         if (!ctx.user) {
           throw new Error("User not authenticated");
         }
         
-        // Check if user already exists
-        const existingInvite = await getUserInviteByEmail(input.email);
-        if (existingInvite && !existingInvite.used) {
-          throw new Error("An active invite already exists for this email");
+        // Check if user already exists by email
+        const existingUser = await getUserByEmail(input.email);
+        if (existingUser) {
+          throw new Error("Usuário com este email já existe");
         }
         
-        // Generate a unique token for the invite
-        const token = globalThis.crypto.randomUUID();
+        // Create user in database
+        const newUser = await createUserByEmail(input.email, input.name);
         
-        // Create invite
-        await createUserInvite({
-          email: input.email,
-          invitedBy: ctx.user.id,
-          token: token,
-          used: false,
-        });
-        
-        // TODO: Send email with invite link
-        // For now, we'll just log it
-        console.log(`[Admin] Invite created for ${input.email} with token: ${token}`);
-        console.log(`[Admin] Invite URL would be: ${ENV.frontendUrl || 'https://your-domain.com'}/auth/invite/${token}`);
+        // If sendInvite is true, send invitation email
+        if (input.sendInvite) {
+          try {
+            const { sendInviteEmail } = await import("./services/email");
+            const loginUrl = `${ENV.frontendUrl}/login`;
+            
+            await sendInviteEmail(input.email, {
+              userName: input.name,
+              loginUrl: loginUrl,
+            });
+            
+            // Also create an invite record for tracking
+            const token = globalThis.crypto.randomUUID();
+            await createUserInvite({
+              email: input.email,
+              invitedBy: ctx.user.id,
+              token: token,
+              used: false,
+            });
+            
+            return {
+              success: true,
+              message: "Usuário adicionado e convite enviado com sucesso.",
+              user: newUser,
+              emailError: false,
+            };
+          } catch (error) {
+            console.error("[Admin] Failed to send invite email:", error);
+            // User was created, but email failed - still return success
+            return {
+              success: true,
+              message: "Usuário adicionado, mas falha ao enviar email de convite.",
+              user: newUser,
+              emailError: true,
+            };
+          }
+        }
         
         return {
           success: true,
-          token: token, // Return token for testing (remove in production)
-          message: "Invite created successfully. Email will be sent shortly.",
+          message: "Usuário adicionado com sucesso.",
+          user: newUser,
+          emailError: false,
         };
       }),
   }),
