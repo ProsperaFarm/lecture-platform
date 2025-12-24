@@ -841,42 +841,54 @@
                 "order": 2,
                 "title": "Sistemas de criação de bezerras",
                 "fileName": "Videoaula 02Sistemas de criação de bezerras.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=VU0eUNtRg9o",
+                "duration": 361
               },
               {
                 "id": "lesson-03-05-03",
                 "order": 3,
                 "title": "Desafios sanitários na criação de bezerras",
                 "fileName": "Videoaula 03Desafios sanitários na criação de bezerras.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=ns7c5_kvFwo",
+                "duration": 327
               },
               {
                 "id": "lesson-03-05-04",
                 "order": 4,
                 "title": "Cuidados com a vaca e bezerra",
                 "fileName": "Videoaula 04Cuidados com a vaca e bezerra.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=5lMZSXNlsLg",
+                "duration": 357
               },
               {
                 "id": "lesson-03-05-05",
                 "order": 5,
                 "title": "Primeiros cuidados com as bezerras",
                 "fileName": "Videoaula 05Primeiros cuidados com as bezerras.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=s6Z6YKOR-z8",
+                "duration": 252
               },
               {
                 "id": "lesson-03-05-06",
                 "order": 6,
                 "title": "Colostragem",
                 "fileName": "Videoaula 06Colostragem.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=ULCc1HsxXck",
+                "duration": 787
               },
               {
                 "id": "lesson-03-05-07",
                 "order": 7,
                 "title": "Cura de umbigo",
                 "fileName": "Videoaula 07Cura de umbigo.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=Aad9lFEPekY",
+                "duration": 323
               }
             ]
           },
@@ -890,28 +902,36 @@
                 "order": 1,
                 "title": "Diarreia em bezerras",
                 "fileName": "Videoaula 08Diarreia em bezerras.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=vdH7Gl9NneA",
+                "duration": 623
               },
               {
                 "id": "lesson-03-06-02",
                 "order": 2,
                 "title": "Prática - Hidratação oral de bezerras",
                 "fileName": "Videoaula 09Prática - Hidratação oral de bezerras.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=VGansEEGj3U",
+                "duration": 325
               },
               {
                 "id": "lesson-03-06-03",
                 "order": 3,
                 "title": "Ações importantes no controle de diarreia",
                 "fileName": "Videoaula 10Ações importantes no controle de diarreia.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=y8pRrSnWBJs",
+                "duration": 230
               },
               {
                 "id": "lesson-03-06-04",
                 "order": 4,
                 "title": "Doença respiratória - Parte 1",
                 "fileName": "Videoaula 11Doença respiratória - Parte 1.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=zH4Y1rgPVHg",
+                "duration": 644
               },
               {
                 "id": "lesson-03-06-05",
