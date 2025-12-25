@@ -938,49 +938,63 @@
                 "order": 5,
                 "title": "Doença respiratória - Parte 2",
                 "fileName": "Videoaula 12Doença respiratória - Parte 2.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=Zr6BPy2Z6AE",
+                "duration": 614
               },
               {
                 "id": "lesson-03-06-06",
                 "order": 6,
                 "title": "Tristeza parasitária bovina - Parte 1",
                 "fileName": "Videoaula 13Tristeza parasitária bovina - Parte 1.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=F5o2Lu9q7DA",
+                "duration": 540
               },
               {
                 "id": "lesson-03-06-07",
                 "order": 7,
                 "title": "Tristeza parasitária bovina - Parte 2",
                 "fileName": "Videoaula 14Tristeza parasitária bovina - Parte 2.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=8saa_mKUVUk",
+                "duration": 570
               },
               {
                 "id": "lesson-03-06-08",
                 "order": 8,
                 "title": "Monitoramento da tristeza parasitária bovina",
                 "fileName": "Videoaula 15Monitoramento da tristeza parasitária bovina.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=anc1FToQH9I",
+                "duration": 322
               },
               {
                 "id": "lesson-03-06-09",
                 "order": 9,
                 "title": "Tratamento da tristeza parasitária bovina",
                 "fileName": "Videoaula 16Tratamento da tristeza parasitária bovina.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=PeiRNICz6x4",
+                "duration": 380
               },
               {
                 "id": "lesson-03-06-10",
                 "order": 10,
                 "title": "Doenças de umbigo - Onfalites",
                 "fileName": "Videoaula 17Doenças de umbigo - Onfalites.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=EbR95GhWQV4",
+                "duration": 447
               },
               {
                 "id": "lesson-03-06-11",
                 "order": 11,
                 "title": "Outras doenças em bezerras",
                 "fileName": "Videoaula 18Outras doenças em bezerras.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=AuP7bRyIuWA",
+                "duration": 424
               }
             ]
           },
@@ -994,21 +1008,27 @@
                 "order": 1,
                 "title": "Programa de saúde de bezerras",
                 "fileName": "Videoaula 19Programa de saúde de bezerras.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=4Cc7d4uaZ_g",
+                "duration": 325
               },
               {
                 "id": "lesson-03-07-02",
                 "order": 2,
                 "title": "Calendário sanitário",
                 "fileName": "Videoaula 20Calendário sanitário.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=uynya5STMfM",
+                "duration": 311
               },
               {
                 "id": "lesson-03-07-03",
                 "order": 3,
                 "title": "Metas na criação de bezerras",
                 "fileName": "Videoaula 21Metas na criação de bezerras.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube.com/watch?v=u_qFNxtBmow",
+                "duration": 391
               },
               {
                 "id": "lesson-03-07-04",
