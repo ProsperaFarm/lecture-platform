@@ -1035,14 +1035,18 @@
                 "order": 4,
                 "title": "Gravação ao vivo - Sanidade de bezerras e novilhas",
                 "fileName": "Gravação de aula online ao vivo - Sanidade de bezerras e novilha.mp4",
-                "type": "live"
+                "type": "live",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=KD1kweqd0jo",
+                "duration": 7184
               },
               {
                 "id": "lesson-03-07-05",
                 "order": 5,
                 "title": "Gravação ao vivo - Como criar bem as bezerras",
                 "fileName": "Gravações de aula online ao vivo - Como criar bem as bezerras no.mp4",
-                "type": "live"
+                "type": "live",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=EIN_KprAeTY",
+                "duration": 7489
               }
             ]
           }
@@ -1064,56 +1068,72 @@
                 "order": 1,
                 "title": "Principais desafios na produção de silagem",
                 "fileName": "Videoaula 01Principais desafios na produção de silagem.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=kon72zW36Q8",
+                "duration": 378
               },
               {
                 "id": "lesson-04-01-02",
                 "order": 2,
                 "title": "Pontos importantes para a ensilagem",
                 "fileName": "Videoaula 02Pontos importantes para a ensilagem.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=92cST66HrYU",
+                "duration": 691
               },
               {
                 "id": "lesson-04-01-03",
                 "order": 3,
                 "title": "Colhendo o milho no ponto ideal",
                 "fileName": "Videoaula 03Colhendo o milho no ponto ideal.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=zKzybg6PSSY",
+                "duration": 435
               },
               {
                 "id": "lesson-04-01-04",
                 "order": 4,
                 "title": "Como fazer a avaliação da silagem - Parte I",
                 "fileName": "Videoaula 04 Como fazer a avaliação da silagem - Parte I.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=mrUPgCqPFgM",
+                "duration": 393
               },
               {
                 "id": "lesson-04-01-05",
                 "order": 5,
                 "title": "Como fazer a avaliação da silagem - Parte II",
                 "fileName": "Videoaula 05Como fazer a avaliação da silagem - Parte II.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=9txeCr3vr4o",
+                "duration": 288
               },
               {
                 "id": "lesson-04-01-06",
                 "order": 6,
                 "title": "Processamento dos grãos de milho - Parte I",
                 "fileName": "Videoaula 06Processamento dos grãos de milho - Parte I.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=18KY8Zk1FLw",
+                "duration": 354
               },
               {
                 "id": "lesson-04-01-07",
                 "order": 7,
                 "title": "Processamento dos grãos de milho - Parte II",
                 "fileName": "Videoaula 07Processamento dos grãos de milho - Parte II.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=tB6BzDsPVd4",
+                "duration": 260
               },
               {
                 "id": "lesson-04-01-08",
                 "order": 8,
                 "title": "Etapas importantes para a compactação da silagem",
                 "fileName": "Videoaula 08Etapas importantes para a compactação da silagem.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=duBLOqWzCGE",
+                "duration": 256
               },
               {
                 "id": "lesson-04-01-09",
@@ -1347,42 +1367,42 @@
                 "type": "video"
               },
               {
-                "id": "lesson-04-04-09",
+                "id": "lesson-04-01-09-B",
                 "order": 9,
                 "title": "Qualidade da dieta fornecida",
                 "fileName": "Videoaula 09Qualidade da dieta fornecida.mp4",
                 "type": "video"
               },
               {
-                "id": "lesson-04-04-10",
+                "id": "lesson-04-01-10-B",
                 "order": 10,
                 "title": "Avaliação da qualidade da dieta fornecida",
                 "fileName": "Videoaula 10Avaliação da qualidade da dieta fornecida.mp4",
                 "type": "video"
               },
               {
-                "id": "lesson-04-04-11",
+                "id": "lesson-04-01-11-B",
                 "order": 11,
                 "title": "Manejo alimentar de vacas secas",
                 "fileName": "Videoaula 11Manejo alimentar de vacas secas.mp4",
                 "type": "video"
               },
               {
-                "id": "lesson-04-04-12",
+                "id": "lesson-04-01-12-B",
                 "order": 12,
                 "title": "Manejo Alimentar Pré-Parto",
                 "fileName": "Videoaula 12Manejo Alimentar Pré-Parto.mp4",
                 "type": "video"
               },
               {
-                "id": "lesson-04-04-13",
+                "id": "lesson-04-01-13-B",
                 "order": 13,
                 "title": "Fatores que impactam o consumo",
                 "fileName": "Videoaula 13Fatores que impactam o consumo.mp4",
                 "type": "video"
               },
               {
-                "id": "lesson-04-04-14",
+                "id": "lesson-04-01-14-B",
                 "order": 14,
                 "title": "Desafios Relacionados ao Cálcio",
                 "fileName": "Videoaula 14Desafios Relacionados ao Cálcio.mp4",
