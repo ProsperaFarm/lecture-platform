@@ -1140,56 +1140,72 @@
                 "order": 9,
                 "title": "Abastecimento e compactação",
                 "fileName": "Videoaula 09 Abastecimento e compactação.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=ZojHtAQ0mwc",
+                "duration": 301
               },
               {
                 "id": "lesson-04-01-10",
                 "order": 10,
                 "title": "Cuidados no fechamento do silo",
                 "fileName": "Videoaula 10Cuidados no fechamento do silo.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=fr_mKbZytd8",
+                "duration": 250
               },
               {
                 "id": "lesson-04-01-11",
                 "order": 11,
                 "title": "Minimizando perdas",
                 "fileName": "Videoaula 11Minimizando perdas.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=iA5g9BDCd7k",
+                "duration": 482
               },
               {
                 "id": "lesson-04-01-12",
                 "order": 12,
                 "title": "Manejo da Silagem - Parte I",
                 "fileName": "Videoaula 12Manejo da Silagem - Parte I.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=Y4LQlaDM08U",
+                "duration": 480
               },
               {
                 "id": "lesson-04-01-13",
                 "order": 13,
                 "title": "Manejo da Silagem - Parte II",
                 "fileName": "Videoaula 13Manejo da Silagem - Parte II.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=mSCoKCtdsAI",
+                "duration": 363
               },
               {
                 "id": "lesson-04-01-14",
                 "order": 14,
                 "title": "Estimando o estoque de silagem na propriedade",
                 "fileName": "Videoaula 14Estimando o estoque de silagem na propriedade.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=BfMBsF4ZfWM",
+                "duration": 305
               },
               {
                 "id": "lesson-04-01-15",
                 "order": 15,
                 "title": "Doenças na cultura de milho",
                 "fileName": "Videoaula 15Doenças na cultura de milho.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=ovqN4Hj7Nvk",
+                "duration": 495
               },
               {
                 "id": "lesson-04-01-16",
                 "order": 16,
                 "title": "Principais pontos para aumentar a qualidade da silagem",
                 "fileName": "Videoaula 16Principais pontos para aumentar a qualidade da silag.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=MOyyDvSPqo8",
+                "duration": 298
               }
             ]
           },
@@ -1203,14 +1219,18 @@
                 "order": 1,
                 "title": "Silagem de milho",
                 "fileName": "Videoaula 01Silagem de milho.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=atP6s_ABbZs",
+                "duration": 430
               },
               {
                 "id": "lesson-04-02-02",
                 "order": 2,
                 "title": "A importância de um bom manejo de solo",
                 "fileName": "Videoaula 02A importância de um bom manejo de solo.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=zfB6wddDTVQ",
+                "duration": 483
               },
               {
                 "id": "lesson-04-02-03",
