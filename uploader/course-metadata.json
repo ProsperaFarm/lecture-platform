@@ -1237,49 +1237,63 @@
                 "order": 3,
                 "title": "Amostragem de solo",
                 "fileName": "Videoaula 03 Amostragem de solo.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=5lMSsQjNBqA",
+                "duration": 638
               },
               {
                 "id": "lesson-04-02-04",
                 "order": 4,
                 "title": "A importância da calagem",
                 "fileName": "Videoaula 04A importância da calagem.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=ENZwAF8noBs",
+                "duration": 943
               },
               {
                 "id": "lesson-04-02-05",
                 "order": 5,
                 "title": "Entendendo a importância do gesso",
                 "fileName": "Videoaula 05Entendendo a importância do gesso.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=vN8YrbjdCXQ",
+                "duration": 209
               },
               {
                 "id": "lesson-04-02-06",
                 "order": 6,
                 "title": "Estratégias de nutrição para a cultura do milho",
                 "fileName": "Videoaula 06Estratégias de nutrição para a cultura do milho.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=u0OZfK7otwA",
+                "duration": 996
               },
               {
                 "id": "lesson-04-02-07",
                 "order": 7,
                 "title": "Compactação e seus prejuízos para o solo",
                 "fileName": "Videoaula 07Compactação e seus prejuizos para o solo.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=-zQ5iShN7w0",
+                "duration": 524
               },
               {
                 "id": "lesson-04-02-08",
                 "order": 8,
                 "title": "Estratégias para manter o equilíbrio biológico no solo",
                 "fileName": "Videoaula 08Estratégias para manter o equilíbrio biológico no so.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=SjH0z60nn8Y",
+                "duration": 709
               },
               {
                 "id": "lesson-04-02-09",
                 "order": 9,
                 "title": "Estratégias para a rotação de culturas",
                 "fileName": "Videoaula 09Estratégias para a rotação de culturas.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=n6dUygupLuQ",
+                "duration": 633
               }
             ]
           },
@@ -1293,21 +1307,27 @@
                 "order": 1,
                 "title": "Conhecendo a planta de milho",
                 "fileName": "Videoaula 10Conhecendo a planta de milho.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=X1a_EfTQpvY",
+                "duration": 696
               },
               {
                 "id": "lesson-04-03-02",
                 "order": 2,
                 "title": "Fases da cultura de milho",
                 "fileName": "Videoaula 11Fases da cultura de milho.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=r6eKKcdegWg",
+                "duration": 1048
               },
               {
                 "id": "lesson-04-03-03",
                 "order": 3,
                 "title": "Plantio do milho",
                 "fileName": "Videoaula 12Plantio do milho.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=kSxw-WhXm4k",
+                "duration": 848
               },
               {
                 "id": "lesson-04-03-04",
