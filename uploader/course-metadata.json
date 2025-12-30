@@ -1334,14 +1334,18 @@
                 "order": 4,
                 "title": "Manejo de plantas daninhas",
                 "fileName": "Videoaula 13Manejo de plantas daninhas.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=ZTZ3mZ2JuWE",
+                "duration": 750
               },
               {
                 "id": "lesson-04-03-05",
                 "order": 5,
                 "title": "Manejo de pragas",
                 "fileName": "Videoaula 14Manejo de pragas.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=vDeKH2pnxvo",
+                "duration": 791
               }
             ]
           },
@@ -1355,56 +1359,72 @@
                 "order": 1,
                 "title": "Dieta de vacas leiteiras",
                 "fileName": "Videoaula 01Dieta de vacas leiteiras.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=eTTX3MNJBqQ",
+                "duration": 553
               },
               {
                 "id": "lesson-04-04-02",
                 "order": 2,
                 "title": "Forragens na alimentação do rebanho",
                 "fileName": "Videoaula 02Forragens na alimentação do rebanho.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=xIclv_JagLU",
+                "duration": 427
               },
               {
                 "id": "lesson-04-04-03",
                 "order": 3,
                 "title": "Impacto da qualidade da forragem na dieta",
                 "fileName": "Videoaula 03 Impacto da qualidade da forragem na dieta.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=S7uLWz69s3Q",
+                "duration": 243
               },
               {
                 "id": "lesson-04-04-04",
                 "order": 4,
                 "title": "Exigência nutricional - Parte I",
                 "fileName": "Videoaula 04Exigência nutricional - Parte I.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=YwZ-nf7j6gA",
+                "duration": 562
               },
               {
                 "id": "lesson-04-04-05",
                 "order": 5,
                 "title": "Exigência nutricional - Parte II",
                 "fileName": "Videoaula 05Exigência nutricional - Parte II.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=TtTpUYuo4AM",
+                "duration": 530
               },
               {
                 "id": "lesson-04-04-06",
                 "order": 6,
                 "title": "Divisão de lotes - Parte I",
                 "fileName": "Videoaula 06Divisão de lotes - Parte I.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=aIF46wsixY0",
+                "duration": 308
               },
               {
                 "id": "lesson-04-04-07",
                 "order": 7,
                 "title": "Divisão de lotes - Parte II",
                 "fileName": "Videoaula 07 Divisão de lotes - Parte II.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=zlPHoPWv55E",
+                "duration": 637
               },
               {
                 "id": "lesson-04-04-08",
                 "order": 8,
                 "title": "Divisão de lotes - Parte III",
                 "fileName": "Videoaula 08Divisão de lotes - Parte III.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=UFK_q5kHAYs",
+                "duration": 584
               },
               {
                 "id": "lesson-04-01-09-B",
