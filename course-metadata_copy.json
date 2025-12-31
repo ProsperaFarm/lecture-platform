@@ -855,6 +855,126 @@
         "folderName": "20_producao_conservacao_forragem",
         "sections": [
           {
+            "id": "section-04-02",
+            "order": 2,
+            "title": "Planejamento forrageiro",
+            "lessons": [
+              {
+                "id": "lesson-04-02-01",
+                "order": 1,
+                "title": "Silagem de milho",
+                "fileName": "Videoaula 01Silagem de milho.mp4",
+                "type": "video"
+              },
+
+              {
+                "id": "lesson-04-02-02",
+                "order": 2,
+                "title": "A importância de um bom manejo de solo",
+                "fileName": "Videoaula 02A importância de um bom manejo de solo.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-02-03",
+                "order": 3,
+                "title": "Amostragem de solo",
+                "fileName": "Videoaula 03 Amostragem de solo.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-02-04",
+                "order": 4,
+                "title": "A importância da calagem",
+                "fileName": "Videoaula 04A importância da calagem.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-02-05",
+                "order": 5,
+                "title": "Entendendo a importância do gesso",
+                "fileName": "Videoaula 05Entendendo a importância do gesso.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-02-06",
+                "order": 6,
+                "title": "Estratégias de nutrição para a cultura do milho",
+                "fileName": "Videoaula 06Estratégias de nutrição para a cultura do milho.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-02-07",
+                "order": 7,
+                "title": "Compactação e seus prejuízos para o solo",
+                "fileName": "Videoaula 07Compactação e seus prejuizos para o solo.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-02-08",
+                "order": 8,
+                "title": "Estratégias para manter o equilíbrio biológico no solo",
+                "fileName": "Videoaula 08Estratégias para manter o equilíbrio biológico no so.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-02-09",
+                "order": 9,
+                "title": "Estratégias para a rotação de culturas",
+                "fileName": "Videoaula 09Estratégias para a rotação de culturas.mp4",
+                "type": "video"
+              }
+            ]
+          },
+          {
+            "id": "section-04-03",
+            "order": 3,
+            "title": "Manejo da Cultura do Milho",
+            "lessons": [
+              {
+                "id": "lesson-04-03-01",
+                "order": 1,
+                "title": "Conhecendo a planta de milho",
+                "fileName": "Videoaula 10Conhecendo a planta de milho.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-03-02",
+                "order": 2,
+                "title": "Fases da cultura de milho",
+                "fileName": "Videoaula 11Fases da cultura de milho.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-03-03",
+                "order": 3,
+                "title": "Plantio do milho",
+                "fileName": "Videoaula 12Plantio do milho.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-03-04",
+                "order": 4,
+                "title": "Manejo de plantas daninhas",
+                "fileName": "Videoaula 13Manejo de plantas daninhas.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-03-05",
+                "order": 5,
+                "title": "Manejo de pragas",
+                "fileName": "Videoaula 14Manejo de pragas.mp4",
+                "type": "video"
+              },
+              {
+                "id": "lesson-04-01-15",
+                "order": 15,
+                "title": "Doenças na cultura de milho",
+                "fileName": "Videoaula 15Doenças na cultura de milho.mp4",
+                "type": "video"
+              }
+            ]
+          },
+          {
             "id": "section-04-01",
             "order": 1,
             "title": "Silagem de Milho",
@@ -958,13 +1078,6 @@
                 "type": "video"
               },
               {
-                "id": "lesson-04-01-15",
-                "order": 15,
-                "title": "Doenças na cultura de milho",
-                "fileName": "Videoaula 15Doenças na cultura de milho.mp4",
-                "type": "video"
-              },
-              {
                 "id": "lesson-04-01-16",
                 "order": 16,
                 "title": "Principais pontos para aumentar a qualidade da silagem",
@@ -974,114 +1087,78 @@
             ]
           },
           {
-            "id": "section-04-02",
-            "order": 2,
-            "title": "Planejamento forrageiro",
+            "id": "section-04-05",
+            "order": 5,
+            "title": "Milho Reidratado",
             "lessons": [
               {
-                "id": "lesson-04-02-01",
+                "id": "lesson-04-05-01",
                 "order": 1,
-                "title": "Silagem de milho",
-                "fileName": "Videoaula 01Silagem de milho.mp4",
+                "title": "Benefícios do milho reidratado",
+                "fileName": "Videoaula 01Benefícios do milho reidratado.mp4",
                 "type": "video"
               },
-
               {
-                "id": "lesson-04-02-02",
+                "id": "lesson-04-05-02",
                 "order": 2,
-                "title": "A importância de um bom manejo de solo",
-                "fileName": "Videoaula 02A importância de um bom manejo de solo.mp4",
+                "title": "Benefícios na dieta das vacas",
+                "fileName": "Videoaula 02Benefícios na dieta das vacas.mp4",
                 "type": "video"
               },
               {
-                "id": "lesson-04-02-03",
+                "id": "lesson-04-05-03",
                 "order": 3,
-                "title": "Amostragem de solo",
-                "fileName": "Videoaula 03 Amostragem de solo.mp4",
+                "title": "O que é necessário para produzir o milho reidratado",
+                "fileName": "Videoaula 03O que é necessário para produzir o milho reidratado.mp4",
                 "type": "video"
               },
               {
-                "id": "lesson-04-02-04",
+                "id": "lesson-04-05-04",
                 "order": 4,
-                "title": "A importância da calagem",
-                "fileName": "Videoaula 04A importância da calagem.mp4",
+                "title": "Instalações para a ensilagem do milho reidratado",
+                "fileName": "Videoaula 04Instalações para a ensilagem do milho reidratado.mp4",
                 "type": "video"
               },
               {
-                "id": "lesson-04-02-05",
+                "id": "lesson-04-05-05",
                 "order": 5,
-                "title": "Entendendo a importância do gesso",
-                "fileName": "Videoaula 05Entendendo a importância do gesso.mp4",
+                "title": "Pontos importantes na técnica da reidratação",
+                "fileName": "Videoaula 05Pontos importantes na técnica da reidratação.mp4",
                 "type": "video"
               },
               {
-                "id": "lesson-04-02-06",
+                "id": "lesson-04-05-06",
                 "order": 6,
-                "title": "Estratégias de nutrição para a cultura do milho",
-                "fileName": "Videoaula 06Estratégias de nutrição para a cultura do milho.mp4",
+                "title": "Garantindo a umidade adequada para o grão reidratado",
+                "fileName": "Videoaula 06Garantindo a umidade adequada para o grão reidratado.mp4",
                 "type": "video"
               },
               {
-                "id": "lesson-04-02-07",
+                "id": "lesson-04-05-07",
                 "order": 7,
-                "title": "Compactação e seus prejuízos para o solo",
-                "fileName": "Videoaula 07Compactação e seus prejuizos para o solo.mp4",
+                "title": "Estratégias para minimizar perdas",
+                "fileName": "Videoaula 07Estratégias para minimizar perdas.mp4",
                 "type": "video"
               },
               {
-                "id": "lesson-04-02-08",
+                "id": "lesson-04-05-08",
                 "order": 8,
-                "title": "Estratégias para manter o equilíbrio biológico no solo",
-                "fileName": "Videoaula 08Estratégias para manter o equilíbrio biológico no so.mp4",
+                "title": "Momento certo de abrir o milho reidratado",
+                "fileName": "Videoaula 08Momento certo de abrir o milho reidratado.mp4",
                 "type": "video"
               },
               {
-                "id": "lesson-04-02-09",
+                "id": "lesson-04-05-09",
                 "order": 9,
-                "title": "Estratégias para a rotação de culturas",
-                "fileName": "Videoaula 09Estratégias para a rotação de culturas.mp4",
-                "type": "video"
-              }
-            ]
-          },
-          {
-            "id": "section-04-03",
-            "order": 3,
-            "title": "Cultura do Milho",
-            "lessons": [
-              {
-                "id": "lesson-04-03-01",
-                "order": 1,
-                "title": "Conhecendo a planta de milho",
-                "fileName": "Videoaula 10Conhecendo a planta de milho.mp4",
+                "title": "Utilização do milho reidratado na dieta de vacas leiteiras",
+                "fileName": "Videoaula 09Utilização do milho reidratado na dieta de vacas lei.mp4",
                 "type": "video"
               },
               {
-                "id": "lesson-04-03-02",
-                "order": 2,
-                "title": "Fases da cultura de milho",
-                "fileName": "Videoaula 11Fases da cultura de milho.mp4",
-                "type": "video"
-              },
-              {
-                "id": "lesson-04-03-03",
-                "order": 3,
-                "title": "Plantio do milho",
-                "fileName": "Videoaula 12Plantio do milho.mp4",
-                "type": "video"
-              },
-              {
-                "id": "lesson-04-03-04",
-                "order": 4,
-                "title": "Manejo de plantas daninhas",
-                "fileName": "Videoaula 13Manejo de plantas daninhas.mp4",
-                "type": "video"
-              },
-              {
-                "id": "lesson-04-03-05",
-                "order": 5,
-                "title": "Manejo de pragas",
-                "fileName": "Videoaula 14Manejo de pragas.mp4",
+                "id": "lesson-04-05-10",
+                "order": 10,
+                "title": "Monitoramento do amido nas fezes",
+                "fileName": "Videoaula 10Monitoramento do amido nas fezes.mp4",
                 "type": "video"
               }
             ]
@@ -1187,83 +1264,6 @@
                 "order": 14,
                 "title": "Desafios Relacionados ao Cálcio",
                 "fileName": "Videoaula 14Desafios Relacionados ao Cálcio.mp4",
-                "type": "video"
-              }
-            ]
-          },
-          {
-            "id": "section-04-05",
-            "order": 5,
-            "title": "Milho Reidratado",
-            "lessons": [
-              {
-                "id": "lesson-04-05-01",
-                "order": 1,
-                "title": "Benefícios do milho reidratado",
-                "fileName": "Videoaula 01Benefícios do milho reidratado.mp4",
-                "type": "video"
-              },
-              {
-                "id": "lesson-04-05-02",
-                "order": 2,
-                "title": "Benefícios na dieta das vacas",
-                "fileName": "Videoaula 02Benefícios na dieta das vacas.mp4",
-                "type": "video"
-              },
-              {
-                "id": "lesson-04-05-03",
-                "order": 3,
-                "title": "O que é necessário para produzir o milho reidratado",
-                "fileName": "Videoaula 03O que é necessário para produzir o milho reidratado.mp4",
-                "type": "video"
-              },
-              {
-                "id": "lesson-04-05-04",
-                "order": 4,
-                "title": "Instalações para a ensilagem do milho reidratado",
-                "fileName": "Videoaula 04Instalações para a ensilagem do milho reidratado.mp4",
-                "type": "video"
-              },
-              {
-                "id": "lesson-04-05-05",
-                "order": 5,
-                "title": "Pontos importantes na técnica da reidratação",
-                "fileName": "Videoaula 05Pontos importantes na técnica da reidratação.mp4",
-                "type": "video"
-              },
-              {
-                "id": "lesson-04-05-06",
-                "order": 6,
-                "title": "Garantindo a umidade adequada para o grão reidratado",
-                "fileName": "Videoaula 06Garantindo a umidade adequada para o grão reidratado.mp4",
-                "type": "video"
-              },
-              {
-                "id": "lesson-04-05-07",
-                "order": 7,
-                "title": "Estratégias para minimizar perdas",
-                "fileName": "Videoaula 07Estratégias para minimizar perdas.mp4",
-                "type": "video"
-              },
-              {
-                "id": "lesson-04-05-08",
-                "order": 8,
-                "title": "Momento certo de abrir o milho reidratado",
-                "fileName": "Videoaula 08Momento certo de abrir o milho reidratado.mp4",
-                "type": "video"
-              },
-              {
-                "id": "lesson-04-05-09",
-                "order": 9,
-                "title": "Utilização do milho reidratado na dieta de vacas leiteiras",
-                "fileName": "Videoaula 09Utilização do milho reidratado na dieta de vacas lei.mp4",
-                "type": "video"
-              },
-              {
-                "id": "lesson-04-05-10",
-                "order": 10,
-                "title": "Monitoramento do amido nas fezes",
-                "fileName": "Videoaula 10Monitoramento do amido nas fezes.mp4",
                 "type": "video"
               }
             ]
