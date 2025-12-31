@@ -1431,42 +1431,54 @@
                 "order": 9,
                 "title": "Qualidade da dieta fornecida",
                 "fileName": "Videoaula 09Qualidade da dieta fornecida.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=S4kJj5JwZ40",
+                "duration": 307
               },
               {
                 "id": "lesson-04-01-10-B",
                 "order": 10,
                 "title": "Avaliação da qualidade da dieta fornecida",
                 "fileName": "Videoaula 10Avaliação da qualidade da dieta fornecida.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=FNjB--SYJf0",
+                "duration": 83
               },
               {
                 "id": "lesson-04-01-11-B",
                 "order": 11,
                 "title": "Manejo alimentar de vacas secas",
                 "fileName": "Videoaula 11Manejo alimentar de vacas secas.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=wZVi4LirwiA",
+                "duration": 698
               },
               {
                 "id": "lesson-04-01-12-B",
                 "order": 12,
                 "title": "Manejo Alimentar Pré-Parto",
                 "fileName": "Videoaula 12Manejo Alimentar Pré-Parto.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=fMdjLK6_gr4",
+                "duration": 659
               },
               {
                 "id": "lesson-04-01-13-B",
                 "order": 13,
                 "title": "Fatores que impactam o consumo",
                 "fileName": "Videoaula 13Fatores que impactam o consumo.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=vcwjWTTk3eI",
+                "duration": 383
               },
               {
                 "id": "lesson-04-01-14-B",
                 "order": 14,
                 "title": "Desafios Relacionados ao Cálcio",
                 "fileName": "Videoaula 14Desafios Relacionados ao Cálcio.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=p04ejNKTGfo",
+                "duration": 494
               }
             ]
           },
@@ -1480,28 +1492,36 @@
                 "order": 1,
                 "title": "Benefícios do milho reidratado",
                 "fileName": "Videoaula 01Benefícios do milho reidratado.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=HuxIWIBp-5o",
+                "duration": 294
               },
               {
                 "id": "lesson-04-05-02",
                 "order": 2,
                 "title": "Benefícios na dieta das vacas",
                 "fileName": "Videoaula 02Benefícios na dieta das vacas.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=6O2Snhn95M8",
+                "duration": 338
               },
               {
                 "id": "lesson-04-05-03",
                 "order": 3,
                 "title": "O que é necessário para produzir o milho reidratado",
                 "fileName": "Videoaula 03O que é necessário para produzir o milho reidratado.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=v9_Ha_BnuXI",
+                "duration": 347
               },
               {
                 "id": "lesson-04-05-04",
                 "order": 4,
                 "title": "Instalações para a ensilagem do milho reidratado",
                 "fileName": "Videoaula 04Instalações para a ensilagem do milho reidratado.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=wmqxNKHEQpI",
+                "duration": 500
               },
               {
                 "id": "lesson-04-05-05",
