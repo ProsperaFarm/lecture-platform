@@ -1528,42 +1528,54 @@
                 "order": 5,
                 "title": "Pontos importantes na técnica da reidratação",
                 "fileName": "Videoaula 05Pontos importantes na técnica da reidratação.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=ZxT_uCpINng",
+                "duration": 154
               },
               {
                 "id": "lesson-04-05-06",
                 "order": 6,
                 "title": "Garantindo a umidade adequada para o grão reidratado",
                 "fileName": "Videoaula 06Garantindo a umidade adequada para o grão reidratado.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=8aqgvkenZBA",
+                "duration": 268
               },
               {
                 "id": "lesson-04-05-07",
                 "order": 7,
                 "title": "Estratégias para minimizar perdas",
                 "fileName": "Videoaula 07Estratégias para minimizar perdas.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=b5BYskLWphk",
+                "duration": 408
               },
               {
                 "id": "lesson-04-05-08",
                 "order": 8,
                 "title": "Momento certo de abrir o milho reidratado",
                 "fileName": "Videoaula 08Momento certo de abrir o milho reidratado.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=FVQU4FKqZYA",
+                "duration": 332
               },
               {
                 "id": "lesson-04-05-09",
                 "order": 9,
                 "title": "Utilização do milho reidratado na dieta de vacas leiteiras",
                 "fileName": "Videoaula 09Utilização do milho reidratado na dieta de vacas lei.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=naKR_33bBEo",
+                "duration": 274
               },
               {
                 "id": "lesson-04-05-10",
                 "order": 10,
                 "title": "Monitoramento do amido nas fezes",
                 "fileName": "Videoaula 10Monitoramento do amido nas fezes.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=8eX2wCdmqHw",
+                "duration": 347
               }
             ]
           }
@@ -1585,28 +1597,36 @@
                 "order": 1,
                 "title": "Introdução à gestão financeira - Parte I",
                 "fileName": "Videoaula 01Introdução à gestão financeira - Parte I.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=8O5YsKOpL3E",
+                "duration": 314
               },
               {
                 "id": "lesson-05-01-02",
                 "order": 2,
                 "title": "Introdução à gestão financeira - Parte II",
                 "fileName": "Videoaula 02Introdução à gestão financeira - Parte II.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=dGh1QGei1ic",
+                "duration": 259
               },
               {
                 "id": "lesson-05-01-03",
                 "order": 3,
                 "title": "Qual é o cenário atual da pecuária leiteira",
                 "fileName": "Videoaula 03Qual é o cenário atual da pecuária leiteira.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=ieCDeggkJjs",
+                "duration": 298
               },
               {
                 "id": "lesson-05-01-04",
                 "order": 4,
                 "title": "Como iniciar o trabalho de gestão financeira na fazenda",
                 "fileName": "Videoaula 04Como iniciar o trabalho de gestão financeira na faze.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=T76vAzKyFkQ",
+                "duration": 199
               },
               {
                 "id": "lesson-05-01-05",
