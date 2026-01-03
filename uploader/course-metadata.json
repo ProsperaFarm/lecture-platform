@@ -1633,14 +1633,18 @@
                 "order": 5,
                 "title": "Financeiro X Econômico",
                 "fileName": "Videoaula 05Financeiro X Econômico.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=c3fqXmvPCho",
+                "duration": 0
               },
               {
                 "id": "lesson-05-01-06",
                 "order": 6,
                 "title": "Conceitos importantes na gestão econômica",
                 "fileName": "Videoaula 06Conceitos importantes na gestão econômica.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=7TxErB7k8NY",
+                "duration": 352
               }
             ]
           },
@@ -1654,35 +1658,45 @@
                 "order": 1,
                 "title": "Fluxo de Caixa - Parte I",
                 "fileName": "Videoaula 07Fluxo de Caixa - Parte I.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=s0IL921xL3s",
+                "duration": 418
               },
               {
                 "id": "lesson-05-02-02",
                 "order": 2,
                 "title": "Fluxo de Caixa - Parte II",
                 "fileName": "Videoaula 08Fluxo de Caixa - Parte II.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=ovDU_M5aFc4",
+                "duration": 420
               },
               {
                 "id": "lesson-05-02-03",
                 "order": 3,
                 "title": "Conciliação Bancária",
                 "fileName": "Videoaula 09Conciliação Bancária.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=DG5yMR5C1xo",
+                "duration": 245
               },
               {
                 "id": "lesson-05-02-04",
                 "order": 4,
                 "title": "Previsão de Caixa",
                 "fileName": "Videoaula 10 Previsão de Caixa.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=TUG9QcakJeQ",
+                "duration": 260
               },
               {
                 "id": "lesson-05-02-05",
                 "order": 5,
                 "title": "Resolução do exercício - Fluxo de caixa",
                 "fileName": "Videoaula 11Resolução do exercício - Fluxo de caixa.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=Rqd3EWFVo9E",
+                "duration": 614
               }
             ]
           },
@@ -1696,21 +1710,27 @@
                 "order": 1,
                 "title": "Orçamento - Parte I",
                 "fileName": "Videoaula 12 Orçamento - Parte I.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=Eccz9Mv_z1s",
+                "duration": 337
               },
               {
                 "id": "lesson-05-03-02",
                 "order": 2,
                 "title": "Orçamento - Parte II",
                 "fileName": "Videoaula 13Orçamento - Parte II.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=TZM8mBBr4SU",
+                "duration": 211
               },
               {
                 "id": "lesson-05-03-03",
                 "order": 3,
                 "title": "Orçamento - Parte III",
                 "fileName": "Videoaula 14Orçamento - Parte III.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=HFlfZn_woko",
+                "duration": 256
               },
               {
                 "id": "lesson-05-03-04",
