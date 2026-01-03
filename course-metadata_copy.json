@@ -860,13 +860,12 @@
             "title": "Planejamento forrageiro",
             "lessons": [
               {
-                "id": "lesson-04-02-01",
+                "id": "lesson-04-01-01",
                 "order": 1,
-                "title": "Silagem de milho",
-                "fileName": "Videoaula 01Silagem de milho.mp4",
+                "title": "Principais desafios na produção de silagem",
+                "fileName": "Videoaula 01Principais desafios na produção de silagem.mp4",
                 "type": "video"
               },
-
               {
                 "id": "lesson-04-02-02",
                 "order": 2,
@@ -980,10 +979,10 @@
             "title": "Silagem de Milho",
             "lessons": [
               {
-                "id": "lesson-04-01-01",
+                "id": "lesson-04-02-01",
                 "order": 1,
-                "title": "Principais desafios na produção de silagem",
-                "fileName": "Videoaula 01Principais desafios na produção de silagem.mp4",
+                "title": "Silagem de milho",
+                "fileName": "Videoaula 01Silagem de milho.mp4",
                 "type": "video"
               },
               {
