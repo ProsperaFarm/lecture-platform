@@ -49,39 +49,80 @@ export const appRouter = router({
       } as const;
     }),
     getGoogleAuthUrl: publicProcedure.query(() => {
-      return { url: getGoogleAuthUrl() };
+      try {
+        if (ENV.enableOAuthLogs) {
+          console.log('[tRPC] getGoogleAuthUrl called');
+        }
+        const url = getGoogleAuthUrl();
+        if (ENV.enableOAuthLogs) {
+          console.log('[tRPC] getGoogleAuthUrl ✅ Success - URL generated');
+        }
+        return { url };
+      } catch (error) {
+        console.error('[tRPC] getGoogleAuthUrl ❌ Error:', error);
+        throw error;
+      }
     }),
     googleCallback: publicProcedure
       .input(z.object({ code: z.string() }))
       .mutation(async ({ input, ctx }) => {
+        if (ENV.enableOAuthLogs) {
+          console.log('[tRPC] googleCallback mutation called');
+          console.log('[tRPC] Authorization code received, length:', input.code.length);
+        }
+        
         // Exchange code for user info
         const googleUser = await completeGoogleOAuth(input.code);
+        if (ENV.enableOAuthLogs) {
+          console.log('[tRPC] Google user retrieved:', googleUser.email);
+        }
         
         // Check if user exists by email (could be pre-registered)
+        if (ENV.enableOAuthLogs) {
+          console.log('[tRPC] Checking if user exists by email:', googleUser.email);
+        }
         let dbUser = await getUserByEmail(googleUser.email);
         
         if (dbUser) {
+          if (ENV.enableOAuthLogs) {
+            console.log('[tRPC] ✅ User found in database');
+            console.log('[tRPC] User openId:', dbUser.openId);
+            console.log('[tRPC] User role:', dbUser.role);
+          }
+          
           // User exists - update openId if it was a pending user
           if (dbUser.openId.startsWith('pending-')) {
+            if (ENV.enableOAuthLogs) {
+              console.log('[tRPC] Updating pending user openId to:', googleUser.id);
+            }
             await updateUserOpenId(dbUser.id, googleUser.id);
             dbUser = await getUserByOpenId(googleUser.id);
           } else if (dbUser.openId !== googleUser.id) {
-            // User exists with different openId - this shouldn't happen, but update it
+            if (ENV.enableOAuthLogs) {
+              console.log('[tRPC] ⚠️ User openId mismatch, updating from', dbUser.openId, 'to', googleUser.id);
+            }
             await updateUserOpenId(dbUser.id, googleUser.id);
             dbUser = await getUserByOpenId(googleUser.id);
           }
           
           // Update last signed in
+          if (ENV.enableOAuthLogs) {
+            console.log('[tRPC] Updating last signed in timestamp');
+          }
           await upsertUser({
             openId: googleUser.id,
             lastSignedIn: new Date(),
           });
         } else {
           // User doesn't exist - reject access (only pre-registered users can access)
+          if (ENV.enableOAuthLogs) {
+            console.log('[tRPC] ❌ User not found in database - access denied');
+          }
           throw new Error('Acesso não autorizado. Entre em contato com um administrador.');
         }
         
         if (!dbUser) {
+          console.error('[tRPC] ❌ dbUser is null after lookup');
           throw new Error('Acesso não autorizado. Entre em contato com um administrador.');
         }
         
@@ -100,13 +141,21 @@ export const appRouter = router({
         
         // Set cookie
         const cookieOptions = getSessionCookieOptions(ctx.req);
-        console.log('[Google OAuth] Setting cookie:', COOKIE_NAME);
-        console.log('[Google OAuth] Cookie options:', cookieOptions);
+        if (ENV.enableOAuthLogs) {
+          console.log('[tRPC] Setting authentication cookie:', COOKIE_NAME);
+          console.log('[tRPC] Cookie domain:', cookieOptions.domain || 'default');
+          console.log('[tRPC] Cookie secure:', cookieOptions.secure);
+          console.log('[tRPC] Cookie sameSite:', cookieOptions.sameSite);
+        }
+        
         ctx.res.cookie(COOKIE_NAME, token, {
           ...cookieOptions,
           maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
         });
-        console.log('[Google OAuth] Cookie set successfully');
+        if (ENV.enableOAuthLogs) {
+          console.log('[tRPC] ✅ Cookie set successfully');
+          console.log('[tRPC] ✅ googleCallback mutation completed successfully');
+        }
         
         return {
           success: true,
