@@ -4,7 +4,7 @@
  * Supports SMTP and Gmail API providers
  */
 
-import { ENV } from "../_core/env";
+import { ENV } from "../_core/env.js";
 import { readFileSync } from "fs";
 import { join } from "path";
 import nodemailer from "nodemailer";

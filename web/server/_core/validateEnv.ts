@@ -1,4 +1,4 @@
-import { ENV } from './env';
+import { ENV } from './env.js';
 
 /**
  * Validate and log OAuth environment variables

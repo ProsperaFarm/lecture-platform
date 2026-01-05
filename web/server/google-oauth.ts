@@ -3,7 +3,7 @@
  * Pure Google OAuth without Manus infrastructure dependencies
  */
 
-import { ENV } from './_core/env';
+import { ENV } from './_core/env.js';
 
 export interface GoogleUserInfo {
   id: string;
