@@ -1,4 +1,3 @@
-import type { Request, Response } from "express";
 import { createApp } from "../server/_core/index";
 
 // Create the Express app for Vercel serverless function
@@ -14,7 +13,8 @@ async function getApp() {
 
 // Export the handler for Vercel
 // Vercel will automatically route /api/* requests to this function
-export default async function handler(req: Request, res: Response) {
+// Using any types to avoid TypeScript compilation issues in Vercel's build process
+export default async function handler(req: any, res: any) {
   try {
     const app = await getApp();
     // Express apps are callable at runtime (they implement the request handler interface)
@@ -22,8 +22,8 @@ export default async function handler(req: Request, res: Response) {
     (app as any)(req, res);
   } catch (error) {
     console.error("[Vercel Function] Error:", error);
-    if (!res.headersSent) {
-      res.status(500).json({ 
+    if (!(res as any).headersSent) {
+      (res as any).status(500).json({ 
         error: "Internal server error", 
         message: error instanceof Error ? error.message : String(error),
         stack: error instanceof Error ? error.stack : undefined
