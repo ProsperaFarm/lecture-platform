@@ -3,10 +3,16 @@ import fs from "fs";
 import { type Server } from "http";
 import { nanoid } from "nanoid";
 import path from "path";
-import { createServer as createViteServer } from "vite";
-import viteConfig from "../../vite.config.js";
 
+/**
+ * Setup Vite dev server with HMR
+ * This function uses dynamic import to avoid bundling Vite in production
+ */
 export async function setupVite(app: Express, server: Server) {
+  // Dynamic import to avoid bundling Vite in production
+  const { createServer: createViteServer } = await import("vite");
+  const viteConfig = await import("../../vite.config.js");
+
   const serverOptions = {
     middlewareMode: true,
     hmr: { server },
@@ -14,7 +20,7 @@ export async function setupVite(app: Express, server: Server) {
   };
 
   const vite = await createViteServer({
-    ...viteConfig,
+    ...viteConfig.default,
     configFile: false,
     server: serverOptions,
     appType: "custom",
@@ -47,6 +53,10 @@ export async function setupVite(app: Express, server: Server) {
   });
 }
 
+/**
+ * Serve static files from the build directory
+ * This function is used in production mode
+ */
 export function serveStatic(app: Express) {
   const distPath =
     process.env.NODE_ENV === "development"
