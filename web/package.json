@@ -101,6 +101,7 @@
     "@types/pg": "^8.15.6",
     "@types/react": "^19.2.1",
     "@types/react-dom": "^19.2.1",
+    "@vercel/node": "^5.5.16",
     "@vitejs/plugin-react": "^5.0.4",
     "add": "^2.0.6",
     "autoprefixer": "^10.4.20",
