@@ -5,9 +5,9 @@ import { drizzle as drizzleNode } from "drizzle-orm/node-postgres";
 import { neon } from "@neondatabase/serverless";
 import pkg from 'pg';
 const { Pool } = pkg;
-import { InsertUser, User, users, courses, lessons, modules, sections, userProgress, Course, Lesson, UserProgress, InsertUserProgress, userInvites, InsertUserInvite, UserInvite } from "../drizzle/schema";
+import { InsertUser, User, users, courses, lessons, modules, sections, userProgress, Course, Lesson, UserProgress, InsertUserProgress, userInvites, InsertUserInvite, UserInvite } from "../drizzle/schema.js";
 import { count } from "drizzle-orm";
-import { ENV } from './_core/env';
+import { ENV } from './_core/env.js';
 
 let _db: ReturnType<typeof drizzleNeon> | ReturnType<typeof drizzleNode> | null = null;
 

@@ -7,8 +7,8 @@ const { Pool } = pkg;
 import { 
   InsertUser, users, courses, modules, sections, lessons,
   Course, Module, Section, Lesson 
-} from "../drizzle/schema";
-import { ENV } from './_core/env';
+} from "../drizzle/schema.js";
+import { ENV } from './_core/env.js';
 
 let _db: ReturnType<typeof drizzleNeon> | ReturnType<typeof drizzleNode> | null = null;
 
