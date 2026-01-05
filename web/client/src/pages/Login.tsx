@@ -7,7 +7,17 @@ import { Loader2 } from "lucide-react";
 export default function Login() {
   const [, setLocation] = useLocation();
   const { data: user, isLoading: isLoadingUser } = trpc.auth.me.useQuery();
-  const { data: authUrl, isLoading: isLoadingUrl } = trpc.auth.getGoogleAuthUrl.useQuery();
+  const { data: authUrl, isLoading: isLoadingUrl, error: authUrlError } = trpc.auth.getGoogleAuthUrl.useQuery();
+
+  // Log auth URL status for debugging
+  useEffect(() => {
+    console.log('[Login] Auth URL status:', {
+      isLoading: isLoadingUrl,
+      hasAuthUrl: !!authUrl,
+      authUrl: authUrl?.url,
+      error: authUrlError
+    });
+  }, [authUrl, isLoadingUrl, authUrlError]);
 
   // Redirect to home if already logged in
   useEffect(() => {
@@ -17,8 +27,13 @@ export default function Login() {
   }, [user, setLocation]);
 
   const handleGoogleLogin = () => {
+    console.log('[Login] Google login button clicked');
     if (authUrl?.url) {
+      console.log('[Login] Redirecting to:', authUrl.url);
       window.location.href = authUrl.url;
+    } else {
+      console.error('[Login] No auth URL available');
+      alert('Erro: Não foi possível obter a URL de autenticação do Google. Verifique os logs do console e as variáveis de ambiente.');
     }
   };
 
@@ -88,6 +103,25 @@ export default function Login() {
               </>
             )}
           </Button>
+
+          {/* Error message */}
+          {authUrlError && (
+            <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-sm text-red-800">
+                <strong>Erro de configuração:</strong> Não foi possível carregar a autenticação do Google. 
+                Verifique as variáveis de ambiente no Vercel (GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_REDIRECT_URI).
+              </p>
+            </div>
+          )}
+
+          {!isLoadingUrl && !authUrl && !authUrlError && (
+            <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+              <p className="text-sm text-yellow-800">
+                <strong>Aviso:</strong> A URL de autenticação não foi carregada. 
+                Verifique os logs do servidor para mais detalhes.
+              </p>
+            </div>
+          )}
 
           {/* Footer */}
           <p className="text-center text-sm text-gray-500 mt-6">

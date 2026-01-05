@@ -53,13 +53,26 @@ export const appRouter = router({
         if (ENV.enableOAuthLogs) {
           console.log('[tRPC] getGoogleAuthUrl called');
         }
+        // Log environment variables status (always, not just when enableOAuthLogs is true)
+        console.log('[tRPC] Environment check:', {
+          hasClientId: !!ENV.googleClientId,
+          hasClientSecret: !!ENV.googleClientSecret,
+          hasRedirectUri: !!ENV.googleRedirectUri,
+          redirectUri: ENV.googleRedirectUri,
+          isProduction: ENV.isProduction
+        });
         const url = getGoogleAuthUrl();
         if (ENV.enableOAuthLogs) {
           console.log('[tRPC] getGoogleAuthUrl ✅ Success - URL generated');
         }
         return { url };
       } catch (error) {
+        // Always log errors, not just when enableOAuthLogs is true
         console.error('[tRPC] getGoogleAuthUrl ❌ Error:', error);
+        console.error('[tRPC] Error details:', {
+          message: error instanceof Error ? error.message : 'Unknown error',
+          stack: error instanceof Error ? error.stack : undefined
+        });
         throw error;
       }
     }),
