@@ -127,11 +127,41 @@ export const appRouter = router({
             lastSignedIn: new Date(),
           });
         } else {
-          // User doesn't exist - reject access (only pre-registered users can access)
+          // User doesn't exist - check if it's the owner
           if (ENV.enableOAuthLogs) {
-            console.log('[tRPC] ❌ User not found in database - access denied');
+            console.log('[tRPC] User not found in database');
+            console.log('[tRPC] Checking if user is owner...');
+            console.log('[tRPC] Google openId:', googleUser.id);
+            console.log('[tRPC] OWNER_OPEN_ID:', ENV.ownerOpenId || 'NOT SET');
           }
-          throw new Error('Acesso não autorizado. Entre em contato com um administrador.');
+          
+          if (googleUser.id === ENV.ownerOpenId) {
+            // This is the owner - create the user automatically
+            if (ENV.enableOAuthLogs) {
+              console.log('[tRPC] ✅ User is owner - creating admin user');
+            }
+            
+            await upsertUser({
+              openId: googleUser.id,
+              email: googleUser.email,
+              name: googleUser.name,
+              loginMethod: 'google',
+              role: 'admin',
+              lastSignedIn: new Date(),
+            });
+            
+            dbUser = await getUserByOpenId(googleUser.id);
+            
+            if (ENV.enableOAuthLogs) {
+              console.log('[tRPC] ✅ Owner user created successfully');
+            }
+          } else {
+            // Not the owner and not pre-registered - reject access
+            if (ENV.enableOAuthLogs) {
+              console.log('[tRPC] ❌ User is not owner and not pre-registered - access denied');
+            }
+            throw new Error('Acesso não autorizado. Entre em contato com um administrador.');
+          }
         }
         
         if (!dbUser) {
