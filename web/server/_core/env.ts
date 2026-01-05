@@ -27,5 +27,5 @@ export const ENV = {
   // Legacy Manus OAuth (not used, kept for compatibility with sdk.ts)
   oAuthServerUrl: process.env.OAUTH_SERVER_URL ?? "",
   // Logging
-  enableOAuthLogs: process.env.ENABLE_OAUTH_LOGS !== 'false', // Default to true, set to 'false' to disable
+  enableOAuthLogs: process.env.ENABLE_OAUTH_LOGS !== 'true', // Default to true, set to 'false' to disable
 };
