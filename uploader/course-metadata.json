@@ -1737,7 +1737,9 @@
                 "order": 4,
                 "title": "Orçamento - Parte IV",
                 "fileName": "Videoaula 15Orçamento - Parte IV.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=FMVaOgmqG1o",
+                "duration": 287
               }
             ]
           },
@@ -1751,35 +1753,45 @@
                 "order": 1,
                 "title": "Exemplo de reunião - Fluxo de caixa - Parte I",
                 "fileName": "Videoaula 16Exemplo de reunião - Fluxo de caixa - Parte I.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=z6s6-hDL3X4",
+                "duration": 244
               },
               {
                 "id": "lesson-05-04-02",
                 "order": 2,
                 "title": "Exemplo de reunião - Fluxo de caixa - Parte II",
                 "fileName": "Videoaula 17Exemplo de reunião - Fluxo de caixa - Parte II.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=1msurakUw50",
+                "duration": 231
               },
               {
                 "id": "lesson-05-04-03",
                 "order": 3,
                 "title": "O que levar para a fazenda quando realizar a gestão",
                 "fileName": "Videoaula 18O que levar para a fazenda quando realizar a gestão.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=sTHW1k3BceU",
+                "duration": 219
               },
               {
                 "id": "lesson-05-04-04",
                 "order": 4,
                 "title": "Gravação ao vivo - Gestão Financeira e Econômica",
                 "fileName": "Gravação de aula online ao vivo - Gestão Financeira e Econômica.mp4",
-                "type": "live"
+                "type": "live",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=RLltEEc67IQ",
+                "duration": 5776
               },
               {
                 "id": "lesson-05-04-05",
                 "order": 5,
                 "title": "Gravação ao vivo - Gestão Financeira e Econômica (2)",
                 "fileName": "Gravação de aula online ao vivo - Gestão Financeira e Econômica (1).mp4",
-                "type": "live"
+                "type": "live",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=WtgQ0PUJGSk",
+                "duration": 6613
               }
             ]
           },
@@ -1793,28 +1805,36 @@
                 "order": 1,
                 "title": "Entendendo o custo de produção",
                 "fileName": "Videaoula 01Entendendo o custo de produção.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=VG_LEFgeAJw",
+                "duration": 187
               },
               {
                 "id": "lesson-05-05-02",
                 "order": 2,
                 "title": "Como implementar a gestão econômica e definir centros",
                 "fileName": "Videoaula 02Como implementar a gestão econômica e definir centro.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=OzzJSBiFfgE",
+                "duration": 341
               },
               {
                 "id": "lesson-05-05-03",
                 "order": 3,
                 "title": "Reconhecendo os custos fixos e variáveis da fazenda",
                 "fileName": "Videoaula 03Reconhecendo os custos fixos e variáveis da fazenda.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=dJJEvCkDKPQ",
+                "duration": 356
               },
               {
                 "id": "lesson-05-05-04",
                 "order": 4,
                 "title": "Controle de estoque",
                 "fileName": "Videoaula 04Controle de estoque.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=EX806jK0_Gg",
+                "duration": 425
               },
               {
                 "id": "lesson-05-05-05",
