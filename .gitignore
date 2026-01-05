@@ -14,7 +14,7 @@ node_modules
 /.next/
 /out/
 
-# production
+# productionz
 /build
 
 # misc
@@ -51,3 +51,5 @@ media/
 
 .env*
 dist/
+
+.vercel
