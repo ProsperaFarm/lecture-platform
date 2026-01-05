@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - master
+      - deploy_prod
   pull_request:
     branches:
       - main
