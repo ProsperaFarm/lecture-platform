@@ -15,15 +15,21 @@ let _db: ReturnType<typeof drizzleNeon> | ReturnType<typeof drizzleNode> | null 
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
-      // Use Neon serverless for production (Vercel/Supabase)
-      // Use node-postgres for local development (Docker)
-      const isProduction = process.env.NODE_ENV === 'production' || process.env.DATABASE_URL.includes('neon.tech') || process.env.DATABASE_URL.includes('supabase.co');
+      // Detect database driver based on connection string
+      // Supabase Pooler (port 6543) uses TCP, not HTTP
+      const isSupabasePooler = process.env.DATABASE_URL.includes(':6543');
+      const isNeonOrSupabaseDirect = process.env.DATABASE_URL.includes('neon.tech') || 
+                                     (process.env.DATABASE_URL.includes('supabase.co') && !isSupabasePooler);
+      const isProduction = process.env.NODE_ENV === 'production';
       
-      if (isProduction) {
+      if (isNeonOrSupabaseDirect) {
+        // Use Neon HTTP driver for Neon or Supabase direct connection
+        console.log('[Database] Using Neon HTTP driver (serverless)');
         const sql = neon(process.env.DATABASE_URL);
         _db = drizzleNeon(sql);
       } else {
-        // Local development with Docker
+        // Use node-postgres for everything else (including Supabase Pooler and local dev)
+        console.log(`[Database] Using node-postgres TCP driver (${isProduction ? 'production' : 'development'})`);
         const pool = new Pool({
           connectionString: process.env.DATABASE_URL,
         });
