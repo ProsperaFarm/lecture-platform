@@ -22,6 +22,8 @@ export type SessionPayload = {
   openId: string;
   appId: string;
   name: string;
+  email?: string;
+  role?: string;
 };
 
 const EXCHANGE_TOKEN_PATH = `/webdev.v1.WebDevAuthPublicService/ExchangeToken`;
@@ -187,6 +189,8 @@ class SDKServer {
       openId: payload.openId,
       appId: payload.appId,
       name: payload.name,
+      email: payload.email,
+      role: payload.role,
     })
       .setProtectedHeader({ alg: "HS256", typ: "JWT" })
       .setExpirationTime(expirationSeconds)
@@ -195,7 +199,7 @@ class SDKServer {
 
   async verifySession(
     cookieValue: string | undefined | null
-  ): Promise<{ openId: string; appId: string; name: string } | null> {
+  ): Promise<{ openId: string; appId: string; name: string; email?: string; role?: string } | null> {
     if (!cookieValue) {
       console.warn("[Auth] Missing session cookie");
       return null;
@@ -206,7 +210,7 @@ class SDKServer {
       const { payload } = await jwtVerify(cookieValue, secretKey, {
         algorithms: ["HS256"],
       });
-      const { openId, appId, name } = payload as Record<string, unknown>;
+      const { openId, appId, name, email, role } = payload as Record<string, unknown>;
 
       if (
         !isNonEmptyString(openId) ||
@@ -214,6 +218,7 @@ class SDKServer {
         !isNonEmptyString(name)
       ) {
         console.warn("[Auth] Session payload missing required fields");
+        console.warn("[Auth] Payload:", { openId, appId, name, email, role });
         return null;
       }
 
@@ -221,6 +226,8 @@ class SDKServer {
         openId,
         appId,
         name,
+        email: email as string | undefined,
+        role: role as string | undefined,
       };
     } catch (error) {
       console.warn("[Auth] Session verification failed", String(error));
