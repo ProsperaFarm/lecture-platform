@@ -40,6 +40,13 @@ export default function Courses() {
   // Fetch all courses
   const { data: courses, isLoading: coursesLoading } = trpc.courses.list.useQuery();
 
+  // Fetch course metadata for all courses
+  const courseIds = courses?.map(c => c.courseId) || [];
+  const { data: courseMetadata = {} } = trpc.courses.getMetadataForMultiple.useQuery(
+    { courseIds },
+    { enabled: courseIds.length > 0 }
+  );
+
   // Fetch user progress for all courses
   const { data: allProgress = [] } = trpc.progress.getAll.useQuery(undefined, {
     enabled: !!user,
@@ -82,13 +89,9 @@ export default function Courses() {
       const totalLessons = course.totalVideos || 0;
       const progressPercentage = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
 
-      // Calculate watched duration
-      const watchedDuration = courseProgress.reduce((acc, p) => {
-        if (p.completed && p.lessonDuration) {
-          return acc + p.lessonDuration;
-        }
-        return acc;
-      }, 0);
+      // Calculate watched duration (UserProgress doesn't have lessonDuration, so we set it to 0)
+      // TODO: This would require joining with lessons table to get actual durations
+      const watchedDuration = 0;
 
       const result = {
         ...course,
@@ -100,7 +103,7 @@ export default function Courses() {
 
       return result;
     });
-  }, [courses, progressData, allProgress]);
+  }, [courses, progressData, allProgress, courseMetadata]);
 
   // Loading state
   if (coursesLoading || isLoadingAuth) {
@@ -174,7 +177,7 @@ export default function Courses() {
                     </div>
                     <div className="flex items-center gap-1">
                       <BookOpen className="w-4 h-4" />
-                      <span>{course.totalModules || 7} módulos</span>
+                      <span>{courseMetadata[course.courseId]?.totalModules || 0} módulos</span>
                     </div>
                     {course.totalDuration && course.totalDuration > 0 && (
                       <div className="flex items-center gap-1">

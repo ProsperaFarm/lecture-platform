@@ -106,7 +106,7 @@ export default function LessonPage() {
 
         {/* Video Player Container */}
         <div className="relative aspect-video bg-black rounded-xl overflow-hidden shadow-lg border border-border/50 group">
-          {lesson.youtubeUrl ? (
+          {lesson.youtubeUrl && courseId ? (
             <PlyrVideoPlayer 
               youtubeUrl={lesson.youtubeUrl}
               lessonId={lesson.lessonId}
