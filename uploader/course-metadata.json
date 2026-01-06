@@ -1841,28 +1841,36 @@
                 "order": 5,
                 "title": "Estruturação da DRE - Demonstrativo de Resultado",
                 "fileName": "Videoaula 05Estruturação da DRE - Demonstrativo de Resultado do.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=xWQZtTApa8s",
+                "duration": 274
               },
               {
                 "id": "lesson-05-05-06",
                 "order": 6,
                 "title": "Resolução do exercício - Fluxo de caixa X Custo de produção",
                 "fileName": "Videoaula 06Resolução do exercício - Fluxo de caixa X Custo de p.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=E1WyqsBceZQ",
+                "duration": 531
               },
               {
                 "id": "lesson-05-05-07",
                 "order": 7,
                 "title": "Curva ABC",
                 "fileName": "Videoaula 07 Curva ABC.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=3UVcBg9lbiw",
+                "duration": 427
               },
               {
                 "id": "lesson-05-05-08",
                 "order": 8,
                 "title": "Comparativo de análise de custo - Benchmarking",
                 "fileName": "Videoaula 08Comparativo de análise de custo - Benchmarking.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=vanDS6R8nh8",
+                "duration": 485
               }
             ]
           },
@@ -1876,42 +1884,54 @@
                 "order": 1,
                 "title": "Gestão por Resultados",
                 "fileName": "Videoaula 09Gestão por Resultados.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=_-BnwiAPlDc",
+                "duration": 170
               },
               {
                 "id": "lesson-05-06-02",
                 "order": 2,
                 "title": "Gestão por Resultados - Custos detalhados",
                 "fileName": "Videoaula 10 Gestão por Resultados - Custos detalhados.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=k1UJ6Msl5Gw",
+                "duration": 244
               },
               {
                 "id": "lesson-05-06-03",
                 "order": 3,
                 "title": "Gestão por Resultados - Benchmarking",
                 "fileName": "Videoaula 11Gestão por Resultados - Benchmarking.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=hahcQAM5U_g",
+                "duration": 203
               },
               {
                 "id": "lesson-05-06-04",
                 "order": 4,
                 "title": "Gestão por Resultados - Como encontrar as oportunidades",
                 "fileName": "Videoaula 12Gestão por Resultados - Como encontrar as oportunida.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=ATe0OUvLYBs",
+                "duration": 145
               },
               {
                 "id": "lesson-05-06-05",
                 "order": 5,
                 "title": "Gestão por Resultados - Custos variáveis",
                 "fileName": "Videoaula 13Gestão por Resultados - Custos variáveis.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=qQd61cahUys",
+                "duration": 137
               },
               {
                 "id": "lesson-05-06-06",
                 "order": 6,
                 "title": "Gestão por Resultados - Análise de Problemas",
                 "fileName": "Videoaula 14Gestão por Resultados - Análise de Problemas.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=s-EH2PDcfDE",
+                "duration": 428
               },
               {
                 "id": "lesson-05-06-07",
