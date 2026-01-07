@@ -1938,14 +1938,18 @@
                 "order": 7,
                 "title": "Gestão por Resultados - Como atuar em custos fixos",
                 "fileName": "Videoaula 15Gestão por Resultados - Como atuar em custos fixos.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=jMvKtq1z8GU",
+                "duration": 307
               },
               {
                 "id": "lesson-05-06-08",
                 "order": 8,
                 "title": "Implantação da gestão por resultados na fazenda",
                 "fileName": "Videoaula 16Implantação da gestão por resultados na fazenda.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=IPPhxQr61Rc",
+                "duration": 306
               }
             ]
           }
@@ -1967,56 +1971,72 @@
                 "order": 1,
                 "title": "Importância da produção de leite de qualidade",
                 "fileName": "Videoaula 01Importância da produção de leite de qualidade.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=28g3m4w0_yg",
+                "duration": 294
               },
               {
                 "id": "lesson-06-01-02",
                 "order": 2,
                 "title": "Resfriamento do leite",
                 "fileName": "Videoaula 02Resfriamento do leite.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=ygfrAOwaiyI",
+                "duration": 266
               },
               {
                 "id": "lesson-06-01-03",
                 "order": 3,
                 "title": "Limpeza dos equipamentos - Parte I",
                 "fileName": "Videoaula 03Limpeza dos equipamentos - Parte I.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=pyVJ59dE4eU",
+                "duration": 340
               },
               {
                 "id": "lesson-06-01-04",
                 "order": 4,
                 "title": "Limpeza dos equipamentos - Parte II",
                 "fileName": "Videoaula 04Limpeza dos equipamentos - Parte II.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=MVHCyQu7xiA",
+                "duration": 275
               },
               {
                 "id": "lesson-06-01-05",
                 "order": 5,
                 "title": "Etapas de limpeza do equipamento",
                 "fileName": "Videoaula 05Etapas de limpeza do equipamento.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=jCffll7rvgQ",
+                "duration": 231
               },
               {
                 "id": "lesson-06-01-06",
                 "order": 6,
                 "title": "Checagem da limpeza do equipamento",
                 "fileName": "Videoaula 06Checagem da limpeza do equipamento.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=z04FtjXt1dk",
+                "duration": 162
               },
               {
                 "id": "lesson-06-01-07",
                 "order": 7,
                 "title": "Sequência de limpeza",
                 "fileName": "Videoaula 07Sequência de limpeza.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=NU7y8aSmSPU",
+                "duration": 284
               },
               {
                 "id": "lesson-06-01-08",
                 "order": 8,
                 "title": "Higiene de ordenha",
                 "fileName": "Videoaula 08Higiene de ordenha.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=dCVnTYcPKJs",
+                "duration": 468
               },
               {
                 "id": "lesson-06-01-09",
