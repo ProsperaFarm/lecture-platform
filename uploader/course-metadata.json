@@ -2043,7 +2043,9 @@
                 "order": 9,
                 "title": "Controle da mastite e redução da CBT",
                 "fileName": "Videoaula 09Controle da mastite e redução da CBT.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=CraEvMmtBmw",
+                "duration": 231
               }
             ]
           },
@@ -2057,63 +2059,81 @@
                 "order": 1,
                 "title": "Definição e impactos da CCS",
                 "fileName": "Videoaula 01Definição e impactos da CCS.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=MMIEz1mF-M0",
+                "duration": 753
               },
               {
                 "id": "lesson-06-02-02",
                 "order": 2,
                 "title": "10 pontos de controle da mastite",
                 "fileName": "Videoaula 0210 pontos de controle da mastite.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=VXGcdRwImmg",
+                "duration": 292
               },
               {
                 "id": "lesson-06-02-03",
                 "order": 3,
                 "title": "Rotina de ordenha na prática - Parte I",
                 "fileName": "Videoaula 03Rotina de ordenha na prática - Parte I.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=iBpik7mJ8-c",
+                "duration": 524
               },
               {
                 "id": "lesson-06-02-04",
                 "order": 4,
                 "title": "Rotina de ordenha na prática - Parte II",
                 "fileName": "Videoaula 04Rotina de ordenha na prática - Parte II.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=NnrQQ47TZ4s",
+                "duration": 195
               },
               {
                 "id": "lesson-06-02-05",
                 "order": 5,
                 "title": "Sobreordenha e Hiperqueratose",
-                "fileName": "Videoaula 05Sobreordenha e Hiperqueratose.mp4",
-                "type": "video"
+                "fileName": "videoaula05_Sobreordenha_e_Hiperqueratose.mp4",
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=4suGS4jh5Y8",
+                "duration": 512
               },
               {
                 "id": "lesson-06-02-06",
                 "order": 6,
                 "title": "Avaliação do filtro de leite",
                 "fileName": "Videoaula 06Avaliação do filtro de leite.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=9abAH8ksHzk",
+                "duration": 123
               },
               {
                 "id": "lesson-06-02-07",
                 "order": 7,
                 "title": "Aplicando a checklist de rotina de ordenha",
                 "fileName": "Videoaula 07Aplicando a checklist de rotina de ordenha.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=-QQQ7PK9-TA",
+                "duration": 320
               },
               {
                 "id": "lesson-06-02-08",
                 "order": 8,
                 "title": "Manejo do ambiente",
                 "fileName": "Videoaula 08Manejo do ambiente.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=3hy5ATpABYA",
+                "duration": 349
               },
               {
                 "id": "lesson-06-02-09",
                 "order": 9,
                 "title": "Equipamento de ordenha",
                 "fileName": "Videoaula 09Equipamento de ordenha.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=y3ywrFCEB8k",
+                "duration": 355
               },
               {
                 "id": "lesson-06-02-10",
