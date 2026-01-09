@@ -2140,7 +2140,9 @@
                 "order": 10,
                 "title": "Manutenção do equipamento de ordenha",
                 "fileName": "Videoaula 10Manutenção do equipamento de ordenha.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=fhlVlMlk3wg",
+                "duration": 464
               }
             ]
           },
@@ -2154,63 +2156,81 @@
                 "order": 1,
                 "title": "Mastite clínica",
                 "fileName": "Videoaula 01Mastite clínica.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=H9TtEBImUcc",
+                "duration": 499
               },
               {
                 "id": "lesson-06-03-02",
                 "order": 2,
                 "title": "Tratamento das vacas",
                 "fileName": "Videoaula 02Tratamento das vacas.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=CCFEKH1JV50",
+                "duration": 150
               },
               {
                 "id": "lesson-06-03-03",
                 "order": 3,
                 "title": "Cultura microbiológica do leite",
                 "fileName": "Videoaula 03Cultura microbiológica do leite.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=i50YrrMRtPA",
+                "duration": 660
               },
               {
                 "id": "lesson-06-03-04",
                 "order": 4,
                 "title": "Agentes causadores de mastite",
                 "fileName": "Videoaula 04Agentes causadores de mastite.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=3LEwOtDwyDE",
+                "duration": 499
               },
               {
                 "id": "lesson-06-03-05",
                 "order": 5,
                 "title": "Definindo tratamentos e estratégias",
                 "fileName": "Videoaula 05Definindo tratamentos e estratégias.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=jo-1sPAW0Rw",
+                "duration": 403
               },
               {
                 "id": "lesson-06-03-06",
                 "order": 6,
                 "title": "Mastite subclínica",
                 "fileName": "Viedoaula 06Mastite subclínica.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=P4N-fXqXbCw",
+                "duration": 201
               },
               {
                 "id": "lesson-06-03-07",
                 "order": 7,
                 "title": "Coleta de CCS",
                 "fileName": "Videoaula 07Coleta de CCS.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=_PoPuHAcm1g",
+                "duration": 223
               },
               {
                 "id": "lesson-06-03-08",
                 "order": 8,
                 "title": "Identificação de vacas com mastite subclínica - CMT",
                 "fileName": "Videoaula 08Identificação de vacas com mastite subclínica - CMT.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=T78KittSPP8",
+                "duration": 266
               },
               {
                 "id": "lesson-06-03-09",
                 "order": 9,
                 "title": "Identificação de vacas com mastite subclínica - CCS",
                 "fileName": "Videoaula 09Identificação de vacas com mastite subclínica - CCS.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=lpDj86w8Gdk",
+                "duration": 242
               },
               {
                 "id": "lesson-06-03-10",
