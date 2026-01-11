@@ -2237,28 +2237,36 @@
                 "order": 10,
                 "title": "CCS e CMT",
                 "fileName": "Videoaula 10CCS e CMT.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=IBM6DqZfXnw",
+                "duration": 220
               },
               {
                 "id": "lesson-06-03-11",
                 "order": 11,
                 "title": "Indicadores da mastite",
                 "fileName": "Videoaula 11Indicadores da mastite.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=oAe51DJcIgo",
+                "duration": 459
               },
               {
                 "id": "lesson-06-03-12",
                 "order": 12,
                 "title": "Avaliando os resultados",
                 "fileName": "Videoaula 12Avaliando os resultados.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=JENRIWl0a1E",
+                "duration": 573
               },
               {
                 "id": "lesson-06-03-13",
                 "order": 13,
                 "title": "Terapia da vaca seca",
                 "fileName": "Videoaula 13Terapia da vaca seca.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=mqY40JjfQ6k",
+                "duration": 407
               }
             ]
           },
@@ -2272,35 +2280,45 @@
                 "order": 1,
                 "title": "Agentes contagiosos - Parte I",
                 "fileName": "Videoaula 01Agentes contagiosos - Parte I.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=F5usOp0hVsk",
+                "duration": 449
               },
               {
                 "id": "lesson-06-04-02",
                 "order": 2,
                 "title": "Agentes contagiosos - Parte II",
                 "fileName": "Videoaula 02Agentes contagiosos - Parte II.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=PaN5ARpGeC0",
+                "duration": 279
               },
               {
                 "id": "lesson-06-04-03",
                 "order": 3,
                 "title": "Agentes ambientais e oportunistas",
                 "fileName": "Videoaula 03Agentes ambientais e oportunistas.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=QFadat1R8V4",
+                "duration": 645
               },
               {
                 "id": "lesson-06-04-04",
                 "order": 4,
                 "title": "Gravação ao vivo - Ciclo produção de leite de qualidade",
                 "fileName": "Gravação de Aula ao vivo - Ciclo produção de leite de qualidade.mp4",
-                "type": "live"
+                "type": "live",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=I89GabWTv6Y",
+                "duration": 6730
               },
               {
                 "id": "lesson-06-04-05",
                 "order": 5,
                 "title": "Gravação ao vivo - Ciclo produção de leite de qualidade (2)",
                 "fileName": "Gravação de Aula online ao vivo - Ciclo produção de leite de qua.mp4",
-                "type": "live"
+                "type": "live",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=bzcJexU3QuA",
+                "duration": 6348
               }
             ]
           }
