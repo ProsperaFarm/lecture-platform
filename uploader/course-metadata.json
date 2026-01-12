@@ -2340,21 +2340,27 @@
                 "order": 1,
                 "title": "Introdução à visão estratégica para domínio do negócio",
                 "fileName": "Videoaula 01Introdução à visão estratégica para domínio do negóc.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=8DDgTDDrn1o",
+                "duration": 755
               },
               {
                 "id": "lesson-07-01-02",
                 "order": 2,
                 "title": "Oportunidades na eficiência reprodutiva, nutrição e alimentação",
                 "fileName": "Videoaula 03Oportunidades na eficiência reprodutiva nutrição e a.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=8hT3lHdBK3c",
+                "duration": 854
               },
               {
                 "id": "lesson-07-01-03",
                 "order": 3,
                 "title": "Produção por hectare ano",
                 "fileName": "Videoaula 04Produção por hectare ano.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=Esr9lhj7cdo",
+                "duration": 575
               }
             ]
           },
@@ -2368,42 +2374,54 @@
                 "order": 1,
                 "title": "Impactos da mastite na produtividade",
                 "fileName": "Videoaula 02Impactos da mastite na produtividade.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=buMR1sbfLwQ",
+                "duration": 860
               },
               {
                 "id": "lesson-07-02-02",
                 "order": 2,
                 "title": "Fatores que impactam na média de produção de leite",
                 "fileName": "Videoaula 05Fatores que impactam na média de produção de leite.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=gqiiboLKznY",
+                "duration": 508
               },
               {
                 "id": "lesson-07-02-03",
                 "order": 3,
                 "title": "Relação de partos e total de vacas adultas no rebanho",
                 "fileName": "Videoaula 06Relação de partos e total de vacas adultas no rebanh.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=tLIXNrnFd9g",
+                "duration": 983
               },
               {
                 "id": "lesson-07-02-04",
                 "order": 4,
                 "title": "Eficiência reprodutiva e produção de leite",
                 "fileName": "Videoaula 07Eficiência reprodutiva e produção de leite.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=WaAz8HoRCkg",
+                "duration": 772
               },
               {
                 "id": "lesson-07-02-05",
                 "order": 5,
                 "title": "Saúde da glândula mamária e produção de leite",
                 "fileName": "Videoaula 08Saúde da glândula mamária e produção de leite.mp4",
-                "type": "video"
+                "type": "video",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=KnTL8lgKqns",
+                "duration": 830
               },
               {
                 "id": "lesson-07-02-06",
                 "order": 6,
                 "title": "Gravação ao vivo - Visão estratégica para domínio",
                 "fileName": "Gravação de aula online ao vivo - Visão estratégica para domínio.mp4",
-                "type": "live"
+                "type": "live",
+                "youtubeUrl": "https://www.youtube-nocookie.com/watch?v=m9sJ23pTjno",
+                "duration": 6870
               }
             ]
           }
